@@ -5,7 +5,7 @@ const UsersPage = () => {
   let [users, setUsers] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/users")
+      .get("http://localhost:3030/api/users")
       .then((res) => setUsers(res.data));
   }, []);
   return (
@@ -13,7 +13,7 @@ const UsersPage = () => {
       <h1>USERS</h1>
       <ul>
         {users.map((user) => (
-          <li>{user.name}</li>
+          <li key={user._id}>{user.name}</li>
         ))}
       </ul>
     </div>
