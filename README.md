@@ -15,6 +15,12 @@ OfficePlace allows users to create a virtual environment where users can go for 
 - Desk indicates if user is in office or not (logged in), and at the desk or not (active) through simple status
 - Basic user interaction - send a note
 
+### Stack
+
+- React frontend
+- Node backend with Express
+- MongoDB with Mongoose
+
 ## Installation
 
 Clone the repository

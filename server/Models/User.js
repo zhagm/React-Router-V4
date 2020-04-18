@@ -8,12 +8,17 @@ let userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
     required: true,
   },
-  date: {
+  register_date: {
+    type: Date,
+    default: Date.now,
+  },
+  last_online: {
     type: Date,
     default: Date.now,
   },
