@@ -4,7 +4,10 @@ import { connect } from "react-redux";
 import { getItems } from "../actions/itemActions";
 
 const ItemsPage = ({ items, getItems }) => {
-  useEffect(() => getItems(), []);
+  useEffect(() => {
+    getItems();
+    // eslint-disable-next-line
+  }, []);
   return (
     <div>
       <h1>ITEMS</h1>

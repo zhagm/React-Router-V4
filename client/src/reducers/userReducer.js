@@ -1,29 +1,20 @@
-import {
-  GET_ITEMS,
-  ADD_ITEM,
-  DELETE_ITEM,
-  ITEMS_LOADING,
-} from "../actions/types";
+import { GET_USERS, USERS_LOADING } from "../actions/types";
 
 const initialState = {
-  items: [],
+  users: [],
   loading: false,
 };
 
 export default function (state = initialState, { type, payload }) {
-  console.log(`itemReducer: ${type}`);
+  console.log(`userReducer: ${type}`);
   switch (type) {
-    case GET_ITEMS:
+    case GET_USERS:
       return {
         ...state,
-        items: payload,
+        users: payload,
         loading: false,
       };
-    case ADD_ITEM:
-      break;
-    case DELETE_ITEM:
-      break;
-    case ITEMS_LOADING:
+    case USERS_LOADING:
       return {
         ...state,
         loading: true,

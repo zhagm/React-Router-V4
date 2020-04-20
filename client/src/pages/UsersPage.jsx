@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getUsers } from "../actions/userActions";
 
-const UsersPage = () => {
-  let [users, setUsers] = useState([]);
+const UsersPage = ({ users, getUsers }) => {
   useEffect(() => {
-    axios
-      .get("http://localhost:3030/api/users")
-      .then((res) => setUsers(res.data));
+    getUsers();
+    // eslint-disable-next-line
   }, []);
   return (
     <div>
@@ -20,4 +20,13 @@ const UsersPage = () => {
   );
 };
 
-export default UsersPage;
+UsersPage.propTypes = {
+  users: PropTypes.array,
+  getUsers: PropTypes.func,
+};
+
+const mapStateToProps = (state) => ({
+  users: state.allUsers.users,
+});
+
+export default connect(mapStateToProps, { getUsers })(UsersPage);
