@@ -15,15 +15,15 @@ let User = require("../models/User");
 router.route("/").post((req, res, next) => {
   let { email, password } = req.body;
 
-  if (!email || !password) res.status(400).send("");
+  if (!email || !password) res.status(400).send({ msg: "Missing credentials" });
 
   // Check if user exists
   User.findOne({ email }).then((user) => {
-    if (!user) res.status(400).send("ERROR: User does not exist");
+    if (!user) res.status(400).send({ msg: "User does not exist" });
 
     // Validate Password and send back token if valid
     bcrypt.compare(password, user.password).then((isMatch) => {
-      if (!isMatch) res.status(400).send("ERROR: Invalid credentials");
+      if (!isMatch) res.status(400).send({ msg: "Invalid credentials" });
 
       jwt.sign(
         { id: user._id },
