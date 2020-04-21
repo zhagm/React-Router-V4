@@ -5,9 +5,6 @@ const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 
-/* CONSTANTS */
-const PORT = process.env.PORT || 4000;
-
 /* APP DECLARATION */
 const app = express();
 const router = express.Router();
@@ -21,11 +18,7 @@ mongoose
 
 /* MIDDLEWARE */
 app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan("tiny"));
 
@@ -33,6 +26,7 @@ app.use(morgan("tiny"));
 app.use("/api", require("./routes/api"));
 
 /* SERVER LISTENING */
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, (err) => {
   console.log(err || `Server listening on port ${PORT}`);
 });

@@ -9,7 +9,7 @@ import ItemsPage from "./pages/ItemsPage";
 const App = () => {
   return (
     <Router>
-      <div>
+      <div id="appWrapper">
         <Nav />
         <Switch>
           <Route path="/about">
