@@ -7,7 +7,6 @@ const initialState = {
 };
 
 export default function (state = initialState, { type, payload }) {
-  console.log(`errorReducer: ${type}`);
   switch (type) {
     case GET_ERRORS:
       const { msg, status, id } = payload;

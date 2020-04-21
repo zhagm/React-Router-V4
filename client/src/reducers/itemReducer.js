@@ -11,7 +11,6 @@ const initialState = {
 };
 
 export default function (state = initialState, { type, payload }) {
-  console.log(`itemReducer: ${type}`);
   switch (type) {
     case GET_ITEMS: // payload is array of items
       return {

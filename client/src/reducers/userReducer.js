@@ -6,7 +6,6 @@ const initialState = {
 };
 
 export default function (state = initialState, { type, payload }) {
-  console.log(`userReducer: ${type}`);
   switch (type) {
     case GET_USERS:
       return {

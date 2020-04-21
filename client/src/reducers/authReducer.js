@@ -17,7 +17,6 @@ const initialState = {
 };
 
 export default function (state = initialState, { type, payload }) {
-  console.log(`authReducer: ${type}`);
   switch (type) {
     case USER_LOADING:
       return {
