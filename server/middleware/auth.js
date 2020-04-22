@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { jwtSecret } = require("../config/keys");
+const JWT_SECRET = (process.env.JWT_SECRET || require("../config/keys").JWT_SECRET);
 
 // AUTH CUSTOM MIDDLEWARE - Checks if user is authenticated
 function auth(req, res, next) {
@@ -11,7 +11,7 @@ function auth(req, res, next) {
   } else {
     try {
       // Verify token
-      let decoded = jwt.verify(token, jwtSecret);
+      let decoded = jwt.verify(token, JWT_SECRET);
       // Store user id in req object;
       req.user = decoded;
       next();

@@ -3,7 +3,8 @@ let mongoose = require("mongoose"),
   router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { jwtSecret } = require("../config/keys");
+const JWT_SECRET =
+  process.env.JWT_SECRET || require("../config/keys").JWT_SECRET;
 
 // USER MODEL
 let User = require("../models/User");
@@ -24,7 +25,7 @@ router
           } else {
             jwt.sign(
               { id: user._id },
-              jwtSecret,
+              JWT_SECRET,
               { expiresIn: 3600 },
               (err, token) => {
                 if (err) throw err;

@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const { jwtSecret } = require("../config/keys");
+const JWT_SECRET = (process.env.JWT_SECRET || require("../config/keys").JWT_SECRET);
 const auth = require("../middleware/auth");
 
 // USER MODEL
@@ -27,7 +27,7 @@ router.route("/").post((req, res, next) => {
 
       jwt.sign(
         { id: user._id },
-        jwtSecret,
+        JWT_SECRET,
         { expiresIn: 3600 },
         (err, token) => {
           if (err) throw err;

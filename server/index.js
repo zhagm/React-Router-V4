@@ -4,13 +4,14 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 /* APP DECLARATION */
 const app = express();
 const router = express.Router();
 
 /* DATABASE */
-const db = require("./config/keys").mongoURI;
+const db = process.env.MONGODB_URI || require("./config/keys").MONGODB_URI;
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB successfully connected"))
