@@ -10,7 +10,7 @@ export const getItems = () => {
   return (dispatch) => {
     dispatch(setItemsLoading());
     axios
-      .get("http://localhost:4000/api/items")
+      .get("https://officeplace-server.herokuapp.com/api/items")
       .then(({ data }) => dispatch({ type: GET_ITEMS, payload: data }));
   };
 };
@@ -19,7 +19,7 @@ export const getItems = () => {
 export const addItem = (item) => (dispatch) => {
   dispatch(setItemsLoading());
   axios
-    .post("http://localhost:4000/api/items", item)
+    .post("https://officeplace-server.herokuapp.com/api/items", item)
     .then(({ data }) => dispatch({ type: ADD_ITEM, payload: data }));
 };
 
