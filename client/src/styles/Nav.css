@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+
+/* components/Nav */
+#mainNav ul {
+  padding: 0;
+  margin: 0;
+}
+
+#mainNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5%;
+  border: solid 1px rgb(0, 0, 0);
+  /* font-family: "Nunito Sans", sans-serif; */
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  background-color: #27374c;
+}
+
+#mainNav a {
+  text-decoration: none;
+  color: white;
+}
+
+#mainNav a:hover {
+  color: #a7caff;
+}
+
+.navGroup {
+  list-style: none;
+}
+
+.navGroup li {
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+.navGroup li a {
+  transition: all 300ms ease 0s;
+}
+
+#mainNav button {
+  padding: 9px 20px;
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  background-color: #1c9dff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 300ms ease 0s;
+}
+
+#mainNav button:hover {
+  background: #017ad7;
+}

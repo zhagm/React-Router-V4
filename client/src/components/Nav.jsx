@@ -1,21 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../styles/Nav.css";
 
 const Nav = () => {
   return (
-    <nav>
-      <ul>
+    <nav id="mainNav">
+      <ul class="navGroup navBrand">
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/">OfficePlace</Link>
+        </li>
+      </ul>
+      <ul class="navGroup">
+        <li>
+          <Link to="/users">USERS</Link>
         </li>
         <li>
-          <Link to="/users">Users</Link>
+          <Link to="/items">ITEMS</Link>
         </li>
         <li>
-          <Link to="/items">Items</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
+          <Link to="/login">
+            <button>LOGIN</button>
+          </Link>
         </li>
       </ul>
     </nav>

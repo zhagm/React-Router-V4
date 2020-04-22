@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./App.css";
+import "./styles/App.css";
 
 // Components and pages
 import Nav from "./components/Nav";
@@ -24,8 +24,8 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
+        <Nav />
         <div id="main">
-          <Nav />
           <Switch>
             <Route path="/login">
               <LoginPage />
