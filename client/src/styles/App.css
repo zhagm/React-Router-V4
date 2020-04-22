@@ -5,3 +5,11 @@
 button:focus {
   outline: 0;
 }
+
+/* Error alert message box */
+.alert {
+  padding: 15px;
+  background-color: #f44336; /* Red */
+  color: white;
+  margin-bottom: 15px;
+}

@@ -14,6 +14,13 @@ router
   .route("/")
   .post((req, res, next) => {
     let { name, email, password } = req.body;
+    if (!name || !email || !password)
+      return res.status(400).json({ msg: "Please enter all fields" });
+
+    // Check for existing user
+    User.findOne({ email }).then((user) => {
+      if (user) return res.status(400).json({ msg: "User already exists" });
+    });
 
     // Create salt & hash then create new user with hashed password
     bcrypt.genSalt(10, (err, salt) => {
@@ -21,7 +28,8 @@ router
         if (err) throw err;
         User.create({ name, email, password: hash }, (error, user) => {
           if (error) {
-            return next(error);
+            console.log(error);
+            // throw error;
           } else {
             jwt.sign(
               { id: user._id },
@@ -32,7 +40,6 @@ router
                 res.json({ token, user });
               }
             );
-            console.log(user);
           }
         });
       });
@@ -68,7 +75,6 @@ router
       (error, data) => {
         if (error) {
           return next(error);
-          console.log(error);
         } else {
           res.json(data);
           console.log("User updated successfully !");
@@ -82,7 +88,7 @@ router
         return next(error);
       } else {
         res.status(200).json({
-          msg: data,
+          msg: data, // might cause problems {} vs ""
         });
       }
     });

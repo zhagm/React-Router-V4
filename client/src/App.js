@@ -7,6 +7,7 @@ import Nav from "./components/Nav";
 import UsersPage from "./pages/UsersPage";
 import ItemsPage from "./pages/ItemsPage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 // Redux imports
@@ -37,7 +38,7 @@ const App = () => {
               <ItemsPage />
             </Route>
             <Route path="/register">
-              <h1>REGISTER</h1>
+              <RegisterPage />
             </Route>
             <Route exact path="/">
               <h1>HOME</h1>
