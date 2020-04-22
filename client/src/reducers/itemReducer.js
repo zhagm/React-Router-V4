@@ -25,7 +25,11 @@ export default function (state = initialState, { type, payload }) {
         loading: false,
       };
     case DELETE_ITEM:
-      break;
+      return {
+        ...state,
+        items: state.items.filter((i) => i._id !== payload),
+        loading: false,
+      };
     case ITEMS_LOADING:
       return {
         ...state,

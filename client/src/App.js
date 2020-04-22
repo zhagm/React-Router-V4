@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./styles/App.css";
 
-// Components and pages
+// Components and Containers
 import Nav from "./components/Nav";
-import UsersPage from "./pages/UsersPage";
-import ItemsPage from "./pages/ItemsPage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import UsersPage from "./containers/UsersPage";
+import ItemsPage from "./containers/ItemsPage";
+import LoginPage from "./containers/LoginPage";
+import RegisterPage from "./containers/RegisterPage";
+import NotFoundPage from "./containers/NotFoundPage";
 
 // Redux imports
 import { Provider } from "react-redux";
