@@ -39,13 +39,13 @@ const Nav = ({ isAuthenticated, logout }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
+// const mapStateToProps = (state) => ({
+//   isAuthenticated: state.auth.isAuthenticated,
+// });
 
 Nav.propTypes = {
   isAuthenticated: PropTypes.bool,
   logout: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { logout })(Nav);
+export default connect(null, { logout })(Nav);
