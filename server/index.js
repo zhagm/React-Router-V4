@@ -24,7 +24,7 @@ app.use(cors());
 app.use(morgan("tiny"));
 
 /* ROUTES */
-app.use("/api", require("./routes/api"));
+app.use("/api", require("./routes"));
 
 /* SERVER LISTENING */
 const PORT = process.env.PORT || 4000;

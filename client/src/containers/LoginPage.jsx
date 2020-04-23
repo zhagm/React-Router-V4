@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../actions/authActions";
 import { clearErrors } from "../actions/errorActions";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
+import Alert from "../components/Alert";
 
 class LoginPage extends Component {
   state = {
@@ -42,7 +43,7 @@ class LoginPage extends Component {
     return (
       <div>
         <h1>Login</h1>
-        {this.state.msg ? <div className="alert">{this.state.msg}</div> : null}
+        <Alert message={this.state.msg} />
         <div>
           <form onSubmit={this.submit}>
             {["email", "password"].map((val, i) => {
@@ -50,7 +51,7 @@ class LoginPage extends Component {
                 <label key={i}>
                   {val.toUpperCase()}:
                   <input
-                    type={val === "name" ? "text" : val}
+                    type={val}
                     name={val}
                     value={this.state[val]}
                     onChange={this.inputChange}
@@ -61,6 +62,9 @@ class LoginPage extends Component {
             })}
             <input type="submit" value="Submit" />
           </form>
+          <div>
+            Don't have an account? <Link to="/register">Get started here.</Link>
+          </div>
         </div>
       </div>
     );

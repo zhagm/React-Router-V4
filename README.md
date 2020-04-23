@@ -44,6 +44,8 @@ This project is structured into a separate frontend and backend. To run both con
 npm run dev
 ```
 
-## License
+## Useful Resources
 
-[MIT](https://choosealicense.com/licenses/mit/)
+- https://www.youtube.com/results?search_query=mern+stack+traversy
+- https://www.youtube.com/watch?v=CVClHLwv-4I
+-

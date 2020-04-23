@@ -1,6 +1,5 @@
-let mongoose = require("mongoose"),
-  express = require("express"),
-  router = express.Router();
+const express = require("express");
+const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET =
@@ -27,10 +26,8 @@ router
       bcrypt.hash(password, salt, (err, hash) => {
         if (err) throw err;
         User.create({ name, email, password: hash }, (error, user) => {
-          if (error) {
-            console.log(error);
-            // throw error;
-          } else {
+          if (error) throw error;
+          else {
             jwt.sign(
               { id: user._id },
               JWT_SECRET,
@@ -67,30 +64,15 @@ router
     });
   })
   .put((req, res, next) => {
-    User.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      (error, data) => {
-        if (error) {
-          return next(error);
-        } else {
-          res.json(data);
-          console.log("User updated successfully !");
-        }
-      }
-    );
+    User.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, user) => {
+      if (err) return next(err);
+      else res.json(user);
+    });
   })
   .delete((req, res, next) => {
-    User.findByIdAndRemove(req.params.id, (error, data) => {
-      if (error) {
-        return next(error);
-      } else {
-        res.status(200).json({
-          msg: data, // might cause problems {} vs ""
-        });
-      }
+    User.findByIdAndRemove(req.params.id, (err, data) => {
+      if (err) return next(err);
+      else res.status(200).json(data);
     });
   });
 

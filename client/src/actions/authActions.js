@@ -29,7 +29,7 @@ export const login = ({ email, password }) => (dispatch) => {
   const body = JSON.stringify({ email, password });
   axios
     .post("http://localhost:4000/api/auth", body, getTokenHeader())
-    .then((res) => dispatch({ type: LOGIN_SUCCESS, payload: res.data }))
+    .then(({ data }) => dispatch({ type: LOGIN_SUCCESS, payload: data }))
     .catch((err) => {
       let { data, status } = err.response;
       dispatch(returnErrors(data.msg, status, "LOGIN_FAIL"));
@@ -50,18 +50,19 @@ export const loadUser = () => (dispatch, getState) => {
     });
 };
 
-// Logout User
-export const logout = () => ({ type: LOGOUT_SUCCESS });
-
 // Get config object with token in header if logged in
 export const getTokenHeader = (getState) => {
-  // getting token from redux auth state (token from localStorage)
   const config = { headers: { "Content-type": "application/json" } };
   if (getState) {
+    // getting token from redux auth state (token from localStorage)
     const { token } = getState().auth;
     if (token) config.headers["x-auth-token"] = token;
   }
   return config;
 };
 
+// Logout User
+export const logout = () => ({ type: LOGOUT_SUCCESS });
+
+// Set user as loading
 export const setUserLoading = () => ({ type: USER_LOADING });

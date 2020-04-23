@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { register } from "../actions/authActions";
 import { clearErrors } from "../actions/errorActions";
 import { Redirect } from "react-router-dom";
+import Alert from "../components/Alert";
 
 class RegisterPage extends Component {
   state = {
@@ -43,7 +44,7 @@ class RegisterPage extends Component {
     return (
       <div>
         <h1>Sign up</h1>
-        {this.state.msg ? <div className="alert">{this.state.msg}</div> : null}
+        <Alert message={this.state.msg} />
         <div>
           <form onSubmit={this.submit}>
             {["name", "email", "password"].map((val, i) => {

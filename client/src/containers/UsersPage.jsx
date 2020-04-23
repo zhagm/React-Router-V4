@@ -11,11 +11,24 @@ const UsersPage = ({ users, getUsers }) => {
   return (
     <div>
       <h1>USERS</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user._id}>{user.name}</li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user._id}>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user._id}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
