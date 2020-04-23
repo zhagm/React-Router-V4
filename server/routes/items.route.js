@@ -13,22 +13,15 @@ router.get("/", (req, res) => {
 
 router.post("/", auth, (req, res) => {
   Item.create({ text: req.body.text || "" }, (err, item) => {
-    if (err) {
-      console.log(err);
-      return next(err);
-    } else {
-      res.send(item);
-    }
+    if (err) return next(err);
+    else res.send(item);
   });
 });
 
 router.delete("/:id", auth, (req, res) => {
   Item.findByIdAndDelete(req.params.id, (err, item) => {
-    if (err) {
-      return next(err);
-    } else {
-      res.send(item);
-    }
+    if (err) return next(err);
+    else res.send(item);
   });
 });
 module.exports = router;

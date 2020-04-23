@@ -3,8 +3,9 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = (process.env.JWT_SECRET || require("../config/keys").JWT_SECRET);
 const auth = require("../middleware/auth");
+const JWT_SECRET =
+  process.env.JWT_SECRET || require("../config/keys").JWT_SECRET;
 
 // USER MODEL
 let User = require("../models/User");
@@ -12,29 +13,21 @@ let User = require("../models/User");
 /* ROUTES */
 
 /* PATH: POST /api/auth/ | DESC: check user credentials and return token if valid | PUBLIC */
-router.route("/").post((req, res, next) => {
+router.route("/").post(async (req, res) => {
   let { email, password } = req.body;
-
   if (!email || !password) res.status(400).send({ msg: "Missing credentials" });
 
   // Check if user exists
-  User.findOne({ email }).then((user) => {
-    if (!user) res.status(400).send({ msg: "User does not exist" });
+  let user = await User.findOne({ email });
+  if (!user) res.status(400).send({ msg: "User does not exist" });
 
-    // Validate Password and send back token if valid
-    bcrypt.compare(password, user.password).then((isMatch) => {
-      if (!isMatch) res.status(400).send({ msg: "Invalid credentials" });
+  // Validate Password and send back token if valid
+  let isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) res.status(400).send({ msg: "Invalid credentials" });
 
-      jwt.sign(
-        { id: user._id },
-        JWT_SECRET,
-        { expiresIn: 3600 },
-        (err, token) => {
-          if (err) throw err;
-          res.send({ token, user });
-        }
-      );
-    });
+  jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
+    if (err) throw err;
+    res.send({ token, user });
   });
 });
 
