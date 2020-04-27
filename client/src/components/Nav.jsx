@@ -18,7 +18,7 @@ const Nav = ({ isAuthenticated, logout }) => {
           <Link to="/users">USERS</Link>
         </li>
         <li>
-          <Link to="/items">ITEMS</Link>
+          <Link to="/chat">CHAT</Link>
         </li>
         <li>
           {isAuthenticated ? (
