@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./styles/App.css";
+import "../styles/App.css";
 
 // Components and Containers
-import Nav from "./components/Nav";
-import PrivateRoute from "./components/PrivateRoute";
-import UsersPage from "./containers/UsersPage";
-import ItemsPage from "./containers/ItemsPage";
-import LoginPage from "./containers/LoginPage";
-import RegisterPage from "./containers/RegisterPage";
-import NotFoundPage from "./containers/NotFoundPage";
+import Nav from "../components/Nav";
+import PrivateRoute from "../components/PrivateRoute";
+import UsersPage from "./UsersPage";
+import ItemsPage from "./ItemsPage";
+import LoginPage from "./LoginPage";
+import RegisterPage from "./RegisterPage";
+import NotFoundPage from "./NotFoundPage";
 
 // Redux imports
-import { loadUser } from "./actions/authActions";
+import { loadUser } from "../actions/authActions";
 import { connect } from "react-redux";
-import store from "./store";
+import store from "../store";
 
 const App = ({ isAuthenticated }) => {
   useEffect(() => {

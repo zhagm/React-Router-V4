@@ -5,15 +5,14 @@ import PropTypes from "prop-types";
 import { logout } from "../actions/authActions";
 import "../styles/Nav.css";
 
+// https://www.youtube.com/watch?v=gXkqy0b4M5g
 const Nav = ({ isAuthenticated, logout }) => {
   const history = useHistory();
   return (
     <nav id="mainNav">
-      <ul className="navGroup navBrand">
-        <li>
-          <Link to="/">OfficePlace</Link>
-        </li>
-      </ul>
+      <div className="logo">
+        <h4 to="/">OfficePlace</h4>
+      </div>
       <ul className="navGroup">
         <li>
           <Link to="/users">USERS</Link>
