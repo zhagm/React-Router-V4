@@ -26,14 +26,14 @@ OfficePlace allows users to create a virtual environment where users can go for 
 Clone the repository
 
 ```bash
-git clone <repo>
+git clone https://github.com/zhagm/officeplace.git
 ```
 
 Move into project directory and install all dependencies
 
 ```bash
 cd officeplace
-npm i
+npm run install
 ```
 
 ## Usage
@@ -43,6 +43,15 @@ This project is structured into a separate frontend and backend. To run both con
 ```bash
 npm run dev
 ```
+
+## Demo
+
+- [Backend server hosted on Heroku](https://officeplace-server.herokuapp.com/)
+- [Frontend Demo]() _(not yet deployed)_
+
+## Progress
+
+[Trello board](https://trello.com/b/oPNupdYd/officeplace-week-3)
 
 ## Useful Resources
 
