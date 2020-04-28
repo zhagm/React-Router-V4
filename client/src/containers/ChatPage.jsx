@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getUsers } from "../actions/userActions";
 
 import socketio from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:4000";
+const socket = socketio(ENDPOINT);
 
 const ChatPage = ({ user }) => {
   let [inputText, setInputText] = useState("");
   let [messages, setMessages] = useState([
     {
-      user: user.name,
+      username: user.name,
       text: "hello",
       timestamp: Date.now(),
     },
   ]);
+  socket.on("message", (msg) => {
+    if (msg) addMessageToDom(msg);
+  });
+
   useEffect(() => {
-    const socket = socketio(ENDPOINT);
-    socket.on("message", (message) => {
-      console.log({ message });
-    });
+    setMessages(JSON.parse(localStorage.getItem("messages")) || []);
     // eslint-disable-next-line
   }, []);
 
@@ -27,18 +28,18 @@ const ChatPage = ({ user }) => {
     const updatedMessages = [...messages, message].sort(
       (a, b) => a.timestamp < b.timestamp
     );
+    localStorage.setItem("messages", JSON.stringify(updatedMessages));
     setMessages(updatedMessages);
   };
 
   const sendMessage = (e) => {
     e.preventDefault();
     let message = {
-      user: user.name,
+      username: user.name,
       text: inputText,
       timestamp: Date.now(),
     };
-    addMessageToDom(message);
-    // socket.emit("message", inputText);
+    socket.emit("message", message);
     setInputText("");
   };
 
@@ -56,7 +57,7 @@ const ChatPage = ({ user }) => {
         <tbody>
           {messages.map((msg, i) => (
             <tr key={i}>
-              <td>{msg.user}:</td>
+              <td>{msg.username}:</td>
               <td>{msg.text}</td>
               <td>{msg.timestamp}</td>
             </tr>

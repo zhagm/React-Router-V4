@@ -15,10 +15,15 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 /* SOCKET CONNECTION */
-io.on("connection", (socket) => {});
 io.on("connection", (socket) => {
-  console.log("New client connected");
-  socket.emit("message", "A new user has joined the chat");
+  socket.emit("message", {
+    text: "A new user has joined the chat",
+    user: "chatbot",
+    timestamp: Date.now(),
+  });
+  socket.on("message", (msg) => {
+    io.emit("message", msg);
+  });
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });

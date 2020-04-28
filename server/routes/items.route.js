@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
-const auth = require("../middleware/auth");
+const auth = require("../utils/authMiddleware");
 
 // MODEL SCHEMA
 let Item = require("../models/Item");

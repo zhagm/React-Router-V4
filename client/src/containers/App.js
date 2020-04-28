@@ -17,18 +17,10 @@ import { loadUser } from "../actions/authActions";
 import { connect } from "react-redux";
 import store from "../store";
 
-// Socket.io Imports
-// import socketio from "socket.io-client";
-// const ENDPOINT = "http://127.0.0.1:4000";
-
 const App = ({ isAuthenticated }) => {
   useEffect(() => {
     // load user if authenticated
     store.dispatch(loadUser());
-    // const socket = socketio(ENDPOINT);
-    // socket.on("message", (message) => {
-    //   console.log(message);
-    // });
     // eslint-disable-next-line
   }, []);
 

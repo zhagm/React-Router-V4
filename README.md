@@ -52,6 +52,7 @@ npm run dev
 ## Progress
 
 [Trello board](https://trello.com/invite/b/oPNupdYd/bde1244e3c28a7a5511ed68c4049f09f/officeplace-week-3)
+
 **[Branch m2](https://github.com/zhagm/officeplace/tree/m2)** is the most recently updated branch.
 
 ## Useful Resources
