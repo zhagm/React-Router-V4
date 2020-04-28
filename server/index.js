@@ -15,22 +15,15 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 /* SOCKET CONNECTION */
+const { formatMessage } = require("./utils/messages")
 io.on("connection", (socket) => {
-  socket.emit("message", {
-    text: "A new user has joined the chat",
-    user: "chatbot",
-    timestamp: Date.now(),
-  });
+  socket.emit("message", ("chatbot", "A new user has joined the chat"));
   socket.on("message", (msg) => {
     io.emit("message", msg);
   });
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });
-  // socket.emit("request" /* */); // emit an event to the socket
-  // io.emit("broadcast" /* */); // emit an event to all connected sockets
-  // socket.on("reply", function () {
-  // socket.broadcast.emit('eventName", 'data'); // emits to all but current socket
 });
 
 /* DATABASE */
@@ -45,6 +38,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan("tiny"));
+
+/* ASSIGN SOCKET TO REQ OBJ SO API CAN EMIT */
+app.use(function(req, res, next) {
+  req.io = io;
+  next();
+});
 
 /* ROUTES */
 app.use("/api", require("./routes"));

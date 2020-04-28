@@ -1,3 +1,7 @@
-export const formatMessage = (username, text, time = Date.now()) {
-    return { username, text, time }
-}
+const formatMessage = (user, text, time = Date.now()) => {
+  return { user, text, time };
+};
+
+module.exports = {
+  formatMessage,
+};

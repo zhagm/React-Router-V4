@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import "../styles/ChatPage.css";
 
-import socketio from "socket.io-client";
-const ENDPOINT = "http://127.0.0.1:4000";
-const socket = socketio(ENDPOINT);
+import socket from "../socket-config.js";
 
 const ChatPage = ({ user }) => {
   let [inputText, setInputText] = useState("");
-  let [messages, setMessages] = useState([
-    {
-      username: user.name,
-      text: "hello",
-      timestamp: Date.now(),
-    },
-  ]);
+  let [messages, setMessages] = useState([]);
   socket.on("message", (msg) => {
     if (msg) addMessageToDom(msg);
   });
 
   useEffect(() => {
-    setMessages(JSON.parse(localStorage.getItem("messages")) || []);
+    console.log("REMOUNTING");
+    let localStorageData;
+    try {
+      localStorageData = JSON.parse(localStorage.getItem("messages"));
+    } catch {
+      localStorageData = [];
+    }
+    setMessages(localStorageData);
     // eslint-disable-next-line
   }, []);
 
@@ -46,24 +46,20 @@ const ChatPage = ({ user }) => {
   return (
     <div>
       <h1>USERS</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Message</th>
-            <th>Time Sent</th>
-          </tr>
-        </thead>
-        <tbody>
-          {messages.map((msg, i) => (
-            <tr key={i}>
-              <td>{msg.username}:</td>
-              <td>{msg.text}</td>
-              <td>{msg.timestamp}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="chatBox">
+        {messages.map((msg, i) => (
+          <div
+            className={`chatMessage ${
+              msg.username === user.name ? "ownChatMessage" : ""
+            }`}
+            key={i}
+          >
+            <span className="messageUser">{msg.username}</span>
+            <span className="messageText">{msg.text}</span>
+            {/* <td>{msg.timestamp}</td> */}
+          </div>
+        ))}
+      </div>
       <form onSubmit={sendMessage}>
         <label>Your Message:</label>
         <input
