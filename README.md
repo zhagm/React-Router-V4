@@ -29,10 +29,11 @@ Clone the repository
 git clone https://github.com/zhagm/officeplace.git
 ```
 
-Move into project directory and install all dependencies
+Move into project directory, switch to the most recent branch, and install all dependencies
 
 ```bash
 cd officeplace
+git pull origin m2
 npm run install
 ```
 

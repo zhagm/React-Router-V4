@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server/index.js",
     "client": "cd client && npm run start",
-    "install": "cd client && npm i && cd ../server && npm i",
+    "install": "npm i && cd client && npm i && cd ../server && npm i",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
