@@ -5,7 +5,7 @@ import "../styles/ChatPage.css";
 
 import socket from "../socket-config.js";
 
-const ChatPage = ({ user }) => {
+const ChatPage = ({ user, isLoading }) => {
   let [inputText, setInputText] = useState("");
   let [messages, setMessages] = useState([]);
   socket.on("message", (msg) => {
@@ -20,7 +20,7 @@ const ChatPage = ({ user }) => {
     } catch {
       localStorageData = [];
     }
-    setMessages(localStorageData);
+    setMessages(localStorageData || []);
     // eslint-disable-next-line
   }, []);
 
@@ -43,6 +43,7 @@ const ChatPage = ({ user }) => {
     setInputText("");
   };
 
+  if (isLoading) return <div></div>;
   return (
     <div>
       <h1>USERS</h1>
@@ -50,7 +51,11 @@ const ChatPage = ({ user }) => {
         {messages.map((msg, i) => (
           <div
             className={`chatMessage ${
-              msg.username === user.name ? "ownChatMessage" : ""
+              msg.username === user.name
+                ? "ownChatMessage"
+                : msg.username === "chatbot"
+                ? "systemMessage"
+                : ""
             }`}
             key={i}
           >
@@ -81,5 +86,6 @@ ChatPage.propTypes = {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  isLoading: state.auth.isLoading,
 });
 export default connect(mapStateToProps, {})(ChatPage);

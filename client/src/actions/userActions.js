@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { returnErrors } from "./errorActions";
 import { GET_USERS, USERS_LOADING } from "./types";
 
 export const getUsers = () => {
@@ -7,7 +7,10 @@ export const getUsers = () => {
     dispatch(setUsersLoading());
     axios
       .get("http://localhost:4000/api/users")
-      .then(({ data }) => dispatch({ type: GET_USERS, payload: data }));
+      .then(({ data }) => dispatch({ type: GET_USERS, payload: data }))
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 

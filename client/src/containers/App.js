@@ -35,11 +35,12 @@ const App = ({ isAuthenticated }) => {
             comp={UsersPage}
             isAuthenticated={isAuthenticated}
           />
-          <PrivateRoute
+          {/* <PrivateRoute
             path="/chat"
             comp={ChatPage}
             isAuthenticated={isAuthenticated}
-          />
+          /> */}
+          <Route path="/chat" component={ChatPage} />
           <Route path="/items" component={ItemsPage} />
           <Route path="/register" component={RegisterPage} />
           <Route exact path="/">

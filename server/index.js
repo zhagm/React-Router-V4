@@ -15,14 +15,21 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 /* SOCKET CONNECTION */
-const { formatMessage } = require("./utils/messages")
+const { formatMessage } = require("./utils/messages");
 io.on("connection", (socket) => {
-  socket.emit("message", ("chatbot", "A new user has joined the chat"));
+  socket.emit(
+    "message",
+    formatMessage("chatbot", "A new user has joined the chat")
+  );
   socket.on("message", (msg) => {
     io.emit("message", msg);
   });
   socket.on("disconnect", () => {
     console.log("Client disconnected");
+    socket.emit(
+      "message",
+      formatMessage("chatbot", "A user has left the chat")
+    );
   });
 });
 
@@ -40,7 +47,7 @@ app.use(cors());
 app.use(morgan("tiny"));
 
 /* ASSIGN SOCKET TO REQ OBJ SO API CAN EMIT */
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   req.io = io;
   next();
 });

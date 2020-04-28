@@ -18,8 +18,9 @@ export const register = ({ name, email, password }) => (dispatch) => {
     .post("http://localhost:4000/api/users", body, getTokenHeader())
     .then((res) => dispatch({ type: REGISTER_SUCCESS, payload: res.data }))
     .catch((err) => {
-      let { data, status } = err.response;
-      dispatch(returnErrors(data.msg, status, "REGISTER_FAIL"));
+      dispatch(
+        returnErrors(err.response.data, err.response.status, "REGISTER_FAIL")
+      );
       dispatch({ type: REGISTER_FAIL });
     });
 };
@@ -31,8 +32,9 @@ export const login = ({ email, password }) => (dispatch) => {
     .post("http://localhost:4000/api/auth", body, getTokenHeader())
     .then(({ data }) => dispatch({ type: LOGIN_SUCCESS, payload: data }))
     .catch((err) => {
-      let { data, status } = err.response;
-      dispatch(returnErrors(data.msg, status, "LOGIN_FAIL"));
+      dispatch(
+        returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
+      );
       dispatch({ type: LOGIN_FAIL });
     });
 };
@@ -44,8 +46,7 @@ export const loadUser = () => (dispatch, getState) => {
     .get("http://localhost:4000/api/auth/user", getTokenHeader(getState))
     .then(({ data }) => dispatch({ type: USER_LOADED, payload: data }))
     .catch((err) => {
-      let { data, status } = err.response;
-      dispatch(returnErrors(data.msg, status));
+      dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({ type: AUTH_ERROR });
     });
 };
