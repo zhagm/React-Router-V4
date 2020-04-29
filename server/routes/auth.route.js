@@ -15,18 +15,25 @@ let User = require("../models/User");
 /* PATH: POST /api/auth/ | DESC: check user credentials and return token if valid | PUBLIC */
 router.route("/").post(async (req, res) => {
   let { email, password } = req.body;
-  if (!email || !password) res.status(400).send({ msg: "Missing credentials" });
+  if (!email || !password) res.status(400).send("Missing credentials");
 
   // Check if user exists
   let user = await User.findOne({ email });
-  if (!user) res.status(400).send({ msg: "User does not exist" });
+  if (!user) res.status(400).send("User does not exist");
 
   // Validate Password and send back token if valid
   let isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) res.status(400).send({ msg: "Invalid credentials" });
+  if (!isMatch) res.status(400).send("Invalid credentials");
 
   jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
-    if (err) throw err;
+    // if (err) throw err;
+    if (err) {
+      res
+        .status(400)
+        .send(
+          "Error with JWT key, you might not have a config/keys.js file, check server/config/your-keys.js"
+        );
+    }
     res.send({ token, user });
   });
 });

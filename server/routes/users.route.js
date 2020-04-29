@@ -14,11 +14,11 @@ router
   .post(async (req, res, next) => {
     let { name, email, password } = req.body;
     if (!name || !email || !password)
-      return res.status(400).json({ msg: "Please enter all fields" });
+      return res.status(400).send("Please enter all fields");
 
     // Check for existing user
     let user = await User.findOne({ email });
-    if (user) return res.status(400).json({ msg: "User already exists" });
+    if (user) return res.status(400).send("User already exists");
 
     // Create salt & hash then create new user with hashed password
     bcrypt.genSalt(10, (err, salt) => {
@@ -31,7 +31,9 @@ router
             JWT_SECRET,
             { expiresIn: 3600 },
             (err, token) => {
-              if (err) throw err;
+              if (err) {
+                res.status(400).send("Error with JWT key");
+              }
               res.json({ token, user });
             }
           );
@@ -49,9 +51,9 @@ router
 router
   .route("/:id")
   .get((req, res) => {
-    User.findById(req.params.id, (error, data) => {
+    User.findById(req.params.id, (error, user) => {
       if (error) return next(error);
-      else res.json(data);
+      else res.json(user);
     });
   })
   .put((req, res, next) => {
@@ -61,9 +63,9 @@ router
     });
   })
   .delete((req, res, next) => {
-    User.findByIdAndRemove(req.params.id, (err, data) => {
+    User.findByIdAndRemove(req.params.id, (err, user) => {
       if (err) return next(err);
-      else res.status(200).json(data);
+      else res.status(200).json(user);
     });
   });
 

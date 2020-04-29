@@ -37,6 +37,16 @@ git pull origin m2
 npm run install
 ```
 
+The project requires a couple keys that I've kept secret. You can find a file named server/config/your-keys.js
+You can update the keys but I put some test keys so that your app still functions as it should.
+your-keys.js is just a placeholder, we'll want to rename it to keys.js in the same file for it to run.
+
+```bash
+mv server/config/your-keys.js server/config/keys.js
+```
+
+And voila, you should be ready to run!
+
 ## Usage
 
 This project is structured into a separate frontend and backend. To run both concurrently you can run the following command:
