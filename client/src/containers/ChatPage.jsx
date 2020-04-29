@@ -43,7 +43,8 @@ const ChatPage = ({ user, isLoading }) => {
     setInputText("");
   };
 
-  if (isLoading) return <div></div>;
+  if (isLoading || !user)
+    return <div>You need to log in to start chatting!</div>;
   return (
     <div>
       <h1>USERS</h1>

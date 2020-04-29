@@ -19,7 +19,10 @@ const { formatMessage } = require("./utils/messages");
 io.on("connection", (socket) => {
   socket.emit(
     "message",
-    formatMessage("chatbot", "A new user has joined the chat")
+    formatMessage(
+      "chatbot",
+      `A new user has joined the chat, ${io.engine.clientsCount} users connected`
+    )
   );
   socket.on("message", (msg) => {
     io.emit("message", msg);

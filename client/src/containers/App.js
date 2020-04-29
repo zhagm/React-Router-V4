@@ -21,6 +21,7 @@ const App = ({ isAuthenticated }) => {
   useEffect(() => {
     // load user if authenticated
     store.dispatch(loadUser());
+    console.log("------------------------APP MOUNTED------------------------");
     // eslint-disable-next-line
   }, []);
 
