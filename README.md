@@ -33,8 +33,14 @@ Move into project directory, switch to the most recent branch, and install all d
 
 ```bash
 cd officeplace
+```
+
+```bash
 git pull origin m2
-npm run install
+```
+
+```bash
+npm run install-all
 ```
 
 The project requires a couple keys that I've kept secret. You can find a file named server/config/your-keys.js
