@@ -29,14 +29,10 @@ Clone the repository
 git clone https://github.com/zhagm/officeplace.git
 ```
 
-Move into project directory, switch to the most recent branch, and install all dependencies
+Move into project directory and install all dependencies.
 
 ```bash
 cd officeplace
-```
-
-```bash
-git pull origin m2
 ```
 
 ```bash
@@ -70,6 +66,7 @@ npm run dev
 
 [Trello board](https://trello.com/invite/b/oPNupdYd/bde1244e3c28a7a5511ed68c4049f09f/officeplace-week-3)
 
+The master will hold the most recent running version.
 **[Branch m2](https://github.com/zhagm/officeplace/tree/m2)** is the most recently updated branch.
 
 ## Useful Resources
