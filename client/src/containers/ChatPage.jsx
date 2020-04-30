@@ -2,19 +2,24 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import "../styles/ChatPage.css";
+import UsersTable from "../components/UsersTable";
 import { sendSocketMessage, getOnlineUsers } from "../actions/socketActions.js";
+import { getUsers } from "../actions/userActions.js";
 
 const ChatPage = ({
   user,
   isLoading,
   sendSocketMessage,
-  messages,
-  users,
+  messages = [],
   getOnlineUsers,
+  onlineUsers = [],
+  getUsers,
+  users = [],
 }) => {
   let [inputText, setInputText] = useState("");
   useEffect(() => {
     getOnlineUsers();
+    getUsers();
     // eslint-disable-next-line
   }, []);
 
@@ -57,11 +62,7 @@ const ChatPage = ({
         />
         <br />
       </form>
-      <ul>
-        {(users || []).map((user) => (
-          <li key={user.id}>{user.name}</li>
-        ))}
-      </ul>
+      <UsersTable users={users} onlineUsers={onlineUsers.map((u) => u.id)} />
     </div>
   );
 };
@@ -77,9 +78,12 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
   isLoading: state.auth.isLoading,
   messages: state.socket.messages,
-  users: state.socket.onlineUsers,
+  onlineUsers: state.socket.onlineUsers,
+  users: state.allUsers.users,
 });
 
-export default connect(mapStateToProps, { sendSocketMessage, getOnlineUsers })(
-  ChatPage
-);
+export default connect(mapStateToProps, {
+  sendSocketMessage,
+  getOnlineUsers,
+  getUsers,
+})(ChatPage);

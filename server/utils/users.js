@@ -6,7 +6,7 @@ const addUserOnline = (user) => {
 };
 
 const removeUserOnline = (id) => {
-  online = online.filter((u) => u._id !== id);
+  online = online.filter((u) => u.id !== id);
 };
 
 const getOnlineUsers = () => online;

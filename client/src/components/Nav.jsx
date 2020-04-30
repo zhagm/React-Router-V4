@@ -15,9 +15,6 @@ const Nav = ({ isAuthenticated, logout }) => {
       </div>
       <ul className="navGroup">
         <li>
-          <Link to="/users">USERS</Link>
-        </li>
-        <li>
           <Link to="/chat">CHAT</Link>
         </li>
         <li>

@@ -19,6 +19,7 @@ export const socketMiddlewareMaker = (url) => {
       case SOCKET_GET_USERS:
         socket.emit("getOnlineUsers");
       case USER_LOADED:
+        socket.emit("login", action.payload); // NOT GOOD, RUNS A LOT
         socket.on("console.log", (message) => console.log("Server: ", message));
         socket.on("getOnlineUsers", (onlineUsers) => {
           dispatch({ type: "SOCKET_USERS_RECEIVED", payload: onlineUsers });

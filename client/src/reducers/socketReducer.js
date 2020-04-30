@@ -28,7 +28,7 @@ export default function (state = initialState, { type, payload }) {
     case SOCKET_REMOVE_USER:
       return {
         ...state,
-        onlineUsers: state.onlineUsers.filter((user) => user._id !== payload),
+        onlineUsers: state.onlineUsers.filter((user) => user.id !== payload),
       };
     case SOCKET_USERS_RECEIVED:
       return {

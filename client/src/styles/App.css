@@ -13,3 +13,12 @@ button:focus {
   color: white;
   margin-bottom: 15px;
 }
+
+.status {
+  opacity: 0;
+}
+
+.online {
+  color: rgb(139, 222, 14);
+  opacity: 1;
+}

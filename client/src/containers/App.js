@@ -5,7 +5,6 @@ import "../styles/App.css";
 // Components and Containers
 import Nav from "../components/Nav";
 import PrivateRoute from "../components/PrivateRoute";
-import UsersPage from "./UsersPage";
 import ItemsPage from "./ItemsPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
@@ -31,11 +30,6 @@ const App = ({ isAuthenticated }) => {
       <div id="main">
         <Switch>
           <Route path="/login" component={LoginPage} />
-          <PrivateRoute
-            path="/users"
-            comp={UsersPage}
-            isAuthenticated={isAuthenticated}
-          />
           {/* <PrivateRoute
             path="/chat"
             comp={ChatPage}
