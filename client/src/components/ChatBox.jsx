@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const ChatBox = ({ messages = [], currentUserName }) => {
+const ChatBox = ({ messages = [], currentUserId }) => {
   return (
     <div className="chatBox">
       {messages.map((msg, i) => (
         <div
           className={`chatMessage ${
-            msg.username === currentUserName
+            msg.userId === currentUserId
               ? "ownChatMessage"
               : msg.username === "chatbot"
               ? "systemMessage"
@@ -25,7 +25,7 @@ const ChatBox = ({ messages = [], currentUserName }) => {
 
 ChatBox.propTypes = {
   messages: PropTypes.array,
-  currentUserName: PropTypes.string, // change to id later
+  currentUserId: PropTypes.string, // change to id later
 };
 
 export default ChatBox;

@@ -36,7 +36,7 @@ const ChatPage = ({
   return (
     <div>
       <h1>USERS</h1>
-      <ChatBox messages={messages} currentUserName={user.name} />
+      <ChatBox messages={messages} currentUserId={user._id} />
       <form onSubmit={sendMessage}>
         <label>Your Message:</label>
         <input

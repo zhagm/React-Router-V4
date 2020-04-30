@@ -42,9 +42,9 @@ router
     });
   })
   .get((req, res) => {
-    User.find((error, data) => {
+    User.find((error, rooms) => {
       if (error) return next(error);
-      else res.json(data);
+      else res.json(rooms);
     });
   });
 

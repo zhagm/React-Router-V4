@@ -24,7 +24,7 @@ const {
 io.on("connection", (serverSocket) => {
   let user;
   serverSocket.on("login", (userObject) => {
-    if (userObject) {
+    if (userObject && !user) {
       user = userObject;
       addUserOnline({ name: user.name, id: user._id });
       io.emit("addUserOnline", { name: user.name, id: user._id });
@@ -35,7 +35,6 @@ io.on("connection", (serverSocket) => {
     }
   });
   serverSocket.on("userSentMessage", (text) => {
-    serverSocket.emit("log", text);
     if (user) {
       io.emit("sendUsersMessage", {
         userId: user._id,
@@ -53,12 +52,14 @@ io.on("connection", (serverSocket) => {
     if (user) {
       removeUserOnline(user._id);
       io.emit("removeUserOnline", user._id);
+      user = undefined;
     }
   });
   serverSocket.on("disconnect", () => {
     if (user) {
       removeUserOnline(user._id);
       io.emit("removeUserOnline", user._id);
+      user = undefined;
     }
   });
 });
