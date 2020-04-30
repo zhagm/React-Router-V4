@@ -44,8 +44,31 @@ router
   .delete((req, res, next) => {
     Room.findByIdAndRemove(req.params.id, (err, room) => {
       if (err) return next(err);
-      else res.status(200).json(room);
+      else res.json(room);
     });
+  });
+
+router
+  .route("/:id/members/:memberId")
+  .post((req, res, next) => {
+    Room.findByIdAndUpdate(
+      req.params.id,
+      { $addToSet: { members: req.params.memberId } },
+      (err, room) => {
+        if (err) return next(err);
+        else res.json(room);
+      }
+    );
+  })
+  .delete((req, res, next) => {
+    Room.findByIdAndUpdate(
+      req.params.id,
+      { $pull: { members: req.params.memberId } },
+      (err, room) => {
+        if (err) return next(err);
+        else res.json(room);
+      }
+    );
   });
 
 module.exports = router;

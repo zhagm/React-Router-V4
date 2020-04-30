@@ -18,6 +18,9 @@ const Nav = ({ isAuthenticated, logout }) => {
           <Link to="/chat">CHAT</Link>
         </li>
         <li>
+          <Link to="/rooms">ROOMS</Link>
+        </li>
+        <li>
           {isAuthenticated ? (
             <Link to="/">
               <button onClick={() => logout() && history.push("/")}>

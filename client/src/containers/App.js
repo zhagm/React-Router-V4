@@ -4,12 +4,13 @@ import "../styles/App.css";
 
 // Components and Containers
 import Nav from "../components/Nav";
-import PrivateRoute from "../components/PrivateRoute";
+import NewRoomForm from "../components/NewRoomForm";
 import ItemsPage from "./ItemsPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import NotFoundPage from "./NotFoundPage";
 import ChatPage from "./ChatPage";
+import RoomsPage from "./RoomsPage";
 
 // Redux Imports
 import { loadUser } from "../actions/authActions";
@@ -36,6 +37,9 @@ const App = ({ isAuthenticated }) => {
             isAuthenticated={isAuthenticated}
           /> */}
           <Route path="/chat" component={ChatPage} />
+          <Route exact path="/rooms/new" component={NewRoomForm} />
+          <Route exact path="/rooms" component={RoomsPage} />
+          {/* <Route path="/rooms/:id" component={RoomPage} /> */}
           <Route path="/items" component={ItemsPage} />
           <Route path="/register" component={RegisterPage} />
           <Route exact path="/">

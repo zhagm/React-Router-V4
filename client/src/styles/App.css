@@ -14,6 +14,7 @@ button:focus {
   margin-bottom: 15px;
 }
 
+/* User online indicator */
 .status {
   opacity: 0;
 }
@@ -21,4 +22,20 @@ button:focus {
 .online {
   color: rgb(139, 222, 14);
   opacity: 1;
+}
+
+/* User selector in new room form */
+.userSelect {
+  padding: 15px;
+  margin: 10px;
+  opacity: 0.5px;
+  background-color: rgb(228, 228, 228);
+  text-align: center;
+}
+
+.userSelect.selected {
+  opacity: 1;
+  background-color: rgb(147, 147, 147);
+  color: white;
+  font-weight: bold;
 }
