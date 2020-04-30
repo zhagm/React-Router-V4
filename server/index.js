@@ -15,24 +15,43 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 /* SOCKET CONNECTION */
-const { formatMessage } = require("./utils/messages");
-io.on("connection", (socket) => {
-  socket.emit(
-    "message",
-    formatMessage(
-      "chatbot",
-      `A new user has joined the chat, ${io.engine.clientsCount} users connected`
-    )
-  );
-  socket.on("message", (msg) => {
-    io.emit("message", msg);
-  });
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-    socket.emit(
-      "message",
-      formatMessage("chatbot", "A user has left the chat")
+const {
+  addUserOnline,
+  removeUserOnline,
+  getOnlineUsers,
+} = require("./utils/users");
+
+io.on("connection", (serverSocket) => {
+  let user;
+  serverSocket.on("login", (userObject) => {
+    user = userObject;
+    addUserOnline(user);
+    io.emit("addUserOnline", { name: user.name, id: user._id });
+    io.emit(
+      "console.log",
+      `User ${user.name} is now online, ${io.engine.clientsCount} users online`
     );
+  });
+  serverSocket.on("userSentMessage", (text) => {
+    serverSocket.emit("log", text);
+    if (user) {
+      io.emit("sendUsersMessage", {
+        userId: user._id,
+        name: user.name,
+        text,
+      });
+    }
+  });
+  serverSocket.on("getOnlineUsers", () => {
+    let onlineUsers = getOnlineUsers();
+    console.log("GETTING ONLINE USERS ", onlineUsers);
+    serverSocket.emit("getOnlineUsers", onlineUsers);
+  });
+  serverSocket.on("removeUserOnline", () => {
+    if (user) {
+      removeUserOnline(user._id);
+      io.emit("removeUserOnline", user._id);
+    }
   });
 });
 
