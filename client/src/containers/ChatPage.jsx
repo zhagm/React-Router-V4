@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import "../styles/ChatPage.css";
 import UsersTable from "../components/UsersTable";
+import ChatBox from "../components/ChatBox";
 import { sendSocketMessage, getOnlineUsers } from "../actions/socketActions.js";
 import { getUsers } from "../actions/userActions.js";
 
@@ -31,27 +32,11 @@ const ChatPage = ({
 
   if (isLoading || !user)
     return <div>You need to log in to start chatting!</div>;
+
   return (
     <div>
       <h1>USERS</h1>
-      <div className="chatBox">
-        {messages.map((msg, i) => (
-          <div
-            className={`chatMessage ${
-              msg.username === user.name
-                ? "ownChatMessage"
-                : msg.username === "chatbot"
-                ? "systemMessage"
-                : ""
-            }`}
-            key={i}
-          >
-            <span className="messageUser">{msg.username}</span>
-            <span className="messageText">{msg.text}</span>
-            {/* <td>{msg.timestamp}</td> */}
-          </div>
-        ))}
-      </div>
+      <ChatBox messages={messages} currentUserName={user.name} />
       <form onSubmit={sendMessage}>
         <label>Your Message:</label>
         <input
