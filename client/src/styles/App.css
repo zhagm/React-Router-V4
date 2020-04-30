@@ -39,3 +39,11 @@ button:focus {
   color: white;
   font-weight: bold;
 }
+
+/* User list item in RoomPage */
+.userSelect.activeUser {
+  opacity: 1;
+  background-color: rgb(141, 244, 78);
+  /* color: white; */
+  font-weight: bold;
+}

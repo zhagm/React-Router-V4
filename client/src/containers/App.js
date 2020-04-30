@@ -11,6 +11,7 @@ import RegisterPage from "./RegisterPage";
 import NotFoundPage from "./NotFoundPage";
 import ChatPage from "./ChatPage";
 import RoomsPage from "./RoomsPage";
+import RoomPage from "./RoomPage";
 
 // Redux Imports
 import { loadUser } from "../actions/authActions";
@@ -39,7 +40,7 @@ const App = ({ isAuthenticated }) => {
           <Route path="/chat" component={ChatPage} />
           <Route exact path="/rooms/new" component={NewRoomForm} />
           <Route exact path="/rooms" component={RoomsPage} />
-          {/* <Route path="/rooms/:id" component={RoomPage} /> */}
+          <Route path="/rooms/:id" component={RoomPage} />
           <Route path="/items" component={ItemsPage} />
           <Route path="/register" component={RegisterPage} />
           <Route exact path="/">

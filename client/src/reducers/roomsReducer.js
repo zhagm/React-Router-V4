@@ -6,10 +6,13 @@ import {
   ROOMS_LOADING,
   ADD_ROOM_MEMBER,
   REMOVE_ROOM_MEMBER,
+  GET_ROOM_MEMBERS,
 } from "../actions/types";
 
 const initialState = {
   rooms: [],
+  currentRoomMembers: [],
+  currentRoom: null,
   loading: false,
 };
 
@@ -65,6 +68,18 @@ export default function (state = initialState, { type, payload }) {
       return {
         ...state,
         rooms,
+      };
+    }
+    case GET_ROOM_MEMBERS: {
+      return {
+        ...state,
+        currentRoomMembers: payload,
+      };
+    }
+    case GET_ROOM: {
+      return {
+        ...state,
+        currentRoom: payload,
       };
     }
     default:

@@ -3,6 +3,7 @@ const router = express.Router();
 
 // room MODEL
 let Room = require("../models/Room");
+let User = require("../models/User");
 
 // ROUTES
 router
@@ -70,5 +71,15 @@ router
       }
     );
   });
+
+router.route("/:id/members").get((req, res, next) => {
+  Room.findById(req.params.id)
+    .select("members")
+    .populate("members")
+    .exec((error, room) => {
+      if (error) return next(error);
+      res.json(room.members);
+    });
+});
 
 module.exports = router;

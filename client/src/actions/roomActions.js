@@ -7,6 +7,7 @@ import {
   ROOMS_LOADING,
   ADD_ROOM_MEMBER,
   REMOVE_ROOM_MEMBER,
+  GET_ROOM_MEMBERS,
 } from "../actions/types";
 import { getTokenHeader } from "./authActions";
 import { returnErrors } from "./errorActions";
@@ -72,6 +73,40 @@ export const removeRoomMember = (roomId, memberId) => (dispatch, getState) => {
         payload: { room: data, memberId },
       })
     )
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
+/* accepts room id, returns an array of members */
+export const getRoomMembers = (roomId) => (dispatch, getState) => {
+  axios
+    .get(
+      `http://localhost:4000/api/rooms/${roomId}/members`,
+      getTokenHeader(getState)
+    )
+    .then(({ data }) =>
+      dispatch({
+        type: GET_ROOM_MEMBERS,
+        payload: data,
+      })
+    )
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
+/* accepts room id, returns room object */
+export const getRoom = (roomId) => (dispatch, getState) => {
+  axios
+    .get(`http://localhost:4000/api/rooms/${roomId}`, getTokenHeader(getState))
+    .then(({ data }) => {
+      console.log(`getRoom => ${data}`);
+      return dispatch({
+        type: GET_ROOM,
+        payload: data,
+      });
+    })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
     });
