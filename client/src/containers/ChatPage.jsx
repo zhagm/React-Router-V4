@@ -21,6 +21,7 @@ const ChatPage = ({
   useEffect(() => {
     getOnlineUsers();
     getUsers();
+    loadUser();
     // eslint-disable-next-line
   }, []);
 

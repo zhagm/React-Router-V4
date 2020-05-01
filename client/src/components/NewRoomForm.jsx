@@ -43,7 +43,7 @@ const NewRoomForm = ({ getUsers, addRoom, isLoading, user, users = [] }) => {
         <br />
         <label>Select members to invite to the room:</label>
         {users
-          .filter((u) => u._id !== user._id)
+          // .filter((u) => u._id !== user._id)
           .map((u) => (
             <div
               key={u._id}

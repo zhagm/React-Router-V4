@@ -1,5 +1,6 @@
 .chatBox {
   max-height: 30vh;
+  min-height: 10vh;
   max-width: 500px;
   overflow-x: scroll;
   border: solid 1px rgb(188, 188, 188);

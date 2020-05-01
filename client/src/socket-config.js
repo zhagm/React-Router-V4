@@ -13,11 +13,12 @@ export const socketMiddlewareMaker = (url) => {
 
   return ({ dispatch }) => (next) => (action) => {
     switch (action.type) {
-      case LOGIN_SUCCESS: {
+      case LOGIN_SUCCESS:
         socket.emit("login", action.payload.user);
-      }
+        break;
       case SOCKET_GET_USERS:
         socket.emit("getOnlineUsers");
+        break;
       case USER_LOADED:
         socket.emit("login", action.payload); // NOT GOOD, RUNS A LOT
         socket.on("console.log", (message) => console.log("Server: ", message));
