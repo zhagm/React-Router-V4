@@ -12,12 +12,15 @@ export const socketMiddlewareMaker = (url) => {
   let socket = socketio(url);
 
   return ({ dispatch }) => (next) => (action) => {
+    socket.on("UserAuthenticated", (userId) => {
+      console.log("USER AUTHENTICATED!", userId);
+    });
     switch (action.type) {
-      case LOGIN_SUCCESS:
-        socket.emit("login", action.payload.user);
-        break;
       case SOCKET_GET_USERS:
         socket.emit("getOnlineUsers");
+        break;
+      case LOGIN_SUCCESS:
+        socket.emit("login", action.payload.user);
         break;
       case USER_LOADED:
         socket.emit("login", action.payload); // NOT GOOD, RUNS A LOT

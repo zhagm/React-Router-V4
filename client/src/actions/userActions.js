@@ -6,7 +6,7 @@ export const getUsers = () => {
   return (dispatch) => {
     dispatch(setUsersLoading());
     axios
-      .get("http://localhost:4000/api/users")
+      .get("https://officeplace-server.herokuapp.com/api/users")
       .then(({ data }) => dispatch({ type: GET_USERS, payload: data }))
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));

@@ -6,9 +6,11 @@ import UsersTable from "../components/UsersTable";
 import ChatBox from "../components/ChatBox";
 import { sendSocketMessage, getOnlineUsers } from "../actions/socketActions.js";
 import { getUsers } from "../actions/userActions.js";
+import { loadUser } from "../actions/authActions";
 
 const ChatPage = ({
   user,
+  loadUser,
   isLoading,
   sendSocketMessage,
   messages = [],
@@ -72,4 +74,5 @@ export default connect(mapStateToProps, {
   sendSocketMessage,
   getOnlineUsers,
   getUsers,
+  loadUser,
 })(ChatPage);

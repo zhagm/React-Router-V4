@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { logout } from "../actions/authActions";
 import "../styles/Nav.css";
 
-// https://www.youtube.com/watch?v=gXkqy0b4M5g
 const Nav = ({ isAuthenticated, logout }) => {
   const history = useHistory();
   return (
@@ -37,10 +36,6 @@ const Nav = ({ isAuthenticated, logout }) => {
     </nav>
   );
 };
-
-// const mapStateToProps = (state) => ({
-//   isAuthenticated: state.auth.isAuthenticated,
-// });
 
 Nav.propTypes = {
   isAuthenticated: PropTypes.bool,

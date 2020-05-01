@@ -15,7 +15,11 @@ import { returnErrors } from "./errorActions";
 export const register = ({ name, email, password }) => (dispatch) => {
   const body = JSON.stringify({ name, email, password });
   axios
-    .post("http://localhost:4000/api/users", body, getTokenHeader())
+    .post(
+      "https://officeplace-server.herokuapp.com/api/users",
+      body,
+      getTokenHeader()
+    )
     .then((res) => dispatch({ type: REGISTER_SUCCESS, payload: res.data }))
     .catch((err) => {
       dispatch(
@@ -29,7 +33,11 @@ export const register = ({ name, email, password }) => (dispatch) => {
 export const login = ({ email, password }) => (dispatch) => {
   const body = JSON.stringify({ email, password });
   axios
-    .post("http://localhost:4000/api/auth", body, getTokenHeader())
+    .post(
+      "https://officeplace-server.herokuapp.com/api/auth",
+      body,
+      getTokenHeader()
+    )
     .then(({ data }) => dispatch({ type: LOGIN_SUCCESS, payload: data }))
     .catch((err) => {
       dispatch(
@@ -43,7 +51,10 @@ export const login = ({ email, password }) => (dispatch) => {
 export const loadUser = () => (dispatch, getState) => {
   dispatch(setUserLoading());
   axios
-    .get("http://localhost:4000/api/auth/user", getTokenHeader(getState))
+    .get(
+      "https://officeplace-server.herokuapp.com/api/auth/user",
+      getTokenHeader(getState)
+    )
     .then(({ data }) => dispatch({ type: USER_LOADED, payload: data }))
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));

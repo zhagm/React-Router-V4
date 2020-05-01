@@ -34,6 +34,7 @@ router.route("/").post(async (req, res) => {
           "Error with JWT key, you might not have a config/keys.js file, check server/config/your-keys.js"
         );
     }
+    req.io.emit("UserAuthenticated", user._id);
     res.send({ token, user });
   });
 });
@@ -42,7 +43,11 @@ router.route("/").post(async (req, res) => {
 router.get("/user", auth, (req, res, next) => {
   User.findById(req.user.id)
     .select("-password") // Send user excluding password
-    .then((user) => res.send(user));
+    .then((user) => {
+      console.log("USER AUTHENTICATED");
+      req.io.emit("UserAuthenticated", req.user.id);
+      res.send(user);
+    });
 });
 
 module.exports = router;

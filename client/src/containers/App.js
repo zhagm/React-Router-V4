@@ -5,6 +5,7 @@ import "../styles/App.css";
 // Components and Containers
 import Nav from "../components/Nav";
 import NewRoomForm from "../components/NewRoomForm";
+import Video from "../components/Video";
 import ItemsPage from "./ItemsPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
@@ -45,6 +46,7 @@ const App = ({ isAuthenticated }) => {
           <Route path="/register" component={RegisterPage} />
           <Route exact path="/">
             <h1>HOME</h1>
+            <Video />
           </Route>
           <Route component={NotFoundPage} />
         </Switch>

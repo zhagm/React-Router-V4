@@ -47,3 +47,9 @@ button:focus {
   /* color: white; */
   font-weight: bold;
 }
+
+/* Video component */
+.videoElement {
+  width: 360px;
+  height: 280px;
+}
