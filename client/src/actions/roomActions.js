@@ -11,12 +11,16 @@ import {
 } from "../actions/types";
 import { getTokenHeader } from "./authActions";
 import { returnErrors } from "./errorActions";
+require("dotenv").config();
+const SERVER_URL =
+  process.env.REACT_APP_SERVER_URL ||
+  "https://officeplace-server.herokuapp.com";
 
 /* returns all rooms in db */
 export const getRooms = () => (dispatch) => {
   dispatch(setRoomsLoading());
   axios
-    .get("https://officeplace-server.herokuapp.com/api/rooms")
+    .get(`${SERVER_URL}/api/rooms`)
     .then(({ data }) => dispatch({ type: GET_ROOMS, payload: data }))
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
@@ -28,11 +32,7 @@ export const addRoom = ({ name, admins, members }) => (dispatch, getState) => {
   dispatch(setRoomsLoading());
   const body = JSON.stringify({ name, admins, members });
   axios
-    .post(
-      "https://officeplace-server.herokuapp.com/api/rooms",
-      body,
-      getTokenHeader(getState)
-    )
+    .post(`${SERVER_URL}/api/rooms`, body, getTokenHeader(getState))
     .then(({ data }) => dispatch({ type: ADD_ROOM, payload: data }))
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
@@ -42,10 +42,7 @@ export const addRoom = ({ name, admins, members }) => (dispatch, getState) => {
 /* accepts room id, returns deleted room's id */
 export const deleteRoom = (id) => (dispatch, getState) => {
   axios
-    .delete(
-      `https://officeplace-server.herokuapp.com/api/rooms/${id}`,
-      getTokenHeader(getState)
-    )
+    .delete(`${SERVER_URL}/api/rooms/${id}`, getTokenHeader(getState))
     .then(({ data }) => dispatch({ type: DELETE_ROOM, payload: data._id }))
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
@@ -56,7 +53,7 @@ export const deleteRoom = (id) => (dispatch, getState) => {
 export const addRoomMember = (roomId, memberId) => (dispatch, getState) => {
   axios
     .post(
-      `https://officeplace-server.herokuapp.com/api/rooms/${roomId}/members/${memberId}`,
+      `${SERVER_URL}/api/rooms/${roomId}/members/${memberId}`,
       getTokenHeader(getState)
     )
     .then(({ data }) =>
@@ -71,7 +68,7 @@ export const addRoomMember = (roomId, memberId) => (dispatch, getState) => {
 export const removeRoomMember = (roomId, memberId) => (dispatch, getState) => {
   axios
     .delete(
-      `https://officeplace-server.herokuapp.com/api/rooms/${roomId}/members/${memberId}`,
+      `${SERVER_URL}/api/rooms/${roomId}/members/${memberId}`,
       getTokenHeader(getState)
     )
     .then(({ data }) =>
@@ -88,10 +85,7 @@ export const removeRoomMember = (roomId, memberId) => (dispatch, getState) => {
 /* accepts room id, returns an array of members */
 export const getRoomMembers = (roomId) => (dispatch, getState) => {
   axios
-    .get(
-      `https://officeplace-server.herokuapp.com/api/rooms/${roomId}/members`,
-      getTokenHeader(getState)
-    )
+    .get(`${SERVER_URL}/api/rooms/${roomId}/members`, getTokenHeader(getState))
     .then(({ data }) =>
       dispatch({
         type: GET_ROOM_MEMBERS,
@@ -106,12 +100,8 @@ export const getRoomMembers = (roomId) => (dispatch, getState) => {
 /* accepts room id, returns room object */
 export const getRoom = (roomId) => (dispatch, getState) => {
   axios
-    .get(
-      `https://officeplace-server.herokuapp.com/api/rooms/${roomId}`,
-      getTokenHeader(getState)
-    )
+    .get(`${SERVER_URL}/api/rooms/${roomId}`, getTokenHeader(getState))
     .then(({ data }) => {
-      console.log(`getRoom => ${data}`);
       return dispatch({
         type: GET_ROOM,
         payload: data,

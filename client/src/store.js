@@ -10,7 +10,9 @@ const devTools =
       window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()
     : null;
 const initialState = {};
-const SOCKET_URL = process.env.SOCKET_URL || "http://127.0.0.1:4000";
+const SOCKET_URL =
+  process.env.REACT_APP_SERVER_URL ||
+  "https://officeplace-server.herokuapp.com";
 const socketMiddleware = socketMiddlewareMaker(SOCKET_URL);
 const composeArgs = [applyMiddleware(thunk, socketMiddleware)];
 if (devTools) composeArgs.push(devTools);

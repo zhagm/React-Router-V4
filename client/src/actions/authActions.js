@@ -10,17 +10,20 @@ import {
   REGISTER_FAIL,
 } from "../actions/types";
 import { returnErrors } from "./errorActions";
+require("dotenv").config();
+const SERVER_URL =
+  process.env.REACT_APP_SERVER_URL ||
+  "https://officeplace-server.herokuapp.com";
 
 // Register User
 export const register = ({ name, email, password }) => (dispatch) => {
   const body = JSON.stringify({ name, email, password });
   axios
-    .post(
-      "https://officeplace-server.herokuapp.com/api/users",
-      body,
-      getTokenHeader()
-    )
-    .then((res) => dispatch({ type: REGISTER_SUCCESS, payload: res.data }))
+    .post(`${SERVER_URL}/api/users`, body, getTokenHeader())
+    .then(({ data }) => {
+      dispatch({ type: REGISTER_SUCCESS, payload: data });
+      dispatch({ type: USER_LOADED, payload: data.user });
+    })
     .catch((err) => {
       dispatch(
         returnErrors(err.response.data, err.response.status, "REGISTER_FAIL")
@@ -33,12 +36,11 @@ export const register = ({ name, email, password }) => (dispatch) => {
 export const login = ({ email, password }) => (dispatch) => {
   const body = JSON.stringify({ email, password });
   axios
-    .post(
-      "https://officeplace-server.herokuapp.com/api/auth",
-      body,
-      getTokenHeader()
-    )
-    .then(({ data }) => dispatch({ type: LOGIN_SUCCESS, payload: data }))
+    .post(`${SERVER_URL}/api/auth`, body, getTokenHeader())
+    .then(({ data }) => {
+      dispatch({ type: LOGIN_SUCCESS, payload: data });
+      dispatch({ type: USER_LOADED, payload: data.user });
+    })
     .catch((err) => {
       dispatch(
         returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
@@ -51,10 +53,7 @@ export const login = ({ email, password }) => (dispatch) => {
 export const loadUser = () => (dispatch, getState) => {
   dispatch(setUserLoading());
   axios
-    .get(
-      "https://officeplace-server.herokuapp.com/api/auth/user",
-      getTokenHeader(getState)
-    )
+    .get(`${SERVER_URL}/api/auth/user`, getTokenHeader(getState))
     .then(({ data }) => dispatch({ type: USER_LOADED, payload: data }))
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));

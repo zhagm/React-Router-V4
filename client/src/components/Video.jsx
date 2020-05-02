@@ -45,7 +45,7 @@ const VideoComponent = () => {
         <video autoPlay className="videoElement"></video>
       </div>
       <br />
-      <button onClick={streamCamVideo}>Start streaming</button>
+      <button onClick={streamCamVideo}>Start Video</button>
     </div>
   );
 };

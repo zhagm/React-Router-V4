@@ -55,13 +55,13 @@ io.on("connection", (serverSocket) => {
       user = undefined;
     }
   });
-  serverSocket.on("disconnect", () => {
-    if (user) {
-      removeUserOnline(user._id);
-      io.emit("removeUserOnline", user._id);
-      user = undefined;
-    }
-  });
+  // serverSocket.on("disconnect", () => {
+  //   if (user) {
+  //     removeUserOnline(user._id);
+  //     io.emit("removeUserOnline", user._id);
+  //     user = undefined;
+  //   }
+  // });
 });
 
 /* DATABASE */

@@ -60,7 +60,7 @@ npm run dev
 ## Demo
 
 - [Backend server hosted on Heroku](https://officeplace-server.herokuapp.com/)
-- [Frontend Demo]() _(not yet deployed)_
+- [Frontend Demo](https://officeplace.herokuapp.com/)
 
 ## Progress
 
@@ -68,9 +68,3 @@ npm run dev
 
 The master will hold the most recent running version.
 **[Branch m2](https://github.com/zhagm/officeplace/tree/m2)** is the most recently updated branch.
-
-## Useful Resources
-
-- https://www.youtube.com/results?search_query=mern+stack+traversy
-- https://www.youtube.com/watch?v=CVClHLwv-4I
-- https://www.youtube.com/watch?v=gXkqy0b4M5g

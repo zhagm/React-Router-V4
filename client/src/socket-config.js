@@ -9,12 +9,9 @@ import {
 require("dotenv").config();
 
 export const socketMiddlewareMaker = (url) => {
-  let socket = socketio(url);
+  const socket = socketio(url);
 
   return ({ dispatch }) => (next) => (action) => {
-    socket.on("UserAuthenticated", (userId) => {
-      console.log("USER AUTHENTICATED!", userId);
-    });
     switch (action.type) {
       case SOCKET_GET_USERS:
         socket.emit("getOnlineUsers");

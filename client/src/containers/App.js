@@ -6,7 +6,6 @@ import "../styles/App.css";
 import Nav from "../components/Nav";
 import NewRoomForm from "../components/NewRoomForm";
 import Video from "../components/Video";
-import ItemsPage from "./ItemsPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import NotFoundPage from "./NotFoundPage";
@@ -21,9 +20,7 @@ import store from "../store";
 
 const App = ({ isAuthenticated }) => {
   useEffect(() => {
-    // load user if authenticated
     store.dispatch(loadUser());
-    console.log("------------------------APP MOUNTED------------------------");
     // eslint-disable-next-line
   }, []);
 
@@ -42,7 +39,6 @@ const App = ({ isAuthenticated }) => {
           <Route exact path="/rooms/new" component={NewRoomForm} />
           <Route exact path="/rooms" component={RoomsPage} />
           <Route path="/rooms/:id" component={RoomPage} />
-          <Route path="/items" component={ItemsPage} />
           <Route path="/register" component={RegisterPage} />
           <Route exact path="/">
             <h1>HOME</h1>

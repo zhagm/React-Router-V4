@@ -19,7 +19,6 @@ const NewRoomForm = ({ getUsers, addRoom, isLoading, user, users = [] }) => {
   };
 
   const updateMembers = (id) => {
-    console.log(members, id);
     if (members.includes(id)) setMembers(members.filter((m) => m !== id));
     else setMembers([...members, id]);
   };
