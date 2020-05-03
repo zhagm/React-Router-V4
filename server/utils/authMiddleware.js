@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = (process.env.JWT_SECRET || require("../config/keys").JWT_SECRET);
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // AUTH CUSTOM MIDDLEWARE - Checks if user is authenticated
 function auth(req, res, next) {
@@ -7,7 +7,7 @@ function auth(req, res, next) {
   const token = req.header("x-auth-token");
 
   if (!token) {
-    res.status(401).send("Token missing, user not authorized");
+    res.status(401).json("Token missing, user not authorized");
   } else {
     try {
       // Verify token
@@ -16,7 +16,7 @@ function auth(req, res, next) {
       req.user = decoded;
       next();
     } catch (err) {
-      res.status(400).send("Token is not valid");
+      res.status(400).json("Token is not valid");
     }
   }
 }
