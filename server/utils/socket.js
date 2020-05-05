@@ -4,7 +4,9 @@ const { addUserOnline, removeUserOnline, getOnlineUsers } = require("./users");
 function init(server) {
   const io = socketio(server);
   io.on("connection", (serverSocket) => {
+    console.log("SOCKET JUST CONNECTED");
     let user;
+    console.log(serverSocket.id);
     serverSocket.on("login", (userObject) => {
       if (userObject && !user) {
         user = userObject;
@@ -34,9 +36,11 @@ function init(server) {
         removeUserOnline(user._id);
         io.emit("removeUserOnline", user._id);
         user = undefined;
-        // socket.disconnect();
       }
     });
+    serverSocket.on("disconnect", () =>
+      console.log("SOCKET JUST DISCONNECTED")
+    );
   });
 
   return io;

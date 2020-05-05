@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createRef } from "react";
 import PropTypes from "prop-types";
 import * as faceapi from "face-api.js";
 require("dotenv").config();
-// import face from "../../public/face.jpg";
 
 const VideoComponent = () => {
   useEffect(() => {
@@ -11,6 +10,7 @@ const VideoComponent = () => {
     };
     temp();
   }, []);
+  let vidRef = createRef();
 
   const loadModels = async () => {
     // const MODEL_URL = "/models";
@@ -42,7 +42,7 @@ const VideoComponent = () => {
   return (
     <div>
       <div>
-        <video autoPlay className="videoElement"></video>
+        <video autoPlay className="videoElement" ref={vidRef}></video>
       </div>
       <br />
       <button onClick={streamCamVideo}>Start Video</button>
