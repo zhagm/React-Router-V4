@@ -18,8 +18,8 @@ const VideoPage = () => {
   }, []);
 
   const processScreenshot = (img) => {
-    getFaceDetection(img).then((detection) => {
-      setDetection(detection);
+    getFaceDetection(img).then((data) => {
+      if (data && data.detection) setDetection(data.detection);
     });
   };
 
@@ -49,10 +49,11 @@ const VideoPage = () => {
             <Video
               onCapture={processScreenshot}
               isCapturing={isDetecting}
-              interval={500}
+              interval={2000}
+              videoConstraints={videoConstraints}
             />
           </div>
-          {/* <DrawBox detection={detection} /> */}
+          <DrawBox detection={detection} />
         </div>
       </div>
       <button onClick={toggleDetection}>

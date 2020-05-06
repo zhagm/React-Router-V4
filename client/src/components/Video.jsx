@@ -1,17 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 
-const videoConstraints = {
-  width: 350,
-  height: 350,
-  facingMode: "user",
-};
-
 const Video = ({
   onCapture,
   continuousMode = true,
   isCapturing = true,
   interval = 1000,
+  videoConstraints,
 }) => {
   const webcam = useRef();
 
