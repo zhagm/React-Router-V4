@@ -5,7 +5,7 @@ import {
   SOCKET_MESSAGE_SEND,
   SOCKET_GET_USERS,
   USER_LOADED,
-} from "./actions/types";
+} from "../actions/types";
 require("dotenv").config();
 
 export const socketMiddlewareMaker = (url) => {
@@ -32,7 +32,7 @@ export const socketMiddlewareMaker = (url) => {
           });
         });
         socket.on("addUserOnline", (user) => {
-          dispatch({ type: "SOCKET_ADD_USER", payload: user });
+          dispatch({ type: "SOCKET_ADD_USER", payload: user.id });
         });
         socket.on("removeUserOnline", (userId) => {
           dispatch({ type: "SOCKET_REMOVE_USER", payload: userId });
@@ -43,6 +43,7 @@ export const socketMiddlewareMaker = (url) => {
         break;
       case LOGOUT_SUCCESS: {
         socket.emit("removeUserOnline", action.payload);
+        // socket.disconnect();
         break;
       }
     }

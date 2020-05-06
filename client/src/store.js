@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
-import { socketMiddlewareMaker } from "./socket-config.js";
+import { socketMiddlewareMaker } from "./utils/socket-config.js";
 require("dotenv").config();
 
 const devTools =
@@ -18,5 +18,7 @@ const composeArgs = [applyMiddleware(thunk, socketMiddleware)];
 if (devTools) composeArgs.push(devTools);
 
 const store = createStore(rootReducer, initialState, compose(...composeArgs));
+
+console.log(process.env);
 
 export default store;

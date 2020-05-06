@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 import { getRoomMembers, getRoom } from "../actions/roomActions.js";
 import { getOnlineUsers } from "../actions/socketActions.js";
 import { useParams } from "react-router-dom";
+import ChatPage from "./ChatPage";
 
 const RoomPage = ({
   getRoomMembers,
   getOnlineUsers,
-  onlineUsers,
+  onlineUsers = [],
   isLoading,
   user,
   members = [],
@@ -25,7 +26,7 @@ const RoomPage = ({
   }, []);
 
   const isActive = (userId) => {
-    return onlineUsers.find((u) => u.id === userId);
+    return onlineUsers && onlineUsers.find((u) => u === userId);
   };
 
   if (isLoading || !user || !room)
@@ -42,6 +43,7 @@ const RoomPage = ({
           {u.name}
         </div>
       ))}
+      <ChatPage />
     </div>
   );
 };

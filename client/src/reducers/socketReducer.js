@@ -19,7 +19,9 @@ export default function (state = initialState, { type, payload }) {
         messages,
       };
     case SOCKET_ADD_USER:
-      let onlineUsers = state.onlineUsers.filter((u) => u.id !== payload.id);
+      let onlineUsers = state.onlineUsers.filter(
+        (userId) => userId !== payload
+      );
       onlineUsers.push(payload);
       return {
         ...state,
@@ -28,7 +30,7 @@ export default function (state = initialState, { type, payload }) {
     case SOCKET_REMOVE_USER:
       return {
         ...state,
-        onlineUsers: state.onlineUsers.filter((user) => user.id !== payload),
+        onlineUsers: state.onlineUsers.filter((userId) => userId !== payload),
       };
     case SOCKET_USERS_RECEIVED:
       return {

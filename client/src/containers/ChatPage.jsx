@@ -50,7 +50,7 @@ const ChatPage = ({
         />
         <br />
       </form>
-      <UsersTable users={users} onlineUsers={onlineUsers.map((u) => u.id)} />
+      <UsersTable users={users} onlineUsers={onlineUsers} />
     </div>
   );
 };

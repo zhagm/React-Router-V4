@@ -4,7 +4,7 @@ import Webcam from "react-webcam";
 const Video = ({
   onCapture,
   continuousMode = true,
-  isCapturing = true,
+  isCapturing,
   interval = 1000,
   videoConstraints,
 }) => {
@@ -15,9 +15,10 @@ const Video = ({
   }, [isCapturing]);
 
   const capture = () => {
-    if (!webcam.current || !isCapturing) return;
+    if (!webcam.current) return;
     onCapture(webcam.current.getScreenshot());
-    if (continuousMode) window.setTimeout(() => capture(), interval);
+    if (continuousMode && isCapturing)
+      window.setTimeout(() => capture(), interval);
   };
 
   return (

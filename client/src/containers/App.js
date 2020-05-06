@@ -9,7 +9,6 @@ import VideoPage from "../components/VideoPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import NotFoundPage from "./NotFoundPage";
-import ChatPage from "./ChatPage";
 import RoomsPage from "./RoomsPage";
 import RoomPage from "./RoomPage";
 
@@ -30,12 +29,6 @@ const App = ({ isAuthenticated }) => {
       <div id="main">
         <Switch>
           <Route path="/login" component={LoginPage} />
-          {/* <PrivateRoute
-            path="/chat"
-            comp={ChatPage}
-            isAuthenticated={isAuthenticated}
-          /> */}
-          <Route path="/chat" component={ChatPage} />
           <Route exact path="/rooms/new" component={NewRoomForm} />
           <Route exact path="/rooms" component={RoomsPage} />
           <Route path="/rooms/:id" component={RoomPage} />
