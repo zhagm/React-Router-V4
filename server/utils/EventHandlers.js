@@ -1,4 +1,4 @@
-const UsersStore = require("./users");
+const { onlineUsers } = require("./redisStore");
 
 class EventHandler {
   constructor({ io, serverSocket, user = null }) {
@@ -8,18 +8,20 @@ class EventHandler {
   }
   getOnlineUsers = () => {
     let { io, serverSocket, user } = this;
-    let onlineUsers = UsersStore.getOnlineUsers();
-    serverSocket.emit("getOnlineUsers", onlineUsers);
+    onlineUsers.get().then((onlineUsers) => {
+      console.log("ONLINE USERS:", onlineUsers);
+      serverSocket.emit("getOnlineUsers", onlineUsers);
+    });
   };
   login = (userObject) => {
     let { io, serverSocket, user } = this;
     if (userObject && !user) {
-      user = userObject;
-      UsersStore.addUserOnline(user._id);
-      io.emit("addUserOnline", { name: user.name, id: user._id });
+      this.user = userObject;
+      onlineUsers.post(this.user._id);
+      io.emit("addUserOnline", { name: this.user.name, id: this.user._id });
       io.emit(
         "console.log",
-        `User ${user.name} is now online, ${io.engine.clientsCount} users online`
+        `User ${this.user.name} is now online, ${io.engine.clientsCount} users online`
       );
     }
   };
@@ -36,9 +38,9 @@ class EventHandler {
   removeUserOnline = () => {
     let { io, serverSocket, user } = this;
     if (user) {
-      UsersStore.removeUserOnline(user._id);
+      onlineUsers.delete(user._id);
       io.emit("removeUserOnline", user._id);
-      user = undefined;
+      this.user = undefined;
     }
   };
 }
