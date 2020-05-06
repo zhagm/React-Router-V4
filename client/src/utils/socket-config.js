@@ -31,8 +31,8 @@ export const socketMiddlewareMaker = (url) => {
             payload: { userId, username: name, text },
           });
         });
-        socket.on("addUserOnline", (user) => {
-          dispatch({ type: "SOCKET_ADD_USER", payload: user.id });
+        socket.on("addUserOnline", (userId) => {
+          dispatch({ type: "SOCKET_ADD_USER", payload: userId });
         });
         socket.on("removeUserOnline", (userId) => {
           dispatch({ type: "SOCKET_REMOVE_USER", payload: userId });

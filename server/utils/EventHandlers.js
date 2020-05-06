@@ -18,7 +18,7 @@ class EventHandler {
     if (userObject && !user) {
       this.user = userObject;
       onlineUsers.post(this.user._id);
-      io.emit("addUserOnline", { name: this.user.name, id: this.user._id });
+      io.emit("addUserOnline", this.user._id);
       io.emit(
         "console.log",
         `User ${this.user.name} is now online, ${io.engine.clientsCount} users online`
