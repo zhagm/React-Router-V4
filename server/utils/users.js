@@ -1,15 +1,37 @@
-let online = [];
+const redis = require("redis");
+const client = redis.createClient();
 
-const addUserOnline = (user) => {
-  online.push(user);
-  return online;
+// client.FLUSHDB(); // to clear all data from redis
+
+const addUserOnline = (id) => {
+  client.SADD("online", id, (err, users) => {
+    if (err) console.error(err);
+    else {
+      console.log(`addUserOnline->${users}`);
+      return users;
+    }
+  });
 };
 
 const removeUserOnline = (id) => {
-  online = online.filter((u) => u.id !== id);
+  client.SREM("online", id, (err, users) => {
+    if (err) console.error(err);
+    else {
+      console.log(`removeUserOnline->${users}`);
+      return users;
+    }
+  });
 };
 
-const getOnlineUsers = () => online;
+const getOnlineUsers = () => {
+  client.SMEMBERS("online", (err, users) => {
+    if (err) console.error(err);
+    else {
+      console.log(`getOnlineUsers->${users}`);
+      return users;
+    }
+  });
+};
 
 module.exports = {
   addUserOnline,
