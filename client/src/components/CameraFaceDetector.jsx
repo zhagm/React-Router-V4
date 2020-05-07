@@ -8,8 +8,9 @@ const videoConstraints = {
   facingMode: "user",
 };
 
-const CameraFaceDetector = () => {
-  const [atDesk, setAtDesk] = useState(null);
+const CameraFaceDetector = ({ onDetectionChange = () => {} }) => {
+  // true if face detected in camera, false if not
+  const [isActive, setIsActive] = useState(null);
   const [isDetecting, setIsDetecting] = useState(false);
 
   useEffect(() => {
@@ -18,17 +19,21 @@ const CameraFaceDetector = () => {
 
   useEffect(() => {
     loadModels();
-  }, [isDetecting, atDesk]);
+  }, [isDetecting, isActive]);
+
+  useEffect(() => {
+    onDetectionChange(isActive && isDetecting);
+  }, [isActive]);
 
   const processScreenshot = (img) => {
     faceDetected(img).then((detected) => {
       if (!isDetecting) detected = false;
-      setAtDesk(detected);
+      setIsActive(detected);
     });
   };
 
   const toggleDetection = () => {
-    if (atDesk) setAtDesk(null);
+    if (isActive) setIsActive(null);
     setIsDetecting(!isDetecting);
   };
 
@@ -36,7 +41,7 @@ const CameraFaceDetector = () => {
     <div>
       <div
         className={`video ${
-          atDesk ? "active" : atDesk === false ? "inactive" : ""
+          isActive ? "active" : isActive === false ? "inactive" : ""
         }`}
       >
         <Video

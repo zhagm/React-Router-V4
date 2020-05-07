@@ -28,29 +28,59 @@ const deleteUserOnline = (id) => {
   });
 };
 
-const getRoomUsers = async (roomId) => {
+const getOnlineRoomUsers = async (roomId) => {
   return new Promise((resolve, reject) => {
-    client.SMEMBERS(`${roomId}`, (err, users) => {
+    client.SMEMBERS(`${roomId}-ONLINE`, (err, users) => {
       if (err) reject(err);
       else resolve([...users]);
     });
   });
 };
 
-const postRoomUsers = (roomId, userId) => {
+const postOnlineRoomUsers = (roomId, userId) => {
   return new Promise((resolve, reject) => {
-    client.SADD(`${roomId}`, userId, (err, usersLength) => {
+    client.SADD(`${roomId}-ONLINE`, userId, (err, usersLength) => {
       if (err) reject(err);
       else resolve(usersLength);
     });
   });
 };
 
-const deleteRoomUsers = (roomId, userId) => {
+const deleteOnlineRoomUsers = (roomId, userId) => {
   return new Promise((resolve, reject) => {
-    client.SREM(`${roomId}`, userId, (err, usersLength) => {
+    client.SREM(`${roomId}-ONLINE`, userId, (err, usersLength) => {
       if (err) reject(err);
       else resolve(usersLength);
+    });
+  });
+};
+
+const getActiveRoomUsers = async (roomId) => {
+  return new Promise((resolve, reject) => {
+    client.SMEMBERS(`${roomId}-ACTIVE`, (err, users) => {
+      if (err) reject(err);
+      else resolve([...users]);
+    });
+  });
+};
+
+const postActiveRoomUsers = (roomId, userId) => {
+  return new Promise((resolve, reject) => {
+    client.SADD(`${roomId}-ACTIVE`, userId, (err, usersLength) => {
+      if (err) reject(err);
+      else resolve(usersLength);
+    });
+  });
+};
+
+const deleteActiveRoomUsers = (roomId, userId) => {
+  return new Promise((resolve, reject) => {
+    client.SREM(`${roomId}-ACTIVE`, userId, (err, usersLength) => {
+      if (err) reject(err);
+      else {
+        console.log("DELTED", usersLength);
+        resolve(usersLength);
+      }
     });
   });
 };
@@ -62,8 +92,15 @@ module.exports = {
     delete: deleteUserOnline,
   },
   room: {
-    get: getRoomUsers,
-    post: postRoomUsers,
-    delete: deleteRoomUsers,
+    onlineUsers: {
+      get: getOnlineRoomUsers,
+      post: postOnlineRoomUsers,
+      delete: deleteOnlineRoomUsers,
+    },
+    activeUsers: {
+      get: getActiveRoomUsers,
+      post: postActiveRoomUsers,
+      delete: deleteActiveRoomUsers,
+    },
   },
 };

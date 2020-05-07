@@ -2,16 +2,12 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getRoomMembers, getRoom } from "../actions/roomActions.js";
-// import { getOnlineUsers, getOnlineMembers } from "../actions/socketActions.js";
 import { useParams } from "react-router-dom";
-// import ChatPage from "./ChatPage";
 import CameraFaceDetector from "../components/CameraFaceDetector";
 import { loadUser } from "../actions/authActions.js";
 
 const RoomPage = ({
   getRoomMembers,
-  // getOnlineUsers,
-  // onlineUsers = [],
   isLoading,
   user,
   members = [],
@@ -21,10 +17,11 @@ const RoomPage = ({
 }) => {
   const { id: roomId } = useParams();
   const [onlineMembers, setOnlineMembers] = useState([]);
+  const [activeMembers, setActiveMembers] = useState([]);
+  const [cameraDetectsFace, setCameraDetectsFace] = useState(null);
 
   useEffect(() => {
     getRoomMembers(roomId);
-    // getOnlineMembers();
     getRoom(roomId);
     loadUser();
     return () => {
@@ -42,25 +39,39 @@ const RoomPage = ({
       // once socket is connected and user is authenticated and loaded
       socket.emit("client:login", user);
       socket.emit("client:getOnlineMembers", roomId);
+      socket.emit("client:getActiveMembers", roomId);
       socket.emit("client:enterRoom", roomId);
+
       socket.on("console.log", (m) => console.log("Server: ", m));
       socket.on("server:enterRoom", (userId) => {
         socket.emit("client:getOnlineMembers", roomId);
       });
-      socket.on("server:getOnlineMembers", (members) =>
-        setOnlineMembers(members)
-      );
-      socket.on("server:userSentMessage", (message) => {
-        console.log({ message });
+      socket.on("server:getOnlineMembers", (members) => {
+        setOnlineMembers(members);
+      });
+      socket.on("server:getActiveMembers", (members) => {
+        setActiveMembers(members);
       });
       socket.on("server:leaveRoom", (userId) => {
         socket.emit("client:getOnlineMembers", roomId);
+        socket.emit("client:getActiveMembers", roomId);
       });
     }
   }, [socket, user]);
 
-  const isActive = (userId) => {
+  useEffect(() => {
+    if (cameraDetectsFace && socket)
+      socket.emit("client:addActiveMember", roomId);
+    if (!cameraDetectsFace && socket)
+      socket.emit("client:deleteActiveMember", roomId);
+  }, [cameraDetectsFace]);
+
+  const isOnline = (userId) => {
     return onlineMembers && onlineMembers.find((u) => u === userId);
+  };
+
+  const isActive = (userId) => {
+    return activeMembers && activeMembers.find((u) => u === userId);
   };
 
   if (isLoading || !user || !room || !socket) return <div>Loading</div>;
@@ -71,12 +82,14 @@ const RoomPage = ({
       {members.map((u) => (
         <div
           key={u._id}
-          className={`desk ${isActive(u._id) ? "activeUser" : ""}`}
+          className={`desk ${
+            isActive(u._id) ? "activeUser" : isOnline(u._id) ? "onlineUser" : ""
+          }`}
         >
           {u.name}
         </div>
       ))}
-      <CameraFaceDetector />
+      <CameraFaceDetector onDetectionChange={setCameraDetectsFace} />
       {/* <ChatPage /> */}
     </div>
   );
@@ -102,6 +115,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getRoomMembers,
-  // getOnlineUsers,
   getRoom,
 })(RoomPage);

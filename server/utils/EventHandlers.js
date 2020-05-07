@@ -5,7 +5,6 @@ class EventHandler {
     this.io = io;
     this.serverSocket = serverSocket;
     this.user = user;
-    this.currentRoomId = currentRoomId;
   }
 
   getOnlineUsers = () => {
@@ -32,10 +31,41 @@ class EventHandler {
   getOnlineMembers = (roomId) => {
     let { io, serverSocket, user } = this;
     if (user) {
-      room.get(roomId).then((users) => {
-        console.log("USERS", users);
+      room.onlineUsers.get(roomId).then((users) => {
         serverSocket.emit("server:getOnlineMembers", users);
       });
+    }
+  };
+  getActiveMembers = (roomId) => {
+    let { io, serverSocket, user } = this;
+    if (user) {
+      room.activeUsers.get(roomId).then((users) => {
+        serverSocket.emit("server:getActiveMembers", users);
+      });
+    }
+  };
+  addActiveMember = (roomId) => {
+    let { io, serverSocket, user } = this;
+    if (user) {
+      room.activeUsers
+        .post(roomId, user._id)
+        .then(() => room.activeUsers.get(roomId))
+        .then((activeUsers) => {
+          console.log(`ACTIVE (add${roomId})---->`, activeUsers);
+          io.in(roomId).emit("server:getActiveMembers", activeUsers);
+        });
+    }
+  };
+  deleteActiveMember = (roomId) => {
+    let { io, serverSocket, user } = this;
+    if (user) {
+      room.activeUsers
+        .delete(roomId, user._id)
+        .then(() => room.activeUsers.get(roomId))
+        .then((activeUsers) => {
+          console.log(`ACTIVE (delete${roomId})---->`, activeUsers);
+          io.in(roomId).emit("server:getActiveMembers", activeUsers);
+        });
     }
   };
   receiveMessage = (text) => {
@@ -52,8 +82,7 @@ class EventHandler {
     let { io, serverSocket, user } = this;
     if (user) {
       serverSocket.join(roomId);
-      this.currentRoomId = roomId;
-      room.post(roomId, user._id);
+      room.onlineUsers.post(roomId, user._id);
       io.emit("server:enterRoom", user._id); // emit only to other users in room
       io.in(roomId).emit(
         "console.log",
@@ -65,8 +94,8 @@ class EventHandler {
     let { io, serverSocket, user } = this;
     if (user) {
       serverSocket.leave(roomId);
-      this.currentRoomId = null;
-      room.delete(roomId, user._id);
+      room.onlineUsers.delete(roomId, user._id);
+      room.activeUsers.delete(roomId, user._id);
       io.emit("server:leaveRoom", user._id); // emit only to other users in room
       io.in(roomId).emit(
         "console.log",

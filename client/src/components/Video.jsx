@@ -3,7 +3,6 @@ import Webcam from "react-webcam";
 
 const Video = ({
   onCapture,
-  continuousMode = true,
   isCapturing,
   interval = 1000,
   videoConstraints,

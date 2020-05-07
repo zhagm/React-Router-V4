@@ -46,9 +46,10 @@ button:focus {
   padding: 15px;
   margin: 10px;
   opacity: 0.5px;
-  background-color: rgb(189, 189, 189);
+  background-color: rgb(213, 213, 213);
   color: rgb(255, 255, 255);
   text-align: center;
+  transition: background-color 0.5s ease;
 }
 
 .desk.activeUser {
