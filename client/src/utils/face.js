@@ -11,18 +11,24 @@ export async function loadModels() {
   await faceapi.loadFaceLandmarkModel(MODEL_URL);
 }
 
-export async function getFaceDetection(imgBlog, inputSize = 512) {
+export async function getFaceDetection(imgBlob, inputSize = 512) {
   const OPTION = new faceapi.TinyFaceDetectorOptions({
     inputSize,
     scoreThreshold: 0.5,
   });
   const useTinyModel = false;
 
-  let img = await faceapi.fetchImage(imgBlog);
+  let img = await faceapi.fetchImage(imgBlob);
 
   let detectionWithLandmarks = await faceapi
     // .detectSingleFace(img, OPTION)
     .detectSingleFace(img, new faceapi.SsdMobilenetv1Options())
     .withFaceLandmarks(useTinyModel);
   return detectionWithLandmarks;
+}
+
+export async function faceDetected(blob) {
+  let detection = await getFaceDetection(blob);
+  if (detection) return true;
+  else return false;
 }

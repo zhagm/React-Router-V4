@@ -5,7 +5,7 @@ import { getRoomMembers, getRoom } from "../actions/roomActions.js";
 // import { getOnlineUsers, getOnlineMembers } from "../actions/socketActions.js";
 import { useParams } from "react-router-dom";
 // import ChatPage from "./ChatPage";
-import VideoPage from "../components/VideoPage";
+import CameraFaceDetector from "../components/CameraFaceDetector";
 import { loadUser } from "../actions/authActions.js";
 
 const RoomPage = ({
@@ -71,12 +71,12 @@ const RoomPage = ({
       {members.map((u) => (
         <div
           key={u._id}
-          className={`userSelect ${isActive(u._id) ? "activeUser" : ""}`}
+          className={`desk ${isActive(u._id) ? "activeUser" : ""}`}
         >
           {u.name}
         </div>
       ))}
-      <VideoPage />
+      <CameraFaceDetector />
       {/* <ChatPage /> */}
     </div>
   );

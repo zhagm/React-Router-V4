@@ -42,19 +42,38 @@ button:focus {
 }
 
 /* User list item in RoomPage */
-.userSelect.activeUser {
+.desk {
+  padding: 15px;
+  margin: 10px;
+  opacity: 0.5px;
+  background-color: rgb(189, 189, 189);
+  color: rgb(255, 255, 255);
+  text-align: center;
+}
+
+.desk.activeUser {
   opacity: 1;
   background-color: rgb(141, 244, 78);
-  /* color: white; */
+  color: black;
   font-weight: bold;
+}
+
+.desk.onlineUser {
+  opacity: 0.8;
+  background-color: rgb(138, 222, 216);
+  color: black;
 }
 
 /* Video component */
 .video {
-  border: solid 10px rgb(234, 0, 0);
+  border: solid 10px black;
   display: inline-flex;
 }
 
 .video.active {
   border: solid 10px rgb(141, 244, 78);
+}
+
+.video.inactive {
+  border: solid 10px rgb(234, 0, 0);
 }

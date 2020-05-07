@@ -5,7 +5,7 @@ import "../styles/App.css";
 // Components and Containers
 import Nav from "../components/Nav";
 import NewRoomForm from "../components/NewRoomForm";
-import VideoPage from "../components/VideoPage";
+import CameraFaceDetector from "../components/CameraFaceDetector";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import NotFoundPage from "./NotFoundPage";
@@ -44,7 +44,7 @@ const App = ({ isAuthenticated }) => {
           <Route path="/register" component={RegisterPage} />
           <Route exact path="/">
             <h1>HOME</h1>
-            <VideoPage />
+            <CameraFaceDetector />
           </Route>
           <Route component={NotFoundPage} />
         </Switch>

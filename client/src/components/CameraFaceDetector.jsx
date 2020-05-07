@@ -1,38 +1,44 @@
 import React, { useState, useEffect } from "react";
-import DrawBox from "./DrawBox";
 import Video from "./Video";
-import { getFaceDetection, loadModels } from "../utils/face";
+import { faceDetected, loadModels } from "../utils/face";
 
 const videoConstraints = {
-  width: undefined,
+  width: "auto",
   height: undefined,
   facingMode: "user",
 };
 
-const VideoPage = () => {
-  const [detection, setDetection] = useState(null);
+const CameraFaceDetector = () => {
+  const [atDesk, setAtDesk] = useState(null);
   const [isDetecting, setIsDetecting] = useState(false);
 
   useEffect(() => {
     loadModels();
   }, []);
 
+  useEffect(() => {
+    loadModels();
+  }, [isDetecting, atDesk]);
+
   const processScreenshot = (img) => {
-    getFaceDetection(img).then((data) => {
-      if (data && data.detection && isDetecting) setDetection(data.detection);
+    faceDetected(img).then((detected) => {
+      if (!isDetecting) detected = false;
+      setAtDesk(detected);
     });
   };
 
   const toggleDetection = () => {
-    if (detection) setDetection(false);
+    if (atDesk) setAtDesk(null);
     setIsDetecting(!isDetecting);
   };
 
-  console.log(detection, isDetecting);
-
   return (
     <div>
-      <div className={`video ${detection ? "active" : ""}`}>
+      <div
+        className={`video ${
+          atDesk ? "active" : atDesk === false ? "inactive" : ""
+        }`}
+      >
         <Video
           onCapture={processScreenshot}
           isCapturing={isDetecting}
@@ -49,4 +55,4 @@ const VideoPage = () => {
   );
 };
 
-export default VideoPage;
+export default CameraFaceDetector;

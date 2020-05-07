@@ -9,16 +9,20 @@ const Video = ({
   videoConstraints,
 }) => {
   const webcam = useRef();
+  let captureInterval;
 
   useEffect(() => {
-    if (isCapturing) capture();
+    if (isCapturing) {
+      capture();
+      if (captureInterval) clearInterval(captureInterval);
+      captureInterval = window.setInterval(() => capture(), interval);
+    }
+    return () => clearInterval(captureInterval);
   }, [isCapturing]);
 
   const capture = () => {
-    if (!webcam.current) return;
-    onCapture(webcam.current.getScreenshot());
-    if (continuousMode && isCapturing)
-      window.setTimeout(() => capture(), interval);
+    if (webcam.current && isCapturing)
+      return onCapture(webcam.current.getScreenshot());
   };
 
   return (
