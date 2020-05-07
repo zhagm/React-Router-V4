@@ -23,6 +23,7 @@ export const getRooms = () => (dispatch) => {
     .get(`${SERVER_URL}/api/rooms`)
     .then(({ data }) => dispatch({ type: GET_ROOMS, payload: data }))
     .catch((err) => {
+      console.log("ERROR: ", err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
@@ -35,6 +36,7 @@ export const addRoom = ({ name, admins, members }) => (dispatch, getState) => {
     .post(`${SERVER_URL}/api/rooms`, body, getTokenHeader(getState))
     .then(({ data }) => dispatch({ type: ADD_ROOM, payload: data }))
     .catch((err) => {
+      console.log("ERROR: ", err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
@@ -45,6 +47,7 @@ export const deleteRoom = (id) => (dispatch, getState) => {
     .delete(`${SERVER_URL}/api/rooms/${id}`, getTokenHeader(getState))
     .then(({ data }) => dispatch({ type: DELETE_ROOM, payload: data._id }))
     .catch((err) => {
+      console.log("ERROR: ", err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
@@ -60,6 +63,7 @@ export const addRoomMember = (roomId, memberId) => (dispatch, getState) => {
       dispatch({ type: ADD_ROOM_MEMBER, payload: { room: data, memberId } })
     )
     .catch((err) => {
+      console.log("ERROR: ", err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
@@ -78,6 +82,7 @@ export const removeRoomMember = (roomId, memberId) => (dispatch, getState) => {
       })
     )
     .catch((err) => {
+      console.log("ERROR: ", err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
@@ -93,6 +98,7 @@ export const getRoomMembers = (roomId) => (dispatch, getState) => {
       })
     )
     .catch((err) => {
+      console.log("ERROR: ", err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
@@ -108,6 +114,7 @@ export const getRoom = (roomId) => (dispatch, getState) => {
       });
     })
     .catch((err) => {
+      console.log("ERROR: ", err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };

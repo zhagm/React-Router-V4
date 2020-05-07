@@ -25,6 +25,7 @@ export const register = ({ name, email, password }) => (dispatch) => {
       dispatch({ type: USER_LOADED, payload: data.user });
     })
     .catch((err) => {
+      console.log("ERROR:", err);
       dispatch(
         returnErrors(err.response.data, err.response.status, "REGISTER_FAIL")
       );
@@ -42,6 +43,7 @@ export const login = ({ email, password }) => (dispatch) => {
       dispatch({ type: USER_LOADED, payload: data.user });
     })
     .catch((err) => {
+      console.log("ERROR:", err);
       dispatch(
         returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
       );
@@ -56,6 +58,7 @@ export const loadUser = () => (dispatch, getState) => {
     .get(`${SERVER_URL}/api/auth/user`, getTokenHeader(getState))
     .then(({ data }) => dispatch({ type: USER_LOADED, payload: data }))
     .catch((err) => {
+      console.log("ERROR:", err);
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({ type: AUTH_ERROR });
     });

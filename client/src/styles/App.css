@@ -31,6 +31,7 @@ button:focus {
   opacity: 0.5px;
   background-color: rgb(228, 228, 228);
   text-align: center;
+  transition: background-color 0.5s ease;
 }
 
 .userSelect.selected {
@@ -49,7 +50,11 @@ button:focus {
 }
 
 /* Video component */
-.videoElement {
-  width: 360px;
-  height: 280px;
+.video {
+  border: solid 10px rgb(234, 0, 0);
+  display: inline-flex;
+}
+
+.video.active {
+  border: solid 10px rgb(141, 244, 78);
 }

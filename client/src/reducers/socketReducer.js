@@ -3,15 +3,20 @@ import {
   SOCKET_ADD_USER,
   SOCKET_REMOVE_USER,
   SOCKET_USERS_RECEIVED,
+  ASSIGN_SOCKET,
 } from "../actions/types";
 
 const initialState = {
   onlineUsers: [],
   messages: [],
+  socket: null,
+  isLoading: true,
 };
 
 export default function (state = initialState, { type, payload }) {
   switch (type) {
+    case ASSIGN_SOCKET:
+      return { ...state, socket: payload, isLoading: false };
     case SOCKET_MESSAGE_RECEIVED:
       let messages = [...state.messages, payload].slice(-10);
       return {

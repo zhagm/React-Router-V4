@@ -4,8 +4,8 @@ import Video from "./Video";
 import { getFaceDetection, loadModels } from "../utils/face";
 
 const videoConstraints = {
-  width: 350,
-  height: 350,
+  width: undefined,
+  height: undefined,
   facingMode: "user",
 };
 
@@ -19,46 +19,32 @@ const VideoPage = () => {
 
   const processScreenshot = (img) => {
     getFaceDetection(img).then((data) => {
-      if (data && data.detection) setDetection(data.detection);
+      if (data && data.detection && isDetecting) setDetection(data.detection);
     });
   };
 
   const toggleDetection = () => {
+    if (detection) setDetection(false);
     setIsDetecting(!isDetecting);
   };
 
-  console.log(detection);
+  console.log(detection, isDetecting);
 
   return (
-    <div
-      className="Camera"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          width: videoConstraints.width,
-          height: videoConstraints.height,
-        }}
-      >
-        <div style={{ position: "relative", width: videoConstraints.width }}>
-          <div style={{ position: "absolute" }}>
-            <Video
-              onCapture={processScreenshot}
-              isCapturing={isDetecting}
-              interval={2000}
-              videoConstraints={videoConstraints}
-            />
-          </div>
-          <DrawBox detection={detection} />
-        </div>
+    <div>
+      <div className={`video ${detection ? "active" : ""}`}>
+        <Video
+          onCapture={processScreenshot}
+          isCapturing={isDetecting}
+          interval={2000}
+          videoConstraints={videoConstraints}
+        />
       </div>
-      <button onClick={toggleDetection}>
-        {isDetecting ? "Stop camera" : "Start camera"}
-      </button>
+      <div>
+        <button onClick={toggleDetection}>
+          {isDetecting ? "Stop camera" : "Start camera"}
+        </button>
+      </div>
     </div>
   );
 };

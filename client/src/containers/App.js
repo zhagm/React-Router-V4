@@ -17,8 +17,17 @@ import { loadUser } from "../actions/authActions";
 import { connect } from "react-redux";
 import store from "../store";
 
+// Socket IO
+import { createSocketConnection } from "../actions/socketActions";
+import socketio from "socket.io-client";
+const SOCKET_URL =
+  process.env.REACT_APP_SERVER_URL ||
+  "https://officeplace-server.herokuapp.com";
+
 const App = ({ isAuthenticated }) => {
   useEffect(() => {
+    const socket = socketio(SOCKET_URL);
+    store.dispatch(createSocketConnection(socket));
     store.dispatch(loadUser());
     // eslint-disable-next-line
   }, []);

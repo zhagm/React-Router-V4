@@ -8,8 +8,10 @@ function init(server) {
     serverSocket.on("client:login", handler.login); // login
     serverSocket.on("client:userSentMessage", handler.receiveMessage); // userSentMessage
     serverSocket.on("client:getOnlineUsers", handler.getOnlineUsers); // getOnlineUsers
+    serverSocket.on("client:getOnlineMembers", handler.getOnlineMembers); // getOnlineMembers
     serverSocket.on("client:removeOnlineUser", handler.removeUserOnline); // removeUserOnline
     serverSocket.on("client:enterRoom", handler.enterRoom);
+    serverSocket.on("client:leaveRoom", handler.leaveRoom);
     serverSocket.on("disconnect", handler.removeUserOnline);
   });
 

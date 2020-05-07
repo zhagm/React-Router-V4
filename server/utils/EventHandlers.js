@@ -29,6 +29,15 @@ class EventHandler {
       );
     }
   };
+  getOnlineMembers = (roomId) => {
+    let { io, serverSocket, user } = this;
+    if (user) {
+      room.get(roomId).then((users) => {
+        console.log("USERS", users);
+        serverSocket.emit("server:getOnlineMembers", users);
+      });
+    }
+  };
   receiveMessage = (text) => {
     let { io, serverSocket, user } = this;
     if (user) {
@@ -49,6 +58,19 @@ class EventHandler {
       io.in(roomId).emit(
         "console.log",
         `user ${user.name} just entered room ${roomId}`
+      );
+    }
+  };
+  leaveRoom = (roomId) => {
+    let { io, serverSocket, user } = this;
+    if (user) {
+      serverSocket.leave(roomId);
+      this.currentRoomId = null;
+      room.delete(roomId, user._id);
+      io.emit("server:leaveRoom", user._id); // emit only to other users in room
+      io.in(roomId).emit(
+        "console.log",
+        `user ${user.name} just left room ${roomId}`
       );
     }
   };
