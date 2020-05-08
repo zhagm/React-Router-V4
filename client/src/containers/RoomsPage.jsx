@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getRooms, addRoom } from "../actions/roomActions";
+import { getRooms } from "../actions/roomActions";
 import { Link } from "react-router-dom";
 
 const RoomsPage = ({ rooms, getRooms }) => {
@@ -12,7 +12,7 @@ const RoomsPage = ({ rooms, getRooms }) => {
 
   return (
     <div>
-      <h1>ROOMS PAGE</h1>
+      <h1>YOUR ROOMS</h1>
       <Link to={`rooms/new`}>
         <button>Make a room</button>
       </Link>

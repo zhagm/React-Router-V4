@@ -28,6 +28,17 @@ export const getRooms = () => (dispatch) => {
     });
 };
 
+/* returns all member's rooms */
+export const getMemberRooms = (memberId) => (dispatch, getState) => {
+  axios
+    .get(`${SERVER_URL}/api/rooms/members/${memberId}`)
+    .then(({ data }) => dispatch({ type: GET_ROOMS, payload: data }))
+    .catch((err) => {
+      console.log("ERROR: ", err);
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
 /* accepts room object { name, admins, (members) }, returns new room */
 export const addRoom = ({ name, admins, members }) => (dispatch, getState) => {
   dispatch(setRoomsLoading());

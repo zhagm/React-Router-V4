@@ -92,6 +92,20 @@ router
     );
   });
 
+router.route("/members/:memberId").get((req, res) => {
+  // PATH: GET /api/rooms/members/:memberId | DESC: get all member's rooms | PRIVATE
+  // accepts req.params = { memberId: { type: String, required: true } }
+  // returns ([ room: { type: Object } ])
+  Room.find((err, rooms) => {
+    if (err) res.status(400).json("Error fetching rooms");
+    else {
+      let { memberId } = req.params;
+      rooms = rooms.filter((room) => room.members.includes(memberId));
+      res.json(rooms);
+    }
+  });
+});
+
 router.route("/:id/members").get((req, res) => {
   // PATH: GET /api/rooms/:id/members | DESC: get all members in a room | PRIVATE
   // accepts req.params.id = { type: String, required: true }
