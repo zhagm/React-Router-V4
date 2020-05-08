@@ -4,33 +4,42 @@ import PropTypes from "prop-types";
 import "../styles/ChatPage.css";
 import UsersTable from "../components/UsersTable";
 import ChatBox from "../components/ChatBox";
-import { sendSocketMessage, getOnlineUsers } from "../actions/socketActions.js";
-import { getUsers } from "../actions/userActions.js";
-import { loadUser } from "../actions/authActions";
+// import { loadUser } from "../actions/authActions";
 
 const ChatPage = ({
+  socket,
   user,
-  loadUser,
+  // loadUser,
   isLoading,
-  sendSocketMessage,
-  messages = [],
-  getOnlineUsers,
-  onlineUsers = [],
-  getUsers,
   users = [],
+  activeMembers,
+  onlineMembers,
+  allMembers,
+  currentRoom,
 }) => {
   let [inputText, setInputText] = useState("");
+  let [messages, setMessages] = useState([]);
   useEffect(() => {
-    getOnlineUsers();
-    getUsers();
-    // loadUser();
+    console.log("messages changed", messages);
     // eslint-disable-next-line
-  }, []);
+  }, [messages]);
+
+  useEffect(() => {
+    if (socket && user && currentRoom) {
+      socket.emit("client:login", user);
+      socket.emit("client:enterRoom", currentRoom._id);
+      socket.on("server:userSentMessage", (message) => {
+        setMessages(messages.concat(message));
+      });
+    }
+  }, [socket, user]);
 
   const sendMessage = (e) => {
     e.preventDefault();
-    sendSocketMessage(inputText);
-    setInputText("");
+    if (socket) {
+      socket.emit("client:userSentMessage", inputText);
+      setInputText("");
+    }
   };
 
   if (isLoading || !user)
@@ -50,29 +59,22 @@ const ChatPage = ({
         />
         <br />
       </form>
-      <UsersTable users={users} onlineUsers={onlineUsers} />
+      <UsersTable users={users} onlineUsers={[]} />
     </div>
   );
 };
 
 ChatPage.propTypes = {
-  messages: PropTypes.array,
   users: PropTypes.array,
-  sendSocketMessage: PropTypes.func,
-  getOnlineUsers: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   isLoading: state.auth.isLoading,
-  messages: state.socket.messages,
-  onlineUsers: state.socket.onlineUsers,
   users: state.allUsers.users,
+  socket: state.socket.socket,
 });
 
 export default connect(mapStateToProps, {
-  sendSocketMessage,
-  getOnlineUsers,
-  getUsers,
-  loadUser,
+  /*loadUser*/
 })(ChatPage);

@@ -5,6 +5,7 @@ class EventHandler {
     this.io = io;
     this.serverSocket = serverSocket;
     this.user = user;
+    this.currentRoomId = currentRoomId;
   }
 
   getOnlineUsers = () => {
@@ -71,10 +72,12 @@ class EventHandler {
   receiveMessage = (text) => {
     let { io, serverSocket, user } = this;
     if (user) {
-      io.emit("server:userSentMessage", {
+      io.in(this.currentRoomId).emit("console.log", `${user.name}: ${text}`);
+      io.in(this.currentRoomId).emit("server:userSentMessage", {
         userId: user._id,
-        name: user.name,
+        username: user.name,
         text,
+        timestamp: Date.now(),
       });
     }
   };
@@ -82,6 +85,7 @@ class EventHandler {
     let { io, serverSocket, user } = this;
     if (user) {
       serverSocket.join(roomId);
+      this.currentRoomId = roomId;
       room.onlineUsers.post(roomId, user._id);
       io.emit("server:enterRoom", user._id); // emit only to other users in room
       io.in(roomId).emit(
@@ -94,6 +98,7 @@ class EventHandler {
     let { io, serverSocket, user } = this;
     if (user) {
       serverSocket.leave(roomId);
+      this.currentRoomId = undefined;
       room.onlineUsers.delete(roomId, user._id);
       room.activeUsers.delete(roomId, user._id);
       io.emit("server:leaveRoom", user._id); // emit only to other users in room
@@ -108,6 +113,7 @@ class EventHandler {
     let { io, serverSocket, user } = this;
     if (user) {
       onlineUsers.delete(user._id);
+      this.currentRoomId = undefined;
       io.emit("server:removeUserOnline", user._id);
       this.user = undefined;
     }

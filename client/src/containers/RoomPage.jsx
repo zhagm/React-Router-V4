@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { getRoomMembers, getRoom } from "../actions/roomActions.js";
 import { useParams } from "react-router-dom";
 import CameraFaceDetector from "../components/CameraFaceDetector";
+import ChatPage from "../containers/ChatPage";
 import { loadUser } from "../actions/authActions.js";
 
 const RoomPage = ({
@@ -90,7 +91,12 @@ const RoomPage = ({
         </div>
       ))}
       <CameraFaceDetector onDetectionChange={setCameraDetectsFace} />
-      {/* <ChatPage /> */}
+      <ChatPage
+        activeMembers={activeMembers}
+        onlineMembers={onlineMembers}
+        allMembers={members}
+        currentRoom={room}
+      />
     </div>
   );
 };
@@ -109,7 +115,6 @@ const mapStateToProps = (state) => ({
   members: state.rooms.currentRoomMembers,
   user: state.auth.user,
   isLoading: state.auth.isLoading,
-  onlineUsers: state.socket.onlineUsers,
   socket: state.socket.socket,
 });
 
