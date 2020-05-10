@@ -26,10 +26,12 @@ export const SOCKET_USERS_RECEIVED = "SOCKET_USERS_RECEIVED";
 
 // ROOM TYPES
 export const GET_ROOMS = "GET_ROOMS";
-export const GET_ROOM = "GET_ROOM";
+export const ENTER_ROOM = "ENTER_ROOM";
+export const LEAVE_ROOM = "LEAVE_ROOM";
 export const ADD_ROOM = "ADD_ROOM";
 export const DELETE_ROOM = "DELETE_ROOM";
 export const ROOMS_LOADING = "ROOMS_LOADING";
 export const ADD_ROOM_MEMBER = "ADD_ROOM_MEMBER";
 export const REMOVE_ROOM_MEMBER = "REMOVE_ROOM_MEMBER";
 export const GET_ROOM_MEMBERS = "GET_ROOM_MEMBERS";
+export const ADD_MESSAGE = "ADD_MESSAGE";

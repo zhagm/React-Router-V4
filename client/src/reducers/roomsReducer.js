@@ -1,17 +1,20 @@
 import {
   GET_ROOMS,
-  GET_ROOM,
+  ENTER_ROOM,
   ADD_ROOM,
   DELETE_ROOM,
   ROOMS_LOADING,
   ADD_ROOM_MEMBER,
   REMOVE_ROOM_MEMBER,
   GET_ROOM_MEMBERS,
+  ADD_MESSAGE,
+  LEAVE_ROOM,
 } from "../actions/types";
 
 const initialState = {
   rooms: [],
   currentRoomMembers: [],
+  currentRoomMessages: [],
   currentRoom: null,
   loading: false,
 };
@@ -76,11 +79,20 @@ export default function (state = initialState, { type, payload }) {
         currentRoomMembers: payload,
       };
     }
-    case GET_ROOM: {
+    case ENTER_ROOM: {
       return {
         ...state,
         currentRoom: payload,
       };
+    }
+    case ADD_MESSAGE: {
+      return {
+        ...state,
+        currentRoomMessages: state.currentRoomMessages.concat(payload),
+      };
+    }
+    case LEAVE_ROOM: {
+      return { ...initialState };
     }
     default:
       return state;

@@ -1,13 +1,15 @@
 import axios from "axios";
 import {
   GET_ROOMS,
-  GET_ROOM,
+  ENTER_ROOM,
+  LEAVE_ROOM,
   ADD_ROOM,
   DELETE_ROOM,
   ROOMS_LOADING,
   ADD_ROOM_MEMBER,
   REMOVE_ROOM_MEMBER,
   GET_ROOM_MEMBERS,
+  ADD_MESSAGE,
 } from "../actions/types";
 import { getTokenHeader } from "./authActions";
 import { returnErrors } from "./errorActions";
@@ -15,6 +17,11 @@ require("dotenv").config();
 const SERVER_URL =
   process.env.REACT_APP_SERVER_URL ||
   "https://officeplace-server.herokuapp.com";
+
+/* adds message to currentRoomMessages, returns updated messages */
+export const addMessage = (newMessage) => (dispatch) => {
+  dispatch({ type: ADD_MESSAGE, payload: newMessage });
+};
 
 /* returns all rooms in db */
 export const getRooms = () => (dispatch) => {
@@ -115,12 +122,12 @@ export const getRoomMembers = (roomId) => (dispatch, getState) => {
 };
 
 /* accepts room id, returns room object */
-export const getRoom = (roomId) => (dispatch, getState) => {
+export const enterRoom = (roomId) => (dispatch, getState) => {
   axios
     .get(`${SERVER_URL}/api/rooms/${roomId}`, getTokenHeader(getState))
     .then(({ data }) => {
       return dispatch({
-        type: GET_ROOM,
+        type: ENTER_ROOM,
         payload: data,
       });
     })
@@ -128,6 +135,10 @@ export const getRoom = (roomId) => (dispatch, getState) => {
       console.log("ERROR: ", err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
+};
+
+export const leaveRoom = () => (dispatch) => {
+  dispatch({ type: LEAVE_ROOM });
 };
 
 export const setRoomsLoading = () => ({ type: ROOMS_LOADING });

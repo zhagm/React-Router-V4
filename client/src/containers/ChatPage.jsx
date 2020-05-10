@@ -1,38 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import "../styles/ChatPage.css";
-import UsersTable from "../components/UsersTable";
-import ChatBox from "../components/ChatBox";
-// import { loadUser } from "../actions/authActions";
+import ChatMessages from "../components/ChatMessages";
+import { addMessage } from "../actions/roomActions";
 
 const ChatPage = ({
   socket,
   user,
-  // loadUser,
   isLoading,
-  users = [],
-  activeMembers,
-  onlineMembers,
-  allMembers,
   currentRoom,
+  messages = [],
+  addMessage,
 }) => {
   let [inputText, setInputText] = useState("");
-  let [messages, setMessages] = useState([]);
-  useEffect(() => {
-    console.log("messages changed", messages);
-    // eslint-disable-next-line
-  }, [messages]);
+  // let [messages, setMessages] = useState(currentRoomMessages);
+  let init = true;
 
   useEffect(() => {
-    if (socket && user && currentRoom) {
+    if (socket && user && currentRoom && init) {
       socket.emit("client:login", user);
       socket.emit("client:enterRoom", currentRoom._id);
-      socket.on("server:userSentMessage", (message) => {
-        setMessages(messages.concat(message));
-      });
+      socket.on("server:userSentMessage", addMessage);
+      init = false;
     }
-  }, [socket, user]);
+  }, [socket, user, currentRoom]);
+  // useEffect(() => {
+  //   if (socket && user && currentRoom) {
+  //     socket.emit("client:login", user);
+  //     socket.emit("client:enterRoom", currentRoom._id);
+  //     socket.on("server:userSentMessage", addMessage);
+  //   }
+  // }, [socket, user, messages]);
+
+  // const addMessage = (message) => {
+  //   setMessages(messages.concat(message));
+  // };
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -48,7 +50,7 @@ const ChatPage = ({
   return (
     <div>
       <h1>USERS</h1>
-      <ChatBox messages={messages} currentUserId={user._id} />
+      <ChatMessages messages={messages} currentUserId={user._id} />
       <form onSubmit={sendMessage}>
         <label>Your Message:</label>
         <input
@@ -59,22 +61,17 @@ const ChatPage = ({
         />
         <br />
       </form>
-      <UsersTable users={users} onlineUsers={[]} />
     </div>
   );
 };
 
-ChatPage.propTypes = {
-  users: PropTypes.array,
-};
+ChatPage.propTypes = {};
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   isLoading: state.auth.isLoading,
-  users: state.allUsers.users,
   socket: state.socket.socket,
+  messages: state.rooms.currentRoomMessages,
 });
 
-export default connect(mapStateToProps, {
-  /*loadUser*/
-})(ChatPage);
+export default connect(mapStateToProps, { addMessage })(ChatPage);

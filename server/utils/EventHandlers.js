@@ -113,6 +113,7 @@ class EventHandler {
     let { io, serverSocket, user } = this;
     if (user) {
       onlineUsers.delete(user._id);
+      this.leaveRoom(this.currentRoomId);
       this.currentRoomId = undefined;
       io.emit("server:removeUserOnline", user._id);
       this.user = undefined;

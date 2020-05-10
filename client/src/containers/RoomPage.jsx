@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getRoomMembers, getRoom } from "../actions/roomActions.js";
+import {
+  getRoomMembers,
+  enterRoom,
+  leaveRoom,
+} from "../actions/roomActions.js";
 import { useParams } from "react-router-dom";
 import CameraFaceDetector from "../components/CameraFaceDetector";
 import ChatPage from "../containers/ChatPage";
@@ -13,17 +17,19 @@ const RoomPage = ({
   user,
   members = [],
   room,
-  getRoom,
+  enterRoom,
+  leaveRoom,
   socket,
 }) => {
   const { id: roomId } = useParams();
   const [onlineMembers, setOnlineMembers] = useState([]);
   const [activeMembers, setActiveMembers] = useState([]);
   const [cameraDetectsFace, setCameraDetectsFace] = useState(null);
+  let init = true;
 
   useEffect(() => {
     getRoomMembers(roomId);
-    getRoom(roomId);
+    enterRoom(roomId);
     loadUser();
     return () => {
       console.log("cleanup!");
@@ -31,12 +37,13 @@ const RoomPage = ({
         socket.emit("client:leaveRoom", roomId);
         console.log("cleanup!");
       }
+      leaveRoom();
     };
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if (socket && user) {
+    if (socket && user && init) {
       // once socket is connected and user is authenticated and loaded
       socket.emit("client:login", user);
       socket.emit("client:getOnlineMembers", roomId);
@@ -57,6 +64,7 @@ const RoomPage = ({
         socket.emit("client:getOnlineMembers", roomId);
         socket.emit("client:getActiveMembers", roomId);
       });
+      init = false;
     }
   }, [socket, user]);
 
@@ -106,7 +114,8 @@ RoomPage.propTypes = {
   user: PropTypes.object,
   isLoading: PropTypes.bool,
   members: PropTypes.array,
-  getRoom: PropTypes.func,
+  enterRoom: PropTypes.func,
+  leaveRoom: PropTypes.func,
   room: PropTypes.object,
 };
 
@@ -120,5 +129,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getRoomMembers,
-  getRoom,
+  enterRoom,
+  leaveRoom,
 })(RoomPage);

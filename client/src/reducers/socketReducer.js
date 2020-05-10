@@ -4,6 +4,7 @@ import {
   SOCKET_REMOVE_USER,
   SOCKET_USERS_RECEIVED,
   ASSIGN_SOCKET,
+  LOGOUT_SUCCESS,
 } from "../actions/types";
 
 const initialState = {
@@ -42,6 +43,9 @@ export default function (state = initialState, { type, payload }) {
         ...state,
         onlineUsers: payload,
       };
+    case LOGOUT_SUCCESS:
+      state.socket.emit("client:removeOnlineUser");
+      return state;
     default:
       return state;
   }
