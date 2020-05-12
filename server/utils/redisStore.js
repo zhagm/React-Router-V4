@@ -1,6 +1,8 @@
 const redis = require("redis");
 const client = redis.createClient();
 
+client.flushall();
+
 const getOnlineUsers = async () => {
   return new Promise((resolve, reject) => {
     client.SMEMBERS("online", (err, users) => {
@@ -78,7 +80,6 @@ const deleteActiveRoomUsers = (roomId, userId) => {
     client.SREM(`${roomId}-ACTIVE`, userId, (err, usersLength) => {
       if (err) reject(err);
       else {
-        console.log("DELTED", usersLength);
         resolve(usersLength);
       }
     });

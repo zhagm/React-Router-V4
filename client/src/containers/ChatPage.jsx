@@ -21,6 +21,7 @@ const ChatPage = ({
       socket.emit("client:login", user);
       socket.emit("client:enterRoom", currentRoom._id);
       socket.on("server:userSentMessage", addMessage);
+      socket.on("server:systemChatMessage", addMessage);
       init = false;
     }
   }, [socket, user, currentRoom]);

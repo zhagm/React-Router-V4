@@ -66,7 +66,7 @@ const RoomPage = ({
       });
       init = false;
     }
-  }, [socket, user]);
+  }, [socket, user, init]);
 
   useEffect(() => {
     if (cameraDetectsFace && socket)

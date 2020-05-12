@@ -44,7 +44,7 @@ export default function (state = initialState, { type, payload }) {
         onlineUsers: payload,
       };
     case LOGOUT_SUCCESS:
-      state.socket.emit("client:removeOnlineUser");
+      state.socket.emit("client:logout");
       return state;
     default:
       return state;

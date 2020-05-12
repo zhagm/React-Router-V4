@@ -7,7 +7,23 @@ class EventHandler {
     this.user = user;
     this.currentRoomId = currentRoomId;
   }
-
+  getHandler(event) {
+    let dictionary = {
+      "client:login": this.login,
+      "client:logout": this.logout,
+      "client:userSentMessage": this.receiveMessage,
+      "client:getOnlineUsers": this.getOnlineUsers,
+      "client:getOnlineMembers": this.getOnlineMembers,
+      "client:getActiveMembers": this.getActiveMembers,
+      "client:addActiveMember": this.addActiveMember,
+      "client:deleteActiveMember": this.deleteActiveMember,
+      "client:enterRoom": this.enterRoom,
+      "client:leaveRoom": this.leaveRoom,
+      disconnect: this.logout,
+    };
+    console.log(event);
+    return dictionary[event];
+  }
   getOnlineUsers = () => {
     let { io, serverSocket, user } = this;
     onlineUsers
@@ -81,13 +97,26 @@ class EventHandler {
       });
     }
   };
+  sendSystemMessage = (text, roomId) => {
+    let { io, serverSocket, user, currentRoomId } = this;
+    if (user && currentRoomId) {
+      serverSocket.broadcast.to(roomId).emit("server:systemChatMessage", {
+        userId: user._id,
+        username: user.name,
+        text,
+        timestamp: Date.now(),
+        isSystemMessage: true,
+      });
+    }
+  };
   enterRoom = (roomId) => {
-    let { io, serverSocket, user } = this;
-    if (user) {
+    let { io, serverSocket, user, currentRoomId } = this;
+    if (user && !currentRoomId) {
       serverSocket.join(roomId);
       this.currentRoomId = roomId;
       room.onlineUsers.post(roomId, user._id);
       io.emit("server:enterRoom", user._id); // emit only to other users in room
+      this.sendSystemMessage(`user ${user.name} just entered the room`, roomId);
       io.in(roomId).emit(
         "console.log",
         `user ${user.name} just entered room ${roomId}`
@@ -95,27 +124,24 @@ class EventHandler {
     }
   };
   leaveRoom = (roomId) => {
-    let { io, serverSocket, user } = this;
-    if (user) {
+    let { io, serverSocket, user, currentRoomId } = this;
+    if (user && currentRoomId) {
       serverSocket.leave(roomId);
       this.currentRoomId = undefined;
       room.onlineUsers.delete(roomId, user._id);
       room.activeUsers.delete(roomId, user._id);
       io.emit("server:leaveRoom", user._id); // emit only to other users in room
-      io.in(roomId).emit(
-        "console.log",
-        `user ${user.name} just left room ${roomId}`
-      );
+      this.sendSystemMessage(`user ${user.name} left the room`, roomId);
     }
   };
-  removeUserOnline = () => {
+  logout = () => {
     console.log("REMOVING USER ONLINE");
     let { io, serverSocket, user } = this;
     if (user) {
       onlineUsers.delete(user._id);
       this.leaveRoom(this.currentRoomId);
       this.currentRoomId = undefined;
-      io.emit("server:removeUserOnline", user._id);
+      io.emit("server:logout", user._id);
       this.user = undefined;
     }
   };
