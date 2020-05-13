@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Video from "./Video";
 import { faceDetected, loadModels } from "../utils/face";
+import classnames from "../utils/classnames";
 
 const videoConstraints = {
   width: "auto",
@@ -40,9 +41,10 @@ const CameraFaceDetector = ({ onDetectionChange = () => {} }) => {
   return (
     <div>
       <div
-        className={`video ${
-          isActive ? "active" : isActive === false ? "inactive" : ""
-        }`}
+        className={classnames("video", {
+          active: isActive,
+          inactive: !isActive,
+        })}
       >
         <Video
           onCapture={processScreenshot}

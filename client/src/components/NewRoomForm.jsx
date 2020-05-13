@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addRoom } from "../actions/roomActions";
 import { getUsers } from "../actions/userActions.js";
+import classnames from "../utils/classnames";
 
 const NewRoomForm = ({ getUsers, addRoom, isLoading, user, users = [] }) => {
   const [name, setName] = useState("");
@@ -47,7 +48,9 @@ const NewRoomForm = ({ getUsers, addRoom, isLoading, user, users = [] }) => {
             <div
               key={u._id}
               onClick={() => updateMembers(u._id)}
-              className={`userSelect ${members.includes(u._id) && " selected"}`}
+              className={classnames("userSelect", {
+                selected: members.includes(u._id),
+              })}
             >
               {u.name}
             </div>

@@ -9,7 +9,7 @@ const AuthPage = () => {
   const authType = useLocation().pathname.slice(1);
   const Form = authType === "login" ? <LoginForm /> : <RegisterForm />;
   return (
-    <main>
+    <main classname="main">
       <section className="section section-shaped section-lg">
         <div className="shape shape-style-1 bg-gradient-default">
           <span />
@@ -21,7 +21,7 @@ const AuthPage = () => {
           <span />
           <span />
         </div>
-        <Container className="pt-lg-7">
+        <Container className="pt-lg-4">
           <Row className="justify-content-center">
             <Col lg="5">
               <Card className="bg-secondary shadow border-0">

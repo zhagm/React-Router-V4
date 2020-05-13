@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./styles/index.css";
-import "./styles/theme/css/argon-design-system-react.css";
+import "./styles/theme/argon-design-system-react.css";
 import App from "./containers/App";
 import { Provider } from "react-redux";
 import store from "./store";

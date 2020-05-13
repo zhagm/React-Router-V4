@@ -20,7 +20,10 @@ import {
 const NavBar = ({
   isAuthenticated,
   logout,
-  links = [{ url: "/rooms", name: "Rooms" }],
+  links = [
+    { url: "/dashboard", name: "Dashboard", private: true },
+    { url: "/about", name: "About Us", private: false },
+  ],
 }) => {
   let [collapseClasses, setCollapseClasses] = useState("");
   const history = useHistory();
@@ -68,13 +71,15 @@ const NavBar = ({
               </Row>
             </div>
             <Nav className="align-items-lg-center ml-lg-auto" navbar>
-              {links.map((link) => (
-                <NavItem>
-                  <Link to={link.url}>
-                    <NavLink to={link.url}>{link.name}</NavLink>
-                  </Link>
-                </NavItem>
-              ))}
+              {links
+                .filter((l) => l.private === isAuthenticated)
+                .map((link) => (
+                  <NavItem key={link.name}>
+                    <Link to={link.url}>
+                      <NavLink to={link.url}>{link.name}</NavLink>
+                    </Link>
+                  </NavItem>
+                ))}
               <NavItem className="d-none d-lg-block ml-lg-4">
                 <Link to={isAuthenticated ? "/" : "/login"}>
                   <Button
@@ -85,7 +90,7 @@ const NavBar = ({
                     color="default"
                   >
                     <span className="nav-link-inner--text ml-1">
-                      {isAuthenticated ? "Logout" : "Get Started"}
+                      {isAuthenticated ? "Logout" : "Login"}
                     </span>
                   </Button>
                 </Link>

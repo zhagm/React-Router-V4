@@ -42,7 +42,7 @@ const LoginForm = ({ login, error, isAuthenticated }) => {
     }
   };
 
-  if (isAuthenticated) return <Redirect to="/rooms" />;
+  if (isAuthenticated) return <Redirect to="/dashboard" />;
 
   return (
     <Form role="form" onSubmit={submit}>

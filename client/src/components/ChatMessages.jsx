@@ -1,30 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
+import classnames from "../utils/classnames";
 
 const ChatMessages = ({ messages, currentUserId }) => {
-  const getMessageClasses = (msg) => {
-    let classes = ["chatMessage"];
-    if (msg.userId === currentUserId) {
-      if (!msg.isSystemMessage) classes.push("ownChatMessage");
-    } else if (msg.isSystemMessage) {
-      classes.push("systemMessage");
-    }
-
-    if (msg.isSystemMessage) {
-      classes.push("systemMessage");
-    } else if (msg.userId === currentUserId) {
-      classes.push("ownChatMessage");
-    }
-    return classes.join(" ");
-  };
-
   return (
     <div className="chatBox">
       {messages
         .slice()
         .reverse()
         .map((msg, i) => (
-          <div className={getMessageClasses(msg)} key={i}>
+          <div
+            className={classnames("chatMessage", {
+              ownChatMessage:
+                msg.userId === currentUserId && !msg.isSystemMessage,
+              systemMessage:
+                msg.userId !== currentUserId && msg.isSystemMessage,
+            })}
+            key={i}
+          >
             <span className="messageUser">{msg.username}</span>
             <span className="messageText">{msg.text}</span>
           </div>

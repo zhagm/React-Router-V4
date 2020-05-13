@@ -39,7 +39,7 @@ const RegisterForm = ({ register, error, isAuthenticated }) => {
     register({ name, email, password });
   };
 
-  if (isAuthenticated) return <Redirect to="/rooms" />;
+  if (isAuthenticated) return <Redirect to="/dashboard" />;
 
   return (
     <Form role="form" onSubmit={submit}>

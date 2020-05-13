@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import CameraFaceDetector from "../components/CameraFaceDetector";
 import ChatPage from "../containers/ChatPage";
 import { loadUser } from "../actions/authActions.js";
+import classnames from "../utils/classnames";
 
 const RoomPage = ({
   getRoomMembers,
@@ -91,9 +92,10 @@ const RoomPage = ({
       {members.map((u) => (
         <div
           key={u._id}
-          className={`desk ${
-            isActive(u._id) ? "activeUser" : isOnline(u._id) ? "onlineUser" : ""
-          }`}
+          className={classnames("desk", {
+            activeUser: isActive(u._id),
+            onlineUser: !isActive(u._id) && isOnline(u._id),
+          })}
         >
           {u.name}
         </div>

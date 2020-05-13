@@ -43,7 +43,7 @@ const App = ({ isAuthenticated }) => {
           <Route path="/login" component={AuthPage} />
           <Route path="/register" component={AuthPage} />
           <Route exact path="/rooms/new" component={NewRoomForm} />
-          <Route exact path="/rooms" component={RoomsPage} />
+          <Route exact path="/dashboard" component={RoomsPage} />
           <Route path="/rooms/:id" component={RoomPage} />
           <Route component={NotFoundPage} />
         </Switch>
