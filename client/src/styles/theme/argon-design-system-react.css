@@ -12118,7 +12118,7 @@ a.btn-icon-only {
     left: 0; }
 
 .card-lift--hover:hover {
-  transform: translateY(-20px);
+  transform: translateY(-10px);
   transition: all 0.15s ease; }
   @media (prefers-reduced-motion: reduce) {
     .card-lift--hover:hover {

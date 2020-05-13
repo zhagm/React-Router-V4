@@ -6,6 +6,12 @@ let roomSchema = new Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+  },
+  image: {
+    type: String,
+  },
   register_date: {
     type: Date,
     default: Date.now,

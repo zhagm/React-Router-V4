@@ -11,6 +11,10 @@ button:focus {
   outline: 0;
 }
 
+.navBackground {
+  height: 80px;
+}
+
 /* Error alert message box */
 .alert {
   padding: 15px;

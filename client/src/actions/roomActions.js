@@ -47,9 +47,12 @@ export const getMemberRooms = (memberId) => (dispatch, getState) => {
 };
 
 /* accepts room object { name, admins, (members) }, returns new room */
-export const addRoom = ({ name, admins, members }) => (dispatch, getState) => {
+export const addRoom = ({ name, admins, members, image, description }) => (
+  dispatch,
+  getState
+) => {
   dispatch(setRoomsLoading());
-  const body = JSON.stringify({ name, admins, members });
+  const body = JSON.stringify({ name, admins, members, image, description });
   axios
     .post(`${SERVER_URL}/api/rooms`, body, getTokenHeader(getState))
     .then(({ data }) => dispatch({ type: ADD_ROOM, payload: data }))

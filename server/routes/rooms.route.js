@@ -9,16 +9,16 @@ let Room = require("../models/Room");
   .route("/")
   .post(async (req, res) => {
     // PATH: POST /api/rooms/ | DESC: create a new room | PRIVATE
-    // accepts req.body = { name: { type: String, required: true }, admins: { type: Array, required: true }, members: { type: Array, required: false } }
+    // accepts req.body = { name: { type: String, required: true }, admins: { type: Array, required: true }, members: { type: Array, required: false }, description: { type: String, required: false }, image: { type: String, required: false  }
     // returns (room: { type: Object })
-    let { name, admins, members = [] } = req.body;
+    let { name, admins, members = [], image = "", description = "" } = req.body;
     if (!name || !admins)
       return res.status(400).json("Please enter all fields");
 
     let room = await Room.findOne({ name });
     if (room)
       return res.status(400).json("A room with that name already exists");
-    Room.create({ name, admins, members }, (err, room) => {
+    Room.create({ name, admins, members, image, description }, (err, room) => {
       if (err) res.status(400).json("Error creating room");
       else res.status(201).json(room);
     });

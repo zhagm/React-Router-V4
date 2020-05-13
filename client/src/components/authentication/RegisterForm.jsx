@@ -99,7 +99,7 @@ const RegisterForm = ({ register, error, isAuthenticated }) => {
       </FormGroup>
       <div className="text-center">
         <Button className="my-4" color="primary" type="submit">
-          Sign in
+          Sign up
         </Button>
       </div>
     </Form>
