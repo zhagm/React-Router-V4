@@ -6,12 +6,11 @@ import "../styles/App.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import NewRoomForm from "../components/NewRoomForm";
-import RegisterPage from "./RegisterPage";
 import NotFoundPage from "./NotFoundPage";
 import RoomsPage from "./RoomsPage";
 import RoomPage from "./RoomPage";
 import SplashPage from "./SplashPage";
-import LoginPage from "./LoginPage";
+import AuthPage from "./AuthPage";
 
 // Redux Imports
 import { loadUser } from "../actions/authActions";
@@ -38,14 +37,14 @@ const App = ({ isAuthenticated }) => {
       <Navbar isAuthenticated={isAuthenticated} />
       <div id="main">
         <Switch>
-          <Route path="/login" component={LoginPage} />
-          <Route exact path="/rooms/new" component={NewRoomForm} />
-          <Route exact path="/rooms" component={RoomsPage} />
-          <Route path="/rooms/:id" component={RoomPage} />
-          <Route path="/register" component={RegisterPage} />
           <Route exact path="/">
             <SplashPage />
           </Route>
+          <Route path="/login" component={AuthPage} />
+          <Route path="/register" component={AuthPage} />
+          <Route exact path="/rooms/new" component={NewRoomForm} />
+          <Route exact path="/rooms" component={RoomsPage} />
+          <Route path="/rooms/:id" component={RoomPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </div>

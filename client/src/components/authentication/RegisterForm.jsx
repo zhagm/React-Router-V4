@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { login } from "../actions/authActions";
+import { register } from "../../actions/authActions";
 import {
   Button,
   FormGroup,
@@ -13,20 +13,21 @@ import {
   Alert,
 } from "reactstrap";
 
-const LoginForm = ({ login, error, isAuthenticated }) => {
-  let [email, setEmail] = useState(localStorage.getItem("OP_email"));
-  let [password, setPassword] = useState(localStorage.getItem("OP_password"));
+const RegisterForm = ({ register, error, isAuthenticated }) => {
+  let [name, setName] = useState("");
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
   let [errorMessage, setErrorMessage] = useState("");
-  let rememberMe = useRef();
 
   useEffect(() => {
-    if (error && error.id === "LOGIN_FAIL") setErrorMessage(error.msg);
+    if (error && error.id === "REGISTER_FAIL") setErrorMessage(error.msg);
     else setErrorMessage(null);
   }, [error]);
 
   const inputChange = (e) => {
     const { name, value } = e.target;
     const setterMethod = {
+      name: setName,
       email: setEmail,
       password: setPassword,
     };
@@ -35,11 +36,7 @@ const LoginForm = ({ login, error, isAuthenticated }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    login({ email, password });
-    if (rememberMe.current.checked) {
-      localStorage.setItem("OP_email", email);
-      localStorage.setItem("OP_password", password);
-    }
+    register({ name, email, password });
   };
 
   if (isAuthenticated) return <Redirect to="/rooms" />;
@@ -51,6 +48,22 @@ const LoginForm = ({ login, error, isAuthenticated }) => {
           {errorMessage}
         </Alert>
       )}
+      <FormGroup>
+        <InputGroup className="input-group-alternative mb-3">
+          <InputGroupAddon addonType="prepend">
+            <InputGroupText>
+              <i className="ni ni-hat-3" />
+            </InputGroupText>
+          </InputGroupAddon>
+          <Input
+            placeholder="Name"
+            type="text"
+            name="name"
+            value={name}
+            onChange={inputChange}
+          />
+        </InputGroup>
+      </FormGroup>
       <FormGroup className="mb-3">
         <InputGroup className="input-group-alternative">
           <InputGroupAddon addonType="prepend">
@@ -84,17 +97,6 @@ const LoginForm = ({ login, error, isAuthenticated }) => {
           />
         </InputGroup>
       </FormGroup>
-      <div className="custom-control custom-control-alternative custom-checkbox">
-        <input
-          className="custom-control-input"
-          id="customCheckLogin"
-          type="checkbox"
-          ref={rememberMe}
-        />
-        <label className="custom-control-label" htmlFor="customCheckLogin">
-          <span>Remember me</span>
-        </label>
-      </div>
       <div className="text-center">
         <Button className="my-4" color="primary" type="submit">
           Sign in
@@ -109,4 +111,4 @@ const mapStateToProps = (state) => ({
   error: state.error,
 });
 
-export default connect(mapStateToProps, { login })(LoginForm);
+export default connect(mapStateToProps, { register })(RegisterForm);

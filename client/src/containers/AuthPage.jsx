@@ -1,10 +1,13 @@
 import React from "react";
-import LoginForm from "../components/LoginInputs";
-import SocialLogin from "../components/SocialLogin";
-import { Link } from "react-router-dom";
+import LoginForm from "../components/authentication/LoginForm";
+import RegisterForm from "../components/authentication/RegisterForm";
+import SocialAuth from "../components/authentication/SocialAuth";
+import { Link, useLocation } from "react-router-dom";
 import { Card, CardBody, Container, Row, Col } from "reactstrap";
 
-const Login = () => {
+const AuthPage = () => {
+  const authType = useLocation().pathname.slice(1);
+  const Form = authType === "login" ? <LoginForm /> : <RegisterForm />;
   return (
     <main>
       <section className="section section-shaped section-lg">
@@ -22,12 +25,17 @@ const Login = () => {
           <Row className="justify-content-center">
             <Col lg="5">
               <Card className="bg-secondary shadow border-0">
-                <SocialLogin />
+                <SocialAuth authType={authType} />
                 <CardBody className="px-lg-5 py-lg-3">
                   <div className="text-center text-muted mb-4">
-                    <small>Or sign in with credentials</small>
+                    {authType === "login" && (
+                      <small>Or sign in with credentials</small>
+                    )}
+                    {authType === "register" && (
+                      <small>Or sign up with credentials</small>
+                    )}
                   </div>
-                  <LoginForm />
+                  {Form}
                 </CardBody>
               </Card>
               <Row className="mt-3">
@@ -43,8 +51,15 @@ const Login = () => {
                   </Link>
                 </Col>
                 <Col className="text-right" xs="6">
-                  <Link className="text-light" to="/register">
-                    <small>Create new account</small>
+                  <Link
+                    className="text-light"
+                    to={`/${authType === "login" ? "register" : "login"}`}
+                  >
+                    <small>
+                      {authType === "login"
+                        ? "Create new account"
+                        : "I already have an account"}
+                    </small>
                   </Link>
                 </Col>
               </Row>
@@ -56,4 +71,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AuthPage;
