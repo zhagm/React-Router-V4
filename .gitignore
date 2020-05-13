@@ -27,3 +27,4 @@ node_modules
 build
 .env
 questions.txt
+themeFiles

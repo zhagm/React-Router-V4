@@ -1,79 +1,59 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { login } from "../actions/authActions";
-import { clearErrors } from "../actions/errorActions";
-import { Redirect, Link } from "react-router-dom";
-import Alert from "../components/Alert";
+import React from "react";
+import LoginForm from "../components/LoginInputs";
+import SocialLogin from "../components/SocialLogin";
+import { Link } from "react-router-dom";
+import { Card, CardBody, Container, Row, Col } from "reactstrap";
 
-class LoginPage extends Component {
-  state = {
-    email: "",
-    password: "",
-    msg: "",
-  };
-
-  static propTypes = {
-    isAuthenticated: PropTypes.bool,
-    error: PropTypes.object.isRequired,
-    login: PropTypes.func.isRequired,
-    clearErrors: PropTypes.func.isRequired,
-  };
-
-  componentDidUpdate = (prevProps) => {
-    const { error } = this.props;
-    if (error !== prevProps.error) {
-      if (error.id === "LOGIN_FAIL") this.setState({ msg: error.msg });
-      else this.setState({ msg: null });
-    }
-  };
-
-  inputChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  submit = (e) => {
-    e.preventDefault();
-    const { email, password } = this.state;
-    this.props.login({ email, password });
-  };
-
-  render() {
-    if (this.props.isAuthenticated) return <Redirect to="/" />;
-    return (
-      <div>
-        <h1>Login</h1>
-        <Alert message={this.state.msg} />
-        <div>
-          <form onSubmit={this.submit}>
-            {["email", "password"].map((val, i) => {
-              return (
-                <label key={i}>
-                  {val.toUpperCase()}:
-                  <input
-                    type={val}
-                    name={val}
-                    value={this.state[val]}
-                    onChange={this.inputChange}
-                  />
-                  <br />
-                </label>
-              );
-            })}
-            <input type="submit" value="Submit" />
-          </form>
-          <div>
-            Don't have an account? <Link to="/register">Get started here.</Link>
-          </div>
+const Login = () => {
+  return (
+    <main>
+      <section className="section section-shaped section-lg">
+        <div className="shape shape-style-1 bg-gradient-default">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
         </div>
-      </div>
-    );
-  }
-}
+        <Container className="pt-lg-7">
+          <Row className="justify-content-center">
+            <Col lg="5">
+              <Card className="bg-secondary shadow border-0">
+                <SocialLogin />
+                <CardBody className="px-lg-5 py-lg-3">
+                  <div className="text-center text-muted mb-4">
+                    <small>Or sign in with credentials</small>
+                  </div>
+                  <LoginForm />
+                </CardBody>
+              </Card>
+              <Row className="mt-3">
+                <Col xs="6">
+                  <Link
+                    className="text-light"
+                    to="/login"
+                    onClick={() =>
+                      alert("Error: password reset not yet implemented")
+                    }
+                  >
+                    <small>Forgot password?</small>
+                  </Link>
+                </Col>
+                <Col className="text-right" xs="6">
+                  <Link className="text-light" to="/register">
+                    <small>Create new account</small>
+                  </Link>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    </main>
+  );
+};
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  error: state.error,
-});
-
-export default connect(mapStateToProps, { login, clearErrors })(LoginPage);
+export default Login;

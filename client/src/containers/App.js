@@ -3,14 +3,15 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "../styles/App.css";
 
 // Components and Containers
-import Nav from "../components/Nav";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import NewRoomForm from "../components/NewRoomForm";
-import ChatPage from "../containers/ChatPage";
-import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import NotFoundPage from "./NotFoundPage";
 import RoomsPage from "./RoomsPage";
 import RoomPage from "./RoomPage";
+import SplashPage from "./SplashPage";
+import LoginPage from "./LoginPage";
 
 // Redux Imports
 import { loadUser } from "../actions/authActions";
@@ -34,7 +35,7 @@ const App = ({ isAuthenticated }) => {
 
   return (
     <Router>
-      <Nav isAuthenticated={isAuthenticated} />
+      <Navbar isAuthenticated={isAuthenticated} />
       <div id="main">
         <Switch>
           <Route path="/login" component={LoginPage} />
@@ -43,12 +44,12 @@ const App = ({ isAuthenticated }) => {
           <Route path="/rooms/:id" component={RoomPage} />
           <Route path="/register" component={RegisterPage} />
           <Route exact path="/">
-            <h1>HOME</h1>
-            <ChatPage />
+            <SplashPage />
           </Route>
           <Route component={NotFoundPage} />
         </Switch>
       </div>
+      <Footer />
     </Router>
   );
 };
