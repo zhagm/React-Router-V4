@@ -87,3 +87,7 @@ button:focus {
 .video.inactive {
   border: solid 10px rgb(234, 0, 0);
 }
+
+.roomCard {
+  height: 100%;
+}

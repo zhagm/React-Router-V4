@@ -19,7 +19,7 @@ import {
 
 const SplashPage = () => {
   return (
-    <main classname="main">
+    <main className="main">
       <div className="position-relative">
         {/* <section className="section section-lg section-shaped pb-250">
           <div className="shape shape-style-1 shape-default"> */}

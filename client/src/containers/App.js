@@ -5,7 +5,6 @@ import "../styles/App.css";
 // Components and Containers
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import NewRoomForm from "../components/NewRoomForm";
 import NotFoundPage from "./NotFoundPage";
 import RoomsPage from "./RoomsPage";
 import RoomPage from "./RoomPage";
@@ -42,7 +41,6 @@ const App = ({ isAuthenticated }) => {
           </Route>
           <Route path="/login" component={AuthPage} />
           <Route path="/register" component={AuthPage} />
-          <Route exact path="/rooms/new" component={NewRoomForm} />
           <Route exact path="/dashboard" component={RoomsPage} />
           <Route path="/rooms/:id" component={RoomPage} />
           <Route component={NotFoundPage} />

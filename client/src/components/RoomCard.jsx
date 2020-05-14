@@ -6,7 +6,7 @@ import { Badge, Button, Card, CardBody, Col } from "reactstrap";
 const RoomCard = ({ room }) => {
   return (
     <Col lg="4" className="mb-5">
-      <Card className="card-lift--hover shadow border-0">
+      <Card className="card-lift--hover shadow border-0 roomCard">
         <CardBody>
           <h6 className="text-default text-uppercase">{room.name}</h6>
           <div>

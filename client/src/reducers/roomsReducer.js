@@ -24,7 +24,9 @@ export default function (state = initialState, { type, payload }) {
     case GET_ROOMS: {
       return {
         ...state,
-        rooms: payload,
+        rooms: payload.sort(
+          (a, b) => new Date(b.register_date) - new Date(a.register_date)
+        ),
         loading: false,
       };
     }

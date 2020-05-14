@@ -3,11 +3,20 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addRoom } from "../actions/roomActions";
 import { getUsers } from "../actions/userActions.js";
+import { Button } from "reactstrap";
 import classnames from "../utils/classnames";
 
-const NewRoomForm = ({ getUsers, addRoom, isLoading, user, users = [] }) => {
+const NewRoomForm = ({
+  cancel,
+  getUsers,
+  addRoom,
+  isLoading,
+  user,
+  users = [],
+}) => {
   const [name, setName] = useState("");
   const [members, setMembers] = useState([]);
+  const [description, setDescription] = useState([]);
 
   useEffect(() => {
     getUsers();
@@ -16,7 +25,8 @@ const NewRoomForm = ({ getUsers, addRoom, isLoading, user, users = [] }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    addRoom({ name, members, admins: [user._id] });
+    addRoom({ name, members, description, admins: [user._id] });
+    cancel();
   };
 
   const updateMembers = (id) => {
@@ -29,7 +39,6 @@ const NewRoomForm = ({ getUsers, addRoom, isLoading, user, users = [] }) => {
 
   return (
     <div>
-      <h1>ADD A NEW ROOM</h1>
       <form onSubmit={submit}>
         <label>
           Choose a room name:
@@ -38,6 +47,15 @@ const NewRoomForm = ({ getUsers, addRoom, isLoading, user, users = [] }) => {
             name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+          />
+        </label>
+        <label>
+          Room Description:
+          <input
+            type="textbox"
+            name="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </label>
         <br />
@@ -55,7 +73,19 @@ const NewRoomForm = ({ getUsers, addRoom, isLoading, user, users = [] }) => {
               {u.name}
             </div>
           ))}
-        <input type="submit" value="Submit" />
+        <div className="text-right pt-3">
+          <Button
+            color="danger"
+            data-dismiss="modal"
+            type="button"
+            onClick={cancel}
+          >
+            Cancel
+          </Button>
+          <Button color="success" type="submit" onClick={submit}>
+            Create New Room
+          </Button>
+        </div>
       </form>
     </div>
   );
