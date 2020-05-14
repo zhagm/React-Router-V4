@@ -50,7 +50,6 @@ const ChatPage = ({
 
   return (
     <div>
-      <h1>USERS</h1>
       <ChatMessages messages={messages} currentUserId={user._id} />
       <form onSubmit={sendMessage}>
         <label>Your Message:</label>
@@ -59,6 +58,7 @@ const ChatPage = ({
           name="input"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
+          autoComplete={false}
         />
         <br />
       </form>

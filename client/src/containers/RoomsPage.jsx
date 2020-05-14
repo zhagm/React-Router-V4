@@ -5,7 +5,6 @@ import { getRooms } from "../actions/roomActions";
 import RoomCard from "../components/RoomCard";
 import { Container, Row, Col } from "reactstrap";
 import NewRoomModal from "../components/NewRoomModal";
-import NewRoomForm from "../components/NewRoomForm";
 require("dotenv").config();
 
 const RoomsPage = ({ rooms = [], getRooms }) => {

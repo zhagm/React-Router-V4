@@ -40,39 +40,43 @@ const NewRoomForm = ({
   return (
     <div>
       <form onSubmit={submit}>
-        <label>
-          Choose a room name:
-          <input
-            type="text"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <label>
-          Room Description:
-          <input
-            type="textbox"
-            name="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </label>
+        <div>
+          <label>
+            Choose a room name:
+            <br />
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Room Description:
+            <br />
+            <input
+              type="textbox"
+              name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </label>
+        </div>
         <br />
         <label>Select members to invite to the room:</label>
-        {users
-          // .filter((u) => u._id !== user._id)
-          .map((u) => (
-            <div
-              key={u._id}
-              onClick={() => updateMembers(u._id)}
-              className={classnames("userSelect", {
-                selected: members.includes(u._id),
-              })}
-            >
-              {u.name}
-            </div>
-          ))}
+        {users.map((u) => (
+          <div
+            key={u._id}
+            onClick={() => updateMembers(u._id)}
+            className={classnames("userSelect", {
+              selected: members.includes(u._id),
+            })}
+          >
+            {u.name}
+          </div>
+        ))}
         <div className="text-right pt-3">
           <Button
             color="danger"

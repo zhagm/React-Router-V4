@@ -7,10 +7,27 @@ import {
   leaveRoom,
 } from "../actions/roomActions.js";
 import { useParams } from "react-router-dom";
-import CameraFaceDetector from "../components/CameraFaceDetector";
 import ChatPage from "../containers/ChatPage";
 import { loadUser } from "../actions/authActions.js";
 import classnames from "../utils/classnames";
+import UserCard from "../components/UserCard";
+import UserProfile from "../components/UserProfile";
+import {
+  Badge,
+  Button,
+  Card,
+  CardBody,
+  CardImg,
+  FormGroup,
+  Input,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup,
+  Container,
+  Row,
+  Col,
+} from "reactstrap";
+const ASSETS_URL = process.env.PUBLIC_URL + "/assets";
 
 const RoomPage = ({
   getRoomMembers,
@@ -84,29 +101,86 @@ const RoomPage = ({
     return activeMembers && activeMembers.find((u) => u === userId);
   };
 
-  if (isLoading || !user || !room || !socket) return <div>Loading</div>;
+  if (isLoading || !user || !room || !socket)
+    return (
+      <div>
+        <div className="navBackground bg-default"></div>
+        Loading
+      </div>
+    );
 
   return (
     <div>
-      <h1>ROOM: {room.name}</h1>
-      {members.map((u) => (
-        <div
-          key={u._id}
-          className={classnames("desk", {
-            activeUser: isActive(u._id),
-            onlineUser: !isActive(u._id) && isOnline(u._id),
-          })}
-        >
-          {u.name}
-        </div>
-      ))}
-      <CameraFaceDetector onDetectionChange={setCameraDetectsFace} />
-      <ChatPage
-        activeMembers={activeMembers}
-        onlineMembers={onlineMembers}
-        allMembers={members}
-        currentRoom={room}
-      />
+      <div className="navBackground bg-default"></div>
+      <Row>
+        <Col lg="3">
+          <UserProfile
+            key={user._id}
+            user={user}
+            isActive={isActive(user._id)}
+            isOnline={isOnline(user._id)}
+            setCameraDetectsFace={setCameraDetectsFace}
+          >
+            <ChatPage
+              activeMembers={activeMembers}
+              onlineMembers={onlineMembers}
+              allMembers={members}
+              currentRoom={room}
+            />
+          </UserProfile>
+        </Col>
+        <Col lg="9">
+          <div className="mt-5">
+            <h2>{room.name}</h2>
+            <p>{room.description}</p>
+          </div>
+          <Row className="justify-content-center">
+            <Col lg="9 py-3">
+              <Row className="row-grid">
+                {members.map((user) => (
+                  <UserCard
+                    key={user._id}
+                    user={user}
+                    isActive={isActive(user._id)}
+                    isOnline={isOnline(user._id)}
+                    setCameraDetectsFace={setCameraDetectsFace}
+                  />
+                ))}
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      {/* <Row>
+        <Col className="m-5" md="9">
+          <div className="">
+            <h2>{room.name}</h2>
+            <p>{room.description}</p>
+            {members.map((u) => (
+              <div className="d-flex align-items-center">
+                <div className="px-4"> */}
+      {/* <img
+                  src={`https://i.picsum.photos/id/${Math.floor(
+                    Math.random() * (100 - 1) + 1
+                  )}/200/200.jpg`}
+                  className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
+                  // src={`${ASSETS_URL}/img/theme/team-2-800x800.jpg`}
+                  style={{ width: "200px" }}
+                />
+                  <div className="pt-4 text-center">
+                    <h5 className="title">
+                      <span className="d-block mb-1">{u.name}</span>
+                      <small className="h6 text-muted">
+                        Marketing Strategist
+                      </small>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Col>
+      </Row> */}
     </div>
   );
 };

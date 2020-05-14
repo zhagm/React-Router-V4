@@ -78,6 +78,11 @@ button:focus {
 .video {
   border: solid 10px black;
   display: inline-flex;
+  width: 100%;
+}
+
+.video * {
+  max-width: 100%;
 }
 
 .video.active {
@@ -90,4 +95,19 @@ button:focus {
 
 .roomCard {
   height: 100%;
+}
+
+.userCard {
+  transition: background-color 0.5s ease;
+}
+
+.userCard .default {
+  color: rgb(120, 120, 120);
+  opacity: 0.9;
+}
+
+.userCard .online {
+  color: white;
+  font-weight: bold;
+  opacity: 1;
 }

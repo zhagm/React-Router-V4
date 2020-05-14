@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Video from "./Video";
 import { faceDetected, loadModels } from "../utils/face";
 import classnames from "../utils/classnames";
+import { Button } from "reactstrap";
 
 const videoConstraints = {
   width: "auto",
@@ -43,7 +44,7 @@ const CameraFaceDetector = ({ onDetectionChange = () => {} }) => {
       <div
         className={classnames("video", {
           active: isActive,
-          inactive: !isActive,
+          inactive: isDetecting && !isActive,
         })}
       >
         <Video
@@ -54,9 +55,9 @@ const CameraFaceDetector = ({ onDetectionChange = () => {} }) => {
         />
       </div>
       <div>
-        <button onClick={toggleDetection}>
+        <Button className="mt-1" onClick={toggleDetection}>
           {isDetecting ? "Stop camera" : "Start camera"}
-        </button>
+        </Button>
       </div>
     </div>
   );

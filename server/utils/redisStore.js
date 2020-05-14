@@ -1,7 +1,7 @@
 const redis = require("redis");
 const client = redis.createClient();
 
-client.flushall();
+client.FLUSHALL();
 
 const getOnlineUsers = async () => {
   return new Promise((resolve, reject) => {

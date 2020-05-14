@@ -16,6 +16,7 @@
   margin: 5px;
   border-radius: 10px;
   align-self: flex-start;
+  font-size: 15px;
 }
 
 .ownChatMessage {
