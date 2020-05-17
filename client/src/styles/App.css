@@ -78,11 +78,37 @@ button:focus {
 .video {
   border: solid 10px black;
   display: inline-flex;
-  width: 100%;
 }
 
 .video * {
   max-width: 100%;
+}
+
+.video {
+  position: relative;
+}
+
+.video-overlay {
+  position: absolute;
+  background-color: rgb(0, 0, 0);
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.video-overlay.dark {
+  opacity: 0.8;
+}
+
+.overlay-text {
+  opacity: 1 !important;
+  color: white;
+  font-weight: bold;
+  font-size: 70px;
+}
+
+.video-component {
+  position: absolute;
 }
 
 .video.active {
@@ -110,4 +136,9 @@ button:focus {
   color: white;
   font-weight: bold;
   opacity: 1;
+}
+
+/* User desks row grid */
+.row-grid {
+  max-width: 100%;
 }

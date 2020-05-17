@@ -23,9 +23,9 @@ export async function getFaceDetection(imgBlob, inputSize = 512) {
   let img = await faceapi.fetchImage(imgBlob);
 
   let detection = await faceapi
-    // .detectSingleFace(img, OPTION)
+    // .detectSingleFace(img, OPTION) // <-- to use tinyface
     .detectSingleFace(img, new faceapi.SsdMobilenetv1Options());
-  // .withFaceLandmarks(useTinyModel);
+  // .withFaceLandmarks(useTinyModel); // <-- to get face landmarks (draw out face)
   return detection;
 }
 

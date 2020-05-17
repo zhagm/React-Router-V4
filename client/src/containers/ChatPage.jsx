@@ -13,7 +13,6 @@ const ChatPage = ({
   addMessage,
 }) => {
   let [inputText, setInputText] = useState("");
-  // let [messages, setMessages] = useState(currentRoomMessages);
   let init = true;
 
   useEffect(() => {
@@ -24,18 +23,18 @@ const ChatPage = ({
       socket.on("server:systemChatMessage", addMessage);
       init = false;
     }
+    return () => {
+      // cleanup
+      if (socket) {
+        socket.off("console.log");
+        socket.off("server:enterRoom");
+        socket.off("server:systemChatMessage");
+        socket.off("server:userSentMessage");
+        socket.off("server:getOnlineMembers");
+        socket.off("server:getActiveMembers");
+      }
+    };
   }, [socket, user, currentRoom]);
-  // useEffect(() => {
-  //   if (socket && user && currentRoom) {
-  //     socket.emit("client:login", user);
-  //     socket.emit("client:enterRoom", currentRoom._id);
-  //     socket.on("server:userSentMessage", addMessage);
-  //   }
-  // }, [socket, user, messages]);
-
-  // const addMessage = (message) => {
-  //   setMessages(messages.concat(message));
-  // };
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -58,7 +57,6 @@ const ChatPage = ({
           name="input"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          autoComplete={false}
         />
         <br />
       </form>

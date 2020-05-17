@@ -4,20 +4,14 @@ import { faceDetected, loadModels } from "../utils/face";
 import classnames from "../utils/classnames";
 import { Button } from "reactstrap";
 
-const videoConstraints = {
-  width: "auto",
-  height: undefined,
-  facingMode: "user",
-};
-
 const CameraFaceDetector = ({ onDetectionChange = () => {} }) => {
   // true if face detected in camera, false if not
   const [isActive, setIsActive] = useState(null);
   const [isDetecting, setIsDetecting] = useState(false);
 
-  useEffect(() => {
-    loadModels();
-  }, []);
+  // useEffect(() => {
+  //   loadModels();
+  // }, []);
 
   useEffect(() => {
     loadModels();
@@ -46,18 +40,22 @@ const CameraFaceDetector = ({ onDetectionChange = () => {} }) => {
           active: isActive,
           inactive: isDetecting && !isActive,
         })}
+        onClick={toggleDetection}
       >
         <Video
           onCapture={processScreenshot}
           isCapturing={isDetecting}
           interval={2000}
-          videoConstraints={videoConstraints}
+          className="video-component"
         />
+        <div className={classnames("video-overlay", { dark: !isDetecting })}>
+          <span className="overlay-text">START</span>
+        </div>
       </div>
       <div>
-        <Button className="mt-1" onClick={toggleDetection}>
+        {/* <Button className="mt-1" onClick={toggleDetection}>
           {isDetecting ? "Stop camera" : "Start camera"}
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

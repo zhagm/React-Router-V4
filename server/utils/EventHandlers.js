@@ -88,7 +88,7 @@ class EventHandler {
   receiveMessage = (text) => {
     let { io, serverSocket, user } = this;
     if (user) {
-      io.in(this.currentRoomId).emit("console.log", `${user.name}: ${text}`);
+      io.in(this.currentRoomId).emit("console.log", "HII", user.name, text);
       io.in(this.currentRoomId).emit("server:userSentMessage", {
         userId: user._id,
         username: user.name,

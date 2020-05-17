@@ -1,12 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 
-const Video = ({
-  onCapture,
-  isCapturing,
-  interval = 1000,
-  videoConstraints,
-}) => {
+const Video = ({ onCapture, isCapturing, interval = 1000 }) => {
   const webcam = useRef();
   let captureInterval;
 
@@ -24,14 +19,7 @@ const Video = ({
       return onCapture(webcam.current.getScreenshot());
   };
 
-  return (
-    <Webcam
-      audio={false}
-      ref={webcam}
-      screenshotFormat="image/jpeg"
-      videoConstraints={videoConstraints}
-    />
-  );
+  return <Webcam audio={false} ref={webcam} screenshotFormat="image/jpeg" />;
 };
 
 export default Video;
