@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import classnames from "../utils/classnames";
 
-const ChatMessages = ({ currentUserId, messages }) => {
+const ChatBox = ({ currentUserId, messages }) => {
   return (
     <div className="chatMessages">
       {messages
@@ -27,9 +27,9 @@ const ChatMessages = ({ currentUserId, messages }) => {
   );
 };
 
-ChatMessages.propTypes = {
+ChatBox.propTypes = {
   currentUserId: PropTypes.string,
   messages: PropTypes.array,
 };
 
-export default ChatMessages;
+export default ChatBox;

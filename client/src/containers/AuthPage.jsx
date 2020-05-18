@@ -1,15 +1,13 @@
 import React from "react";
-import LoginForm from "../components/authentication/LoginForm";
-import RegisterForm from "../components/authentication/RegisterForm";
-import SocialAuth from "../components/authentication/SocialAuth";
 import { Link, useLocation } from "react-router-dom";
-import { Card, CardBody, Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
+
+import AuthCard from "../components/authentication/AuthCard";
 
 const AuthPage = () => {
   const authType = useLocation().pathname.slice(1);
-  const Form = authType === "login" ? <LoginForm /> : <RegisterForm />;
   return (
-    <main classname="main">
+    <main className="main">
       <section className="section section-shaped section-lg">
         <div className="shape shape-style-1 bg-gradient-default">
           <span />
@@ -24,20 +22,7 @@ const AuthPage = () => {
         <Container className="pt-lg-4">
           <Row className="justify-content-center">
             <Col lg="5">
-              <Card className="bg-secondary shadow border-0">
-                <SocialAuth authType={authType} />
-                <CardBody className="px-lg-5 py-lg-3">
-                  <div className="text-center text-muted mb-4">
-                    {authType === "login" && (
-                      <small>Or sign in with credentials</small>
-                    )}
-                    {authType === "register" && (
-                      <small>Or sign up with credentials</small>
-                    )}
-                  </div>
-                  {Form}
-                </CardBody>
-              </Card>
+              <AuthCard />
               <Row className="mt-3">
                 <Col xs="6">
                   <Link

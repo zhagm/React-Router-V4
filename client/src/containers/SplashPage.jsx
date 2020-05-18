@@ -1,28 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import classnames from "../utils/classnames";
-import {
-  Badge,
-  Button,
-  Card,
-  CardBody,
-  CardImg,
-  FormGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col,
-} from "reactstrap";
+import { Button, Container, Row, Col } from "reactstrap";
 
 const SplashPage = () => {
   return (
     <main className="main">
       <div className="position-relative">
-        {/* <section className="section section-lg section-shaped pb-250">
-          <div className="shape shape-style-1 shape-default"> */}
         <section className="section section-shaped section-lg pb-250">
           <div className="shape shape-style-1 bg-gradient-default">
             <span />

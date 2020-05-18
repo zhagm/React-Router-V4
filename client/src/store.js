@@ -14,6 +14,4 @@ if (devTools) composeArgs.push(devTools);
 
 const store = createStore(rootReducer, initialState, compose(...composeArgs));
 
-console.log(process.env);
-
 export default store;

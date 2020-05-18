@@ -18,14 +18,14 @@ const SERVER_URL =
 // Register User
 export const register = ({ name, email, password }) => (dispatch) => {
   const body = JSON.stringify({ name, email, password });
-  axios
+  return axios
     .post(`${SERVER_URL}/api/users`, body, getTokenHeader())
     .then(({ data }) => {
       dispatch({ type: REGISTER_SUCCESS, payload: data });
       dispatch({ type: USER_LOADED, payload: data.user });
+      return true; // returns true if success
     })
     .catch((err) => {
-      console.log("ERROR:", err);
       dispatch(
         returnErrors(err.response.data, err.response.status, "REGISTER_FAIL")
       );
@@ -36,14 +36,14 @@ export const register = ({ name, email, password }) => (dispatch) => {
 // Login User
 export const login = ({ email, password }) => (dispatch) => {
   const body = JSON.stringify({ email, password });
-  axios
+  return axios
     .post(`${SERVER_URL}/api/auth`, body, getTokenHeader())
     .then(({ data }) => {
       dispatch({ type: LOGIN_SUCCESS, payload: data });
       dispatch({ type: USER_LOADED, payload: data.user });
+      return true; // returns true if success
     })
     .catch((err) => {
-      console.log("ERROR:", err);
       dispatch(
         returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
       );
@@ -58,7 +58,6 @@ export const loadUser = () => (dispatch, getState) => {
     .get(`${SERVER_URL}/api/auth/user`, getTokenHeader(getState))
     .then(({ data }) => dispatch({ type: USER_LOADED, payload: data }))
     .catch((err) => {
-      console.log("ERROR:", err);
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({ type: AUTH_ERROR });
     });

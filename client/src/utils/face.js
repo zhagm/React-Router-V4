@@ -3,29 +3,23 @@ import * as faceapi from "face-api.js";
 // preload models before running faceapi detection
 export async function loadModels() {
   const MODEL_URL = process.env.PUBLIC_URL + "/models";
-  // tinyface
-  await faceapi.loadTinyFaceDetectorModel(MODEL_URL);
-  await faceapi.loadFaceLandmarkTinyModel(MODEL_URL);
 
-  // ssd (better but slower)
+  // ssd (better than tinyface but slower)
   await faceapi.loadSsdMobilenetv1Model(MODEL_URL);
-  await faceapi.loadFaceLandmarkModel(MODEL_URL);
+  // for later :)
+  // await faceapi.loadFaceLandmarkModel(MODEL_URL);
+  // await faceapi.loadFaceExpressionModel(MODEL_URL);
 }
 
 // get face detection data
-export async function getFaceDetection(imgBlob, inputSize = 512) {
-  const OPTION = new faceapi.TinyFaceDetectorOptions({
-    inputSize,
-    scoreThreshold: 0.5,
-  });
-  const useTinyModel = false;
-
+export async function getFaceDetection(imgBlob) {
+  if (!imgBlob) return false;
   let img = await faceapi.fetchImage(imgBlob);
 
   let detection = await faceapi
-    // .detectSingleFace(img, OPTION) // <-- to use tinyface
-    .detectSingleFace(img, new faceapi.SsdMobilenetv1Options());
-  // .withFaceLandmarks(useTinyModel); // <-- to get face landmarks (draw out face)
+    .detectSingleFace(img, new faceapi.SsdMobilenetv1Options())
+    // .withFaceLandmarks()
+    // .withFaceExpressions();
   return detection;
 }
 

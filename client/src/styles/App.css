@@ -142,3 +142,19 @@ button:focus {
 .row-grid {
   max-width: 100%;
 }
+
+/* NavLink Custom (no nesting) */
+.NavLink {
+  color: white;
+  transition: all 500ms ease;
+}
+
+.NavLink.active {
+  opacity: 0.7;
+  color: white;
+}
+
+.NavLink:hover {
+  opacity: 0.7;
+  color: rgb(252, 119, 17);
+}

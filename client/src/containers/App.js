@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "../styles/App.css";
 
 // Components and Containers
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../components/general/Navbar";
+import Footer from "../components/general/Footer";
 import NotFoundPage from "./NotFoundPage";
 import RoomsPage from "./RoomsPage";
 import RoomPage from "./RoomPage";

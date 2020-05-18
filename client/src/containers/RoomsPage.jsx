@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Container, Row, Col } from "reactstrap";
+
 import { getRooms } from "../actions/roomActions";
 import RoomCard from "../components/RoomCard";
-import { Container, Row, Col } from "reactstrap";
 import NewRoomModal from "../components/NewRoomModal";
 require("dotenv").config();
 

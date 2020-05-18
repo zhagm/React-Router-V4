@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import "../styles/ChatPage.css";
-import ChatMessages from "../components/ChatMessages";
+import ChatBox from "../components/ChatBox";
 import { addMessage } from "../actions/roomActions";
 
 const ChatPage = ({
@@ -13,15 +15,13 @@ const ChatPage = ({
   addMessage,
 }) => {
   let [inputText, setInputText] = useState("");
-  let init = true;
 
   useEffect(() => {
-    if (socket && user && currentRoom && init) {
+    if (socket && user && currentRoom) {
       socket.emit("client:login", user);
       socket.emit("client:enterRoom", currentRoom._id);
       socket.on("server:userSentMessage", addMessage);
       socket.on("server:systemChatMessage", addMessage);
-      init = false;
     }
     return () => {
       // cleanup
@@ -34,7 +34,7 @@ const ChatPage = ({
         socket.off("server:getActiveMembers");
       }
     };
-  }, [socket, user, currentRoom]);
+  }, [socket, user, currentRoom, addMessage]);
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -49,7 +49,7 @@ const ChatPage = ({
 
   return (
     <div>
-      <ChatMessages messages={messages} currentUserId={user._id} />
+      <ChatBox messages={messages} currentUserId={user._id} />
       <form onSubmit={sendMessage}>
         <label>Your Message:</label>
         <input
@@ -64,7 +64,14 @@ const ChatPage = ({
   );
 };
 
-ChatPage.propTypes = {};
+ChatPage.propTypes = {
+  currentRoom: PropTypes.object.isRequired,
+  socket: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  messages: PropTypes.array,
+  addMessage: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,

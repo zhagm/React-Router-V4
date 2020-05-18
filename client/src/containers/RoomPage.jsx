@@ -28,7 +28,6 @@ const RoomPage = ({
   const [onlineMembers, setOnlineMembers] = useState([]);
   const [activeMembers, setActiveMembers] = useState([]);
   const [cameraDetectsFace, setCameraDetectsFace] = useState(null);
-  let init = true;
 
   useEffect(() => {
     getRoomMembers(roomId);
@@ -38,7 +37,6 @@ const RoomPage = ({
       // cleanup
       if (socket) {
         socket.emit("client:leaveRoom", roomId);
-        console.log("cleanup!");
         socket.off("console.log");
         socket.off("server:enterRoom");
         socket.off("server:getOnlineMembers");
@@ -51,7 +49,8 @@ const RoomPage = ({
   }, []);
 
   useEffect(() => {
-    if (socket && user && init) {
+    // socket emits and listeners
+    if (socket && user && roomId) {
       // once socket is connected and user is authenticated and loaded
       socket.emit("client:login", user);
       socket.emit("client:getOnlineMembers", roomId);
@@ -72,20 +71,19 @@ const RoomPage = ({
         socket.emit("client:getOnlineMembers", roomId);
         socket.emit("client:getActiveMembers", roomId);
       });
-      init = false;
     }
-  }, [socket, user, init]);
+  }, [socket, user, roomId]);
 
   useEffect(() => {
     if (cameraDetectsFace && socket)
       socket.emit("client:addActiveMember", roomId);
     if (!cameraDetectsFace && socket)
       socket.emit("client:deleteActiveMember", roomId);
-  }, [cameraDetectsFace]);
+  }, [cameraDetectsFace, socket, roomId]);
 
-  const isOnline = (userId) => onlineMembers.find((u) => u === userId);
+  const isOnline = (userId) => Boolean(onlineMembers.find((u) => u === userId));
 
-  const isActive = (userId) => activeMembers.find((u) => u === userId);
+  const isActive = (userId) => Boolean(activeMembers.find((u) => u === userId));
 
   if (isLoading || !user || !room || !socket)
     return (
@@ -108,12 +106,7 @@ const RoomPage = ({
             isOnline={isOnline(user._id)}
             setCameraDetectsFace={setCameraDetectsFace}
           >
-            <ChatPage
-              activeMembers={activeMembers}
-              onlineMembers={onlineMembers}
-              allMembers={members}
-              currentRoom={room}
-            />
+            <ChatPage currentRoom={room} />
           </UserProfile>
         </Col>
         <Col lg="9" className="desks-col">
@@ -129,7 +122,6 @@ const RoomPage = ({
                 user={user}
                 isActive={isActive(user._id)}
                 isOnline={isOnline(user._id)}
-                setCameraDetectsFace={setCameraDetectsFace}
               />
             ))}
           </Row>
