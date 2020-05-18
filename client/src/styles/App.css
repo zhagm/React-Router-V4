@@ -12,7 +12,7 @@ button:focus {
 }
 
 .navBackground {
-  height: 80px;
+  height: 69px;
 }
 
 /* Error alert message box */
@@ -157,4 +157,12 @@ button:focus {
 .NavLink:hover {
   opacity: 0.7;
   color: rgb(252, 119, 17);
+}
+
+.navCollapse {
+  background-color: red;
+  width: 100vw;
+  position: absolute;
+  top: 70px;
+  left: 0;
 }

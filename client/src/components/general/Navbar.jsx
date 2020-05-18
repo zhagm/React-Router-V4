@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import { logout } from "../../actions/authActions";
 import classnames from "../../utils/classnames";
+import CollapseNav from "./CollapseNav";
 
 import {
   Button,
@@ -14,8 +15,6 @@ import {
   NavItem,
   Nav,
   Container,
-  Row,
-  Col,
 } from "reactstrap";
 
 const NavBar = ({
@@ -26,80 +25,17 @@ const NavBar = ({
   ],
   logout,
 }) => {
-  let [collapseClasses, setCollapseClasses] = useState("");
   const history = useHistory();
   const location = useLocation();
 
   return (
     <header className="header-global">
-      <Navbar
-        className="navbar-main navbar-transparent navbar-light headroom"
-        expand="lg"
-        id="navbar-main"
-      >
+      <Navbar className="navbar-main navbar-transparent navbar-light headroom">
         <Container>
           <NavbarBrand className="mr-lg-5" to="/" tag={Link}>
             OFFICEPLACE
           </NavbarBrand>
-          <button className="navbar-toggler" id="navbar_global">
-            <span className="navbar-toggler-icon" />
-          </button>
-          <UncontrolledCollapse
-            toggler="#navbar_global"
-            navbar
-            className={collapseClasses}
-            onExiting={() => setCollapseClasses("collapsing-out")}
-            onExited={() => setCollapseClasses("")}
-          >
-            <div className="navbar-collapse-header">
-              <Row>
-                <Col className="collapse-brand" xs="6">
-                  <Link to="/">OFFICEPLACE</Link>
-                </Col>
-                <Col className="collapse-close" xs="6">
-                  <button className="navbar-toggler" id="navbar_global">
-                    <span />
-                    <span />
-                  </button>
-                </Col>
-              </Row>
-            </div>
-            <Nav className="align-items-lg-center ml-lg-auto" navbar>
-              {links
-                .filter((l) => l.private === isAuthenticated)
-                .map((link) => {
-                  return (
-                    <NavItem key={link.name}>
-                      <Link
-                        className={classnames("NavLink", {
-                          active:
-                            location.pathname.toLowerCase() ===
-                            link.url.toLowerCase(),
-                        })}
-                        to={link.url}
-                      >
-                        {link.name}
-                      </Link>
-                    </NavItem>
-                  );
-                })}
-              <NavItem className="d-none d-lg-block ml-lg-4">
-                <Link to={isAuthenticated ? "/" : "/login"}>
-                  <Button
-                    onClick={() =>
-                      isAuthenticated && logout() && history.push("/")
-                    }
-                    className="btn-neutral btn-icon"
-                    color="default"
-                  >
-                    <span className="nav-link-inner--text ml-1">
-                      {isAuthenticated ? "Logout" : "Login"}
-                    </span>
-                  </Button>
-                </Link>
-              </NavItem>
-            </Nav>
-          </UncontrolledCollapse>
+          <CollapseNav isAuthenticated={isAuthenticated} items={links} />
         </Container>
       </Navbar>
     </header>
