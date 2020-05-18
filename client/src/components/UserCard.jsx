@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { Badge, Button, Card, CardBody, Col } from "reactstrap";
+import { Badge, Card, CardBody, Col } from "reactstrap";
+import classnames from "../utils/classnames";
 
-const UserCard = ({ user, isOnline, isActive }) => {
-  const getStatuscolor = (active, online) => {
+const UserCard = ({ user, isActive, isOnline }) => {
+  const getStatuscolor = () => {
     const colors = {
       active: "success",
       online: "warning",
@@ -14,14 +14,16 @@ const UserCard = ({ user, isOnline, isActive }) => {
     if (isOnline) return colors["online"];
     return colors["other"];
   };
+
   return (
     <Col lg="4" className="mb-5">
       <Card className={`shadow border-0 bg-${getStatuscolor()}  userCard`}>
         <CardBody>
           <h6
-            className={`text-uppercase text-center ${
-              isOnline || isActive ? "online" : "default"
-            }`}
+            className={classnames("text-uppercase text-center", {
+              online: isOnline || isActive,
+              default: !isOnline && !isActive,
+            })}
           >
             {user.name}
           </h6>
@@ -36,6 +38,8 @@ const UserCard = ({ user, isOnline, isActive }) => {
 
 UserCard.propTypes = {
   user: PropTypes.object.isRequired,
+  isActive: PropTypes.bool,
+  isOnline: PropTypes.bool,
 };
 
 export default UserCard;

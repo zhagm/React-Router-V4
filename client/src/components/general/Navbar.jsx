@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { logout } from "../actions/authActions";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import { connect } from "react-redux";
+
+import { logout } from "../../actions/authActions";
+import classnames from "../../utils/classnames";
 
 import {
   Button,
@@ -10,7 +12,6 @@ import {
   NavbarBrand,
   Navbar,
   NavItem,
-  NavLink,
   Nav,
   Container,
   Row,
@@ -19,22 +20,15 @@ import {
 
 const NavBar = ({
   isAuthenticated,
-  logout,
   links = [
     { url: "/dashboard", name: "Dashboard", private: true },
     { url: "/about", name: "About Us", private: false },
   ],
+  logout,
 }) => {
   let [collapseClasses, setCollapseClasses] = useState("");
   const history = useHistory();
-
-  const onExiting = () => {
-    setCollapseClasses("collapsing-out");
-  };
-
-  const onExited = () => {
-    setCollapseClasses("");
-  };
+  const location = useLocation();
 
   return (
     <header className="header-global">
@@ -54,8 +48,8 @@ const NavBar = ({
             toggler="#navbar_global"
             navbar
             className={collapseClasses}
-            onExiting={onExiting}
-            onExited={onExited}
+            onExiting={() => setCollapseClasses("collapsing-out")}
+            onExited={() => setCollapseClasses("")}
           >
             <div className="navbar-collapse-header">
               <Row>
@@ -73,13 +67,22 @@ const NavBar = ({
             <Nav className="align-items-lg-center ml-lg-auto" navbar>
               {links
                 .filter((l) => l.private === isAuthenticated)
-                .map((link) => (
-                  <NavItem key={link.name}>
-                    <Link to={link.url}>
-                      <NavLink to={link.url}>{link.name}</NavLink>
-                    </Link>
-                  </NavItem>
-                ))}
+                .map((link) => {
+                  return (
+                    <NavItem key={link.name}>
+                      <Link
+                        className={classnames("NavLink", {
+                          active:
+                            location.pathname.toLowerCase() ===
+                            link.url.toLowerCase(),
+                        })}
+                        to={link.url}
+                      >
+                        {link.name}
+                      </Link>
+                    </NavItem>
+                  );
+                })}
               <NavItem className="d-none d-lg-block ml-lg-4">
                 <Link to={isAuthenticated ? "/" : "/login"}>
                   <Button
@@ -103,9 +106,10 @@ const NavBar = ({
   );
 };
 
-Nav.propTypes = {
+NavBar.propTypes = {
   isAuthenticated: PropTypes.bool,
-  logout: PropTypes.func.isRequired,
+  links: PropTypes.array,
+  logout: PropTypes.func,
 };
 
 export default connect(null, { logout })(NavBar);

@@ -1,6 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { NavItem, NavLink, Nav, Container, Row, Col } from "reactstrap";
+import { NavItem, Nav, Container, Row, Col } from "reactstrap";
 
 const Footer = ({ links = [] }) => {
   return (
@@ -16,8 +17,8 @@ const Footer = ({ links = [] }) => {
             <Nav className=" nav-footer justify-content-end">
               {links.map((link) => (
                 <NavItem>
-                  <Link to={link.url}>
-                    <NavLink to={link.url}>{link.name}</NavLink>
+                  <Link className="NavLink" to={link.url}>
+                    {link.name}
                   </Link>
                 </NavItem>
               ))}
@@ -27,6 +28,10 @@ const Footer = ({ links = [] }) => {
       </Container>
     </footer>
   );
+};
+
+Footer.propTypes = {
+  links: PropTypes.array,
 };
 
 export default Footer;

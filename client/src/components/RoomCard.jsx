@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import { Badge, Button, Card, CardBody, Col } from "reactstrap";
 
 const RoomCard = ({ room }) => {
+  const memberLengthStr = `${room.members.length} member${
+    room.members.length !== 1 ? "s" : ""
+  }`;
+
   return (
     <Col lg="4" className="mb-5">
       <Card className="card-lift--hover shadow border-0 roomCard">
@@ -11,14 +15,10 @@ const RoomCard = ({ room }) => {
           <h6 className="text-default text-uppercase">{room.name}</h6>
           <div>
             <Badge color="default" className="mr-1">
-              {`${room.members.length} member${
-                room.members.length !== 1 ? "s" : ""
-              }`}
+              {memberLengthStr}
             </Badge>
           </div>
-          <p className="description mt-3">
-            {room.description ? room.description : ""}
-          </p>
+          <p className="description mt-3">{room.description || ""}</p>
           <Link to={`rooms/${room._id}`}>
             <Button className="mt-4" color="primary">
               Enter Room

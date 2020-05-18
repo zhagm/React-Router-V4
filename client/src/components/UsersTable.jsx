@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import classnames from "../utils/classnames";
 
 const UsersTable = ({ users = [], onlineUsers = [] }) => {
   return (
@@ -15,9 +16,9 @@ const UsersTable = ({ users = [], onlineUsers = [] }) => {
         {users.map((user) => (
           <tr key={user._id}>
             <td
-              className={`status ${
-                onlineUsers.includes(user._id) ? "online" : ""
-              }`}
+              className={classnames("status", {
+                online: onlineUsers.includes(user._id),
+              })}
             >
               •
             </td>

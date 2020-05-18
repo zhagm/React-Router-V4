@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import classnames from "../utils/classnames";
 
-const ChatMessages = ({ messages, currentUserId }) => {
+const ChatMessages = ({ currentUserId, messages }) => {
   return (
-    <div className="chatBox">
+    <div className="chatMessages">
       {messages
-        .slice()
-        .reverse()
+        .slice() // create copy to avoid reversing orig
+        .reverse() // reversing to have messages pop up from bottom
         .map((msg, i) => (
           <div
             className={classnames("chatMessage", {
@@ -22,14 +23,13 @@ const ChatMessages = ({ messages, currentUserId }) => {
             <span className="messageText">{msg.text}</span>
           </div>
         ))}
-      <div className="chatMessages"></div>
     </div>
   );
 };
 
 ChatMessages.propTypes = {
-  messages: PropTypes.array,
   currentUserId: PropTypes.string,
+  messages: PropTypes.array,
 };
 
 export default ChatMessages;

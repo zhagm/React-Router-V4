@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Button, CardHeader } from "reactstrap";
 require("dotenv").config();
 const ASSETS_URL = process.env.PUBLIC_URL + "/assets";
@@ -14,28 +15,30 @@ const SocialAuth = ({ authType }) => {
         <Button
           className="btn-neutral btn-icon"
           color="default"
-          href=""
           onClick={(e) => alert("Error: social auth not yet implemented")}
         >
           <span className="btn-inner--icon mr-1">
-            <img alt="..." src={`${ASSETS_URL}/icons/github.svg`} />
+            <img alt="" src={`${ASSETS_URL}/icons/github.svg`} />
           </span>
           <span className="btn-inner--text">Github</span>
         </Button>
         <Button
           className="btn-neutral btn-icon ml-1"
           color="default"
-          href=""
           onClick={(e) => alert("Error: social auth not yet implemented")}
         >
           <span className="btn-inner--icon mr-1">
-            <img alt="..." src={`${ASSETS_URL}/icons/google.svg`} />
+            <img alt="" src={`${ASSETS_URL}/icons/google.svg`} />
           </span>
           <span className="btn-inner--text">Google</span>
         </Button>
       </div>
     </CardHeader>
   );
+};
+
+SocialAuth.propTypes = {
+  authType: PropTypes.string.isRequired,
 };
 
 export default SocialAuth;

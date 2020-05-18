@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { Button, Modal } from "reactstrap";
+
 import NewRoomForm from "./NewRoomForm";
 
 const NewRoomModal = ({ buttonText, title }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleModal = () => setIsOpen(!isOpen);
+
   return (
     <React.Fragment>
       <Button color="primary" type="button" onClick={toggleModal}>
@@ -25,26 +26,14 @@ const NewRoomModal = ({ buttonText, title }) => {
         <div className="modal-body">
           <NewRoomForm cancel={toggleModal} />
         </div>
-        {/* <div className="modal-footer">
-          <Button
-            color="danger"
-            data-dismiss="modal"
-            type="button"
-            onClick={toggleModal}
-          >
-            Cancel
-          </Button>
-          <Button
-            color="success"
-            type="button"
-            onClick={() => setSumbitting(true)}
-          >
-            {confirmButtonText}
-          </Button>
-        </div> */}
       </Modal>
     </React.Fragment>
   );
+};
+
+NewRoomModal.propTypes = {
+  buttonText: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default NewRoomModal;

@@ -1,24 +1,9 @@
 import React from "react";
-import { Badge, Button, Card, CardBody, Col } from "reactstrap";
-import CameraFaceDetector from "../components/CameraFaceDetector";
+import PropTypes from "prop-types";
 
-const UserProfile = ({
-  user,
-  isOnline,
-  isActive,
-  setCameraDetectsFace,
-  children,
-}) => {
-  const getStatuscolor = (active, online) => {
-    const colors = {
-      active: "success",
-      online: "info",
-      other: "secondary",
-    };
-    if (isActive) return colors["active"];
-    if (isOnline) return colors["online"];
-    return colors["other"];
-  };
+import CameraFaceDetector from "../components/webcam/CameraFaceDetector";
+
+const UserProfile = ({ children, setCameraDetectsFace, user }) => {
   return (
     <div className="text-center m-3 mt-5">
       <h5 className="title">
@@ -30,6 +15,12 @@ const UserProfile = ({
       </h5>
     </div>
   );
+};
+
+UserProfile.propTypes = {
+  children: PropTypes.object,
+  setCameraDetectsFace: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default UserProfile;
