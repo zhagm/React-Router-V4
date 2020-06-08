@@ -1,3 +1,4 @@
+// classes formatting function (similar to npm classnames lib but my own implementation)
 export default function (...names) {
   let classes = [];
   for (let item of names) {

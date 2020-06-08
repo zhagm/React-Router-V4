@@ -137,4 +137,5 @@ export const leaveRoom = () => (dispatch) => {
   dispatch({ type: LEAVE_ROOM });
 };
 
+// set rooms as loading (while waiting for rooms data)
 export const setRoomsLoading = () => ({ type: ROOMS_LOADING });

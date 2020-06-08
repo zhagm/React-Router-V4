@@ -1,19 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-import { logout } from "../../actions/authActions";
-import classnames from "../../utils/classnames";
 import CollapseNav from "./CollapseNav";
 
 import {
-  Button,
-  UncontrolledCollapse,
   NavbarBrand,
   Navbar,
-  NavItem,
-  Nav,
   Container,
 } from "reactstrap";
 
@@ -23,10 +16,7 @@ const NavBar = ({
     { url: "/dashboard", name: "Dashboard", private: true },
     { url: "/about", name: "About Us", private: false },
   ],
-  logout,
 }) => {
-  const history = useHistory();
-  const location = useLocation();
 
   return (
     <header className="header-global">
@@ -45,7 +35,6 @@ const NavBar = ({
 NavBar.propTypes = {
   isAuthenticated: PropTypes.bool,
   links: PropTypes.array,
-  logout: PropTypes.func,
 };
 
-export default connect(null, { logout })(NavBar);
+export default NavBar;

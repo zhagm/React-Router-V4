@@ -6,6 +6,7 @@ export async function loadModels() {
 
   // ssd (better than tinyface but slower)
   await faceapi.loadSsdMobilenetv1Model(MODEL_URL);
+
   // for later :)
   // await faceapi.loadFaceLandmarkModel(MODEL_URL);
   // await faceapi.loadFaceExpressionModel(MODEL_URL);
@@ -18,8 +19,8 @@ export async function getFaceDetection(imgBlob) {
 
   let detection = await faceapi
     .detectSingleFace(img, new faceapi.SsdMobilenetv1Options())
-    // .withFaceLandmarks()
-    // .withFaceExpressions();
+  // .withFaceLandmarks()
+  // .withFaceExpressions();
   return detection;
 }
 

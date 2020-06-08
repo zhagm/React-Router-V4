@@ -8,6 +8,7 @@ const SplashPage = () => {
       <div className="position-relative">
         <section className="section section-shaped section-lg pb-250">
           <div className="shape shape-style-1 bg-gradient-default">
+            {/* Decorative background circles */}
             <span />
             <span />
             <span />

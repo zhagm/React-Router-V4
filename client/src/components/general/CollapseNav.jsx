@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { logout } from "../../actions/authActions";
 import classnames from "../../utils/classnames";
 
-import "../../styles/CollapseNav.scss";
+import "../../styles/CollapseNav.css";
 
 import { NavItem } from "reactstrap";
 

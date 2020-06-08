@@ -103,6 +103,7 @@ NewRoomForm.propTypes = {
   user: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   users: PropTypes.array.isRequired,
+  cancel: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

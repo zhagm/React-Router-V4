@@ -12,6 +12,12 @@ require("dotenv").config();
 const app = express();
 const server = http.createServer(app);
 
+/* MIDDLEWARE */
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(morgan("tiny"));
+
 /* CONNECT SOCKET */
 const io = socketInitialize(server);
 app.use(function (req, res, next) {
@@ -25,12 +31,6 @@ mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB successfully connected"))
   .catch((err) => console.log(err));
-
-/* MIDDLEWARE */
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-app.use(morgan("tiny"));
 
 /* ROUTES */
 app.use("/api", require("./routes"));

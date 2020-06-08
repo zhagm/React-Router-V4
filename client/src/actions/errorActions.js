@@ -6,4 +6,5 @@ export const returnErrors = (msg, status, id = null) => ({
   payload: { msg, status, id },
 });
 
+// clearing errors
 export const clearErrors = () => ({ type: CLEAR_ERRORS });

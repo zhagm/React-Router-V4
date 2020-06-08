@@ -123,12 +123,14 @@ const AuthForm = ({
 
 AuthForm.propTypes = {
   error: PropTypes.object.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  authType: PropTypes.string.isRequired,
   errorId: PropTypes.string.isRequired,
+  authType: PropTypes.string.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   inputsArray: PropTypes.arrayOf(PropTypes.string).isRequired,
   rememberMe: PropTypes.bool,
   buttonText: PropTypes.string,
+  login: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
