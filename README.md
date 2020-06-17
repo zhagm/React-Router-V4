@@ -26,11 +26,11 @@
 - [Usage](#usage)
 - [Contact](#contact)
 
-<!-- ABOUT THE PROJECT -->
+<!-- DEMO VIDEO -->
 
-## About The Project
+## Demo
 
-[![Watch the demo here!](https://youtu.be/-vrytNw_v_A)](https://youtu.be/-vrytNw_v_A)
+[![Watch the demo video][product-screenshot]](https://youtu.be/-vrytNw_v_A)
 
 <!-- ABOUT THE PROJECT -->
 
@@ -108,4 +108,4 @@ Zhag Magauina - [@zhag_m](https://twitter.com/zhag_m) - zhagdev@gmail.com
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/zhag
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: readmeFiles/screenshot.png
