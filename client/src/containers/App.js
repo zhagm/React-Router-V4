@@ -1,29 +1,37 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import MenuDrawer from "../components/navigation/MenuDrawer";
 import "../styles/App.css";
 
-// Components and Containers
-import Navbar from "../components/general/Navbar";
-import Footer from "../components/general/Footer";
-import NotFoundPage from "./NotFoundPage";
-import RoomsPage from "./RoomsPage";
-import RoomPage from "./RoomPage";
-import SplashPage from "./SplashPage";
-import AuthPage from "./AuthPage";
+/* COMPONENTS AND CONTAINERS */
+import SplashPage from "./pages/SplashPage";
+import AuthPage from "../containers/pages/AuthPage";
+import MainNav from "../components/navigation/MainNav";
+import NotFound from "./pages/NotFound";
+import RoomPage from "./pages/RoomPage";
+import RoomsPage from "./pages/RoomsPage";
+import Logout from "../components/auth/Logout";
 
 // Redux Imports
-import { loadUser } from "../actions/authActions";
 import { connect } from "react-redux";
-import store from "../store";
+import { loadUser } from "../redux/actions/authActions";
+import store from "../redux/store";
 
 // Socket IO
-import { createSocketConnection } from "../actions/socketActions";
+import { createSocketConnection } from "../redux/actions/socketActions";
 import socketio from "socket.io-client";
+
 const SOCKET_URL =
   process.env.REACT_APP_SERVER_URL ||
   "https://officeplace-server.herokuapp.com";
 
-const App = ({ isAuthenticated }) => {
+/**
+ * Returns main app container, connects to server socket and loads user.
+ * @function App
+ * @param {bool} isAuthenticated - passed from redux connect.
+ * @returns {div}
+ */
+function App({ isAuthenticated }) {
   useEffect(() => {
     const socket = socketio(SOCKET_URL);
     store.dispatch(createSocketConnection(socket));
@@ -32,24 +40,32 @@ const App = ({ isAuthenticated }) => {
   }, []);
 
   return (
-    <Router>
-      <Navbar isAuthenticated={isAuthenticated} />
-      <div id="main">
+    <div data-testid="component-app" className="App">
+      <Router>
         <Switch>
-          <Route exact path="/">
-            <SplashPage />
+          <Route exact path="/" component={SplashPage} />
+          <Route exact path="/login" component={AuthPage} />
+          <Route exact path="/register" component={AuthPage} />
+          <Route exact path="/logout" component={Logout} />
+          <Route>
+            <div>
+              <MainNav>
+                <MenuDrawer />
+              </MainNav>
+              <div className="MainContainerBody">
+                <Switch>
+                  <Route exact path="/rooms" component={RoomsPage} />
+                  <Route path="/rooms/:id" component={RoomPage} />
+                  <Route path="/" component={NotFound} />
+                </Switch>
+              </div>
+            </div>
           </Route>
-          <Route path="/login" component={AuthPage} />
-          <Route path="/register" component={AuthPage} />
-          <Route exact path="/dashboard" component={RoomsPage} />
-          <Route path="/rooms/:id" component={RoomPage} />
-          <Route component={NotFoundPage} />
         </Switch>
-      </div>
-      <Footer />
-    </Router>
+      </Router>
+    </div>
   );
-};
+}
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,

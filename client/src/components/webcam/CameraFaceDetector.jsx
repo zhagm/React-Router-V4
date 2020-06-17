@@ -5,11 +5,19 @@ import classnames from "../../utils/classnames";
 import { faceDetected, loadModels } from "../../utils/face";
 import Video from "./Video";
 
+/**
+ * THIS CODE HAS NOT BEEN REFACTORED FROM PREVIOUS VERSION
+ * Returns camera component that detects face in view.
+ * @function CameraFaceDetector
+ * @param {func} onDetectionChange - called when there is a change in whether a face is or isn't detected.
+ * @returns {div}``
+ */
 const CameraFaceDetector = ({ onDetectionChange }) => {
   const [isActive, setIsActive] = useState(null);
   const [isDetecting, setIsDetecting] = useState(false);
 
   useEffect(() => {
+    // models for face detection
     loadModels();
   }, []);
 

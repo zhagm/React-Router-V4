@@ -1,0 +1,3 @@
+- command-f to find 'HARDCODED' -> places to fix while you tried TDD
+- clear auth form error on remount
+- form validation for creating account

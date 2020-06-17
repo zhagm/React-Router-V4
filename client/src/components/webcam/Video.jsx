@@ -2,6 +2,15 @@ import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import Webcam from "react-webcam";
 
+/**
+ * THIS CODE HAS NOT BEEN REFACTORED FROM PREVIOUS VERSION
+ * Returns video component that detects face in view.
+ * @function Video
+ * @param {func} onCapture - called when screenshot of webcam captured.
+ * @param {bool} isCapturing - to be capturing or not to be capturing.
+ * @param {integer} interval - interval of face detection screenshot, defaults to 1 second.
+ * @returns {Webcam}
+ */
 const Video = ({ onCapture, isCapturing, interval = 1000 }) => {
   const webcam = useRef();
 
