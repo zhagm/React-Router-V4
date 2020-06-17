@@ -8,23 +8,17 @@
   <p align="center">
     A virtual space to work alongside others
     <br />
-    <a href="https://officeplace.herokuapp.com/">View Demo</a>
-    ·
     <a href="https://github.com/zhagm/officeplace/issues">Report Bug</a>
     ·
     <a href="https://github.com/zhagm/officeplace/issues">Request Feature</a>
   </p>
 </p>
 
-<!-- WARNING INFO -->
-
-> **WARNING**: Live demo isn't currently running, but if you want to test the app out the [installation](#installation) instructions are simple.
-> Hope you enjoy!
-
 <!-- TABLE OF CONTENTS -->
 
 ## Table of Contents
 
+- [Demo](#demo)
 - [About the Project](#about-the-project)
   - [Built With](#built-with)
 - [Getting Started](#getting-started)
@@ -36,7 +30,11 @@
 
 ## About The Project
 
-[![OfficePlace Screen Shot][product-screenshot]](https://officeplace.online)
+[![Watch the demo here!](https://youtu.be/-vrytNw_v_A)](https://youtu.be/-vrytNw_v_A)
+
+<!-- ABOUT THE PROJECT -->
+
+## About The Project
 
 OfficePlace was built as a part of the [Techtonica](http://techtonica.org) H12020 program.
 
