@@ -95,6 +95,10 @@ This project is structured into a separate frontend and backend. To run both con
 npm run dev
 ```
 
+If you want to log into an existing account, the credentials for mine are:
+Email: "zh@g"
+Password: "asdf"
+
 <!-- CONTACT -->
 
 ## Contact
