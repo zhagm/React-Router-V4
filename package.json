@@ -10,6 +10,7 @@
     "install-client": "cd client && npm i",
     "install-server": "cd server && npm i",
     "install-all": "npm install && npm run install-client && npm run install-server",
+    "env-setup": "mv .sample-env .env && mv client/.sample-env client/.env",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],

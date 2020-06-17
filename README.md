@@ -1,26 +1,65 @@
-# OfficePlace 🖥
+<!-- PROJECT LOGO -->
+<p align="center">
+  <!-- <a href="https://github.com/zhagm/officeplace">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a> -->
+  <h1 align="center">OfficePlace</h1>
 
-OfficePlace is a virtual office space for your team, closing the distance between remote coworkers so that even when you’re working on your own, you’re working together.
+  <p align="center">
+    A virtual space to work alongside others
+    <br />
+    <a href="https://officeplace.herokuapp.com/">View Demo</a>
+    ·
+    <a href="https://github.com/zhagm/officeplace/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/zhagm/officeplace/issues">Request Feature</a>
+  </p>
+</p>
 
-### Core Functionality
+<!-- WARNING INFO -->
 
-OfficePlace allows users to create a virtual environment where users can go for accountability and communication. In times like these when working in a physical office is not an option, it's helpful to have a virtual space that emulates an open office space where you can see when your coworkers/peers are present at their desks. The purpose of the app is to close the distance between remote coworkers, so even when you’re working on your own, you’re working together.
+> **WARNING**: Live demo isn't currently running, but if you want to test the app out the [installation](#installation) instructions are simple.
+> Hope you enjoy!
 
-### Features
+<!-- TABLE OF CONTENTS -->
 
-- Virtual accountability - a space where you can see your coworkers and who's active
-- User registration and login
-- Just one room
-- Grid of desks - basic css grid
-- Desk indicates if user is in office or not (logged in), and at the desk or not (active) through simple status
+## Table of Contents
 
-### Stack
+- [About the Project](#about-the-project)
+  - [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Contact](#contact)
 
-- React frontend
-- Node backend with Express
-- MongoDB with Mongoose
+<!-- ABOUT THE PROJECT -->
 
-## Installation
+## About The Project
+
+[![OfficePlace Screen Shot][product-screenshot]](https://officeplace.online)
+
+OfficePlace was built as a part of the [Techtonica](http://techtonica.org) H12020 program.
+
+officeplace.online creates a virtual 'open office' space for your team, closing the distance between remote coworkers so that even when you’re working on your own, you’re working together.
+
+Users can create a virtual environment where users can go for accountability and communication. In times like these when working in a physical office is not an option, it's helpful to have a virtual space that emulates an open office space where you can see when your coworkers/peers are present at their desks.
+
+### Built With
+
+- [React](https://reactjs.org)
+- [Redux](https://redux.js.org)
+- [Material UI](https://material-ui.com)
+- [Node](https://nodejs.org)
+- [MongoDB](https://www.mongodb.org)
+- [Socket.io](https://socket.io)
+
+<!-- GETTING STARTED -->
+
+## Getting Started
+
+<!-- ### Prerequisites -->
+
+### Installation
 
 Clone the repository
 
@@ -43,10 +82,12 @@ You can update the keys but I put some test keys so that your app still function
 .sample-env is just a placeholder, we'll want to rename it to .env to work with the [dotenv](https://www.npmjs.com/package/dotenv) library.
 
 ```bash
-mv .sample-env .env
+npm run env-setup
 ```
 
 And voila, you should be ready to run!
+
+<!-- USAGE EXAMPLES -->
 
 ## Usage
 
@@ -56,14 +97,17 @@ This project is structured into a separate frontend and backend. To run both con
 npm run dev
 ```
 
-## Demo
+<!-- CONTACT -->
 
-- [App demo](https://officeplace.herokuapp.com/)
-- [Backend server hosted on Heroku](https://officeplace-server.herokuapp.com/)
+## Contact
 
-## Progress
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-[Trello board](https://trello.com/invite/b/oPNupdYd/bde1244e3c28a7a5511ed68c4049f09f/officeplace-week-3)
+Zhag Magauina - [@zhag_m](https://twitter.com/zhag_m) - zhagdev@gmail.com
 
-The master will hold the most recent running version.
-**[Branch m3](https://github.com/zhagm/officeplace/tree/m3)** is the most recently updated branch.
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/zhag
+[product-screenshot]: images/screenshot.png
