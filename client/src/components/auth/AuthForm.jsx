@@ -28,6 +28,11 @@ const AuthForm = ({ isAuthenticated, login, register, isLogin, error }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [inputErrors, setInputErrors] = useState({
+    name: false,
+    email: false,
+    password: false,
+  });
   const rememberMeRef = useRef();
 
   const formProps = {
@@ -37,6 +42,7 @@ const AuthForm = ({ isAuthenticated, login, register, isLogin, error }) => {
       rememberMe: true,
       buttonText: "Sign in",
       inputsArray: ["email", "password"],
+      doValidate: false,
     },
     register: {
       authType: "register",
@@ -44,12 +50,38 @@ const AuthForm = ({ isAuthenticated, login, register, isLogin, error }) => {
       rememberMe: false,
       buttonText: "Sign up",
       inputsArray: ["name", "email", "password"],
+      doValidate: true,
     },
   };
 
-  const { authType, errorId, rememberMe, buttonText, inputsArray } = formProps[
-    isLogin ? "login" : "register"
-  ];
+  const {
+    authType,
+    errorId,
+    rememberMe,
+    buttonText,
+    inputsArray,
+    doValidate,
+  } = formProps[isLogin ? "login" : "register"];
+
+  const inputValidators = {
+    name: () => {
+      if (!doValidate) return;
+      // check if name is at least 5 chars, update inputErrors with true or false
+      if (name.length < 5) {
+        setInputErrors({ ...inputErrors, name: true });
+      } else {
+        setInputErrors({ ...inputErrors, name: true });
+      }
+    },
+    email: () => {
+      if (!doValidate) return;
+      // check if email is valid, update inputErrors with true or false
+    },
+    password: () => {
+      if (!doValidate) return;
+      // check if password is at least 5 chars, update inputErrors with true or false
+    },
+  };
 
   const inputTypeProps = {
     name: {
@@ -58,6 +90,9 @@ const AuthForm = ({ isAuthenticated, login, register, isLogin, error }) => {
       label: "Name",
       value: name,
       key: "name",
+      onBlur: inputValidators["name"],
+      error: inputErrors["name"],
+      helperText: inputErrors["name"] ? "Minimum 5 characters" : "",
     },
     email: {
       name: "email",
@@ -65,6 +100,8 @@ const AuthForm = ({ isAuthenticated, login, register, isLogin, error }) => {
       label: "Email",
       value: email,
       key: "email",
+      onBlur: inputValidators["email"],
+      // need to add error and helperText
     },
     password: {
       name: "password",
@@ -72,6 +109,8 @@ const AuthForm = ({ isAuthenticated, login, register, isLogin, error }) => {
       label: "Password",
       value: password,
       key: "password",
+      onBlur: inputValidators["password"],
+      // need to add error and helperText
     },
   };
 
