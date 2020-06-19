@@ -10,6 +10,11 @@ require("dotenv").config();
 
 /* APP DECLARATION */
 const app = express();
+app.all("*", (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 const server = http.createServer(app);
 
 /* CONNECT SOCKET */
