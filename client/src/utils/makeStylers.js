@@ -232,3 +232,12 @@ export const userProfileStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
 }));
+
+export const modalStyles = makeStyles((theme) => ({
+  paper: {
+    position: "absolute",
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));

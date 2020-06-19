@@ -9,6 +9,11 @@ function init(server) {
     client.on("client:logout", handler.getHandler("client:logout"));
 
     client.on(
+      "client:getOnlineCounts",
+      handler.getHandler("client:getOnlineCounts")
+    );
+
+    client.on(
       "client:userSentMessage",
       handler.getHandler("client:userSentMessage")
     );

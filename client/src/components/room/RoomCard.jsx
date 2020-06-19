@@ -16,6 +16,7 @@ import { roomCardStyles as useStyles } from "../../utils/makeStylers";
  * Returns card item with data of room object passed.
  * @function RoomCard
  * @param {object} room - .
+ * @param {int} onlineCount - number of online members.
  * @returns {div}
  */
 const RoomCard = ({ room }) => {

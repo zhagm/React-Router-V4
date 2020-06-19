@@ -18,6 +18,8 @@ const ChatPage = ({
 }) => {
   let [inputText, setInputText] = useState("");
 
+  useEffect(() => {}, [messages]);
+
   useEffect(() => {
     if (socket && user && currentRoom) {
       socket.emit("client:login", user);

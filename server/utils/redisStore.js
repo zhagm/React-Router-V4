@@ -86,6 +86,40 @@ const deleteActiveRoomUsers = (roomId, userId) => {
   });
 };
 
+const getRoomsOnlineCount = async (roomIds) => {
+  let promisesArr = roomIds.map((id) => {
+    return new Promise((resolve, reject) => {
+      client.SMEMBERS(`${id}-ONLINE`, (err, users) => {
+        if (err) reject(err);
+        else resolve({ id: id, count: users.length });
+      });
+    });
+  });
+  return Promise.all(promisesArr).then((values) => {
+    return values.reduce((res, { id, count }) => {
+      res[id] = count;
+      return res;
+    }, {});
+  });
+};
+
+const getRoomsActiveCount = async (roomIds) => {
+  let promisesArr = roomIds.map((id) => {
+    return new Promise((resolve, reject) => {
+      client.SMEMBERS(`${id}-ACTIVE`, (err, users) => {
+        if (err) reject(err);
+        else resolve({ id: id, count: users.length });
+      });
+    });
+  });
+  return Promise.all(promisesArr).then((values) => {
+    return values.reduce((res, { id, count }) => {
+      res[id] = count;
+      return res;
+    }, {});
+  });
+};
+
 module.exports = {
   onlineUsers: {
     get: getOnlineUsers,
@@ -104,4 +138,6 @@ module.exports = {
       delete: deleteActiveRoomUsers,
     },
   },
+  getRoomsOnlineCount,
+  getRoomsActiveCount,
 };

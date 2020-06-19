@@ -1,4 +1,4 @@
-const { onlineUsers, room } = require("./redisStore");
+const { onlineUsers, room, getRoomsOnlineCount } = require("./redisStore");
 
 class EventHandler {
   constructor({ io, client, user = null, currentRoomId }) {
@@ -19,11 +19,20 @@ class EventHandler {
       "client:deleteActiveMember": this.deleteActiveMember,
       "client:enterRoom": this.enterRoom,
       "client:leaveRoom": this.leaveRoom,
+      "client:getOnlineCounts": this.getOnlineCounts,
       disconnect: this.logout,
     };
     console.log(event);
     return dictionary[event];
   }
+  getOnlineCounts = (roomIds) => {
+    let { client } = this;
+    getRoomsOnlineCount(roomIds)
+      .then((roomCounts) => {
+        client.emit("server:getOnlineCounts", roomCounts);
+      })
+      .catch((err) => console.log(err));
+  };
   getOnlineUsers = () => {
     let { client } = this;
     onlineUsers

@@ -54,7 +54,6 @@ export const login = ({ email, password }) => (dispatch) => {
 // Check token and load user
 export const loadUser = () => (dispatch, getState) => {
   dispatch(setUserLoading());
-  console.log(SERVER_URL);
   axios
     .get(`${SERVER_URL}/api/auth/user`, getTokenHeader(getState))
     .then(({ data }) => dispatch({ type: USER_LOADED, payload: data }))
