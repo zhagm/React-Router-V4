@@ -41,12 +41,6 @@ server.listen(PORT, (err) => {
   console.log(err || `Server listening on port ${PORT}`);
 });
 
-/* 404 */
-app.use((req, res, next) => {
-  console.log({ req });
-  next();
-});
-
 /* next(error) */
 app.use((err, req, res) => {
   console.error(err.message);
