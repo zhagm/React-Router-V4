@@ -30,7 +30,7 @@ function RoomsPage({ getRooms, rooms = [], socket }) {
   }, []);
 
   useEffect(() => {
-    if (rooms.length) {
+    if (rooms.length && socket) {
       socket.emit(
         "client:getOnlineCounts",
         rooms.map((room) => room._id)
@@ -39,7 +39,7 @@ function RoomsPage({ getRooms, rooms = [], socket }) {
         setOnlineCounts(onlineCountsObj);
       });
     }
-  }, [rooms]);
+  }, [rooms, socket]);
 
   let RoomItems = rooms.map((room) => {
     let onlineCount = onlineCounts[room._id] || 0;
